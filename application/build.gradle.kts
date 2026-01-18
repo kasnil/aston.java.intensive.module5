@@ -1,3 +1,3 @@
 plugins {
-    id("buildsrc.convention.application-jvm")
+    id("buildsrc.convention.library-jvm")
 }

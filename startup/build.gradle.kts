@@ -1,11 +1,12 @@
 plugins {
-    id("java")
-
-    // Apply the Application plugin to add support for building an executable JVM application.
-    application
+    id("buildsrc.convention.application-jvm")
 }
 
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":utils"))
+}
+
+application {
+    mainClass = "aston.java.intensive.module5.Main"
 }
