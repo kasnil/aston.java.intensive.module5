@@ -6,6 +6,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":model"))
+    implementation(project(":domain"))
     implementation(project(":utils"))
 }

@@ -1,5 +1,5 @@
 include(":app")
-include(":model")
+include(":domain")
 include(":utils")
 
 rootProject.name = "aston.java.intensive.module5"
