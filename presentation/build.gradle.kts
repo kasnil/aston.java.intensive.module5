@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("buildsrc.convention.library-jvm")
 }
 
 dependencies {
