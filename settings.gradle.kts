@@ -1,5 +1,6 @@
 include(":app")
 include(":domain")
+include(":application")
 include(":infrastructure")
 include(":presentation")
 include(":utils")
