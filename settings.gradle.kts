@@ -1,4 +1,4 @@
-include(":app")
+include(":startup")
 include(":domain")
 include(":application")
 include(":infrastructure")
