@@ -36,4 +36,21 @@ jobs:
         run: ./gradlew assemble --no-daemon --build-cache --warning-mode all --scan
 
       - name: Test with Gradle
-        run: ./gradlew --no-daemon --build-cache --warning-mode all --scan
+        run: ./gradlew test --no-daemon --build-cache --warning-mode all --scan
+
+      - name: Problems Report
+        uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: problems-report
+          path: |
+            build/reports/problems/problems-report.html
+          if-no-files-found: ignore
+
+      - name: Unit tests results
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: unit-tests-results
+          path: |
+            */build/reports/tests
