@@ -1,0 +1,69 @@
+name: Cleanup PR Caches
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cleanup:
+    name: Delete PR Caches
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Cleanup caches for closed PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          PR_REF: refs/pull/${{ github.event.pull_request.number }}/merge
+        run: |
+          echo "Cleaning up caches for PR #${{ github.event.pull_request.number }}"
+          echo "Ref: ${PR_REF}"
+          echo ""
+          
+          # List caches for this PR's ref
+          CACHES=$(gh cache list --ref "${PR_REF}" --limit 100 --json id,key,sizeInBytes 2>/dev/null || echo "[]")
+          
+          if [[ "${CACHES}" == "[]" || -z "${CACHES}" ]]; then
+            echo "No caches found for this PR"
+            exit 0
+          fi
+          
+          echo "Found caches:"
+          echo "${CACHES}" | jq -r '.[] | "  - \(.key) (\(.sizeInBytes / 1024 / 1024 | floor)MB)"'
+          echo ""
+          
+          # Delete each cache
+          DELETED=0
+          TOTAL_SIZE=0
+          
+          for CACHE_ID in $(echo "${CACHES}" | jq -r '.[].id'); do
+            SIZE=$(echo "${CACHES}" | jq -r ".[] | select(.id == ${CACHE_ID}) | .sizeInBytes")
+            KEY=$(echo "${CACHES}" | jq -r ".[] | select(.id == ${CACHE_ID}) | .key")
+          
+            if gh cache delete "${CACHE_ID}" 2>/dev/null; then
+              echo "✓ Deleted: ${KEY}"
+              DELETED=$((DELETED + 1))
+              TOTAL_SIZE=$((TOTAL_SIZE + SIZE))
+            else
+              echo "✗ Failed to delete: ${KEY}"
+            fi
+          done
+          
+          TOTAL_MB=$((TOTAL_SIZE / 1024 / 1024))
+          echo ""
+          echo "Summary:"
+          echo "  Caches deleted: ${DELETED}"
+          echo "  Space freed: ${TOTAL_MB}MB"
+          
+          # Add to job summary
+          echo "## PR Cache Cleanup" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| PR | #${{ github.event.pull_request.number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Caches deleted | ${DELETED} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Space freed | ${TOTAL_MB}MB |" >> $GITHUB_STEP_SUMMARY
