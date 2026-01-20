@@ -9,27 +9,27 @@ public class EnsureStringGuardTest {
     public void testIsNotNull() {
         String value = "";
 
-        assertDoesNotThrow(() -> Ensure.That(value).isNotNull());
+        assertDoesNotThrow(() -> Ensure.that(value).isNotNull());
     }
 
     @Test
     public void testIsNotNullFailed() {
         String value = null;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).isNotNull());
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNull());
     }
 
     @Test
     public void testIsNotNullOrEmpty() {
         String value = "Hello, World!";
 
-        assertDoesNotThrow(() -> Ensure.That(value).isNotNullOrEmpty());
+        assertDoesNotThrow(() -> Ensure.that(value).isNotNullOrEmpty());
     }
 
     @Test
     public void testIsNotNullOrEmptyFailed() {
         String value = "";
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).isNotNullOrEmpty());
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNullOrEmpty());
     }
 }

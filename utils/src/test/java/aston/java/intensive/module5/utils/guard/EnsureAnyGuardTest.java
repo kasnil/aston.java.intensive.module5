@@ -9,13 +9,13 @@ public class EnsureAnyGuardTest {
     public void testIsNotNull() {
         String value = "";
 
-        assertDoesNotThrow(() -> Ensure.That(value).isNotNull());
+        assertDoesNotThrow(() -> Ensure.that(value).isNotNull());
     }
 
     @Test
     public void testIsNotNullFailed() {
         String value = null;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).isNotNull());
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNull());
     }
 }
