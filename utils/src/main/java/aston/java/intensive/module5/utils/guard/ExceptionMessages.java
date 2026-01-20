@@ -5,5 +5,5 @@ public final class ExceptionMessages {
     public static final String STRING_IS_NULL_OR_EMPTY = "Строка не должна быть пустой или null.";
     public static final String BOOLEAN_IS_FALSE = "Ожидалось выражение, результат которого будет true.";
     public static final String BOOLEAN_IS_TRUE = "Ожидалось выражение, результат которого будет false.";
-
+    public static final String COLLECTION_IS_EMPTY = "Пустой список запрещен.";
 }

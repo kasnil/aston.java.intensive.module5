@@ -9,27 +9,27 @@ public class EnsureBooleanGuardTest {
     public void testIsTrue() {
         var value = true;
 
-        assertDoesNotThrow(() -> Ensure.That(value).isTrue());
+        assertDoesNotThrow(() -> Ensure.that(value).isTrue());
     }
 
     @Test
     public void testIsTrueFailed() {
         var value = false;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).isTrue());
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isTrue());
     }
 
     @Test
     public void testIsFalse() {
         var value = false;
 
-        assertDoesNotThrow(() -> Ensure.That(value).isFalse());
+        assertDoesNotThrow(() -> Ensure.that(value).isFalse());
     }
 
     @Test
     public void testIsFalseFailed() {
         var value = true;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).isFalse());
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isFalse());
     }
 }
