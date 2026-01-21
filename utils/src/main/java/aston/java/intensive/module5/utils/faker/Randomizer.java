@@ -28,4 +28,15 @@ public final class Randomizer {
     {
         return seed.nextInt(max - min + 1) + min;
     }
+
+    public String password(int length)
+    {
+        var result = "";
+
+        while(result.length() < length) {
+            result += (char)number(33, 127); // ASCII
+        }
+
+        return result;
+    }
 }
