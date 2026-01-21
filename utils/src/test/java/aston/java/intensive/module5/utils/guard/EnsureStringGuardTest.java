@@ -32,4 +32,46 @@ public class EnsureStringGuardTest {
 
         assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNullOrEmpty());
     }
+
+    @Test
+    public void testHasLength() {
+        String value = "123";
+
+        assertDoesNotThrow(() -> Ensure.that(value).hasLength(3));
+    }
+
+    @Test
+    public void testHasLengthFailed() {
+        String value = "";
+
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasLength(3));
+    }
+
+    @Test
+    public void testHasLengthBetween() {
+        String value = "123";
+
+        assertDoesNotThrow(() -> Ensure.that(value).hasLengthBetween(1, 4));
+    }
+
+    @Test
+    public void testHasLengthBetweenFailed() {
+        String value = "";
+
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasLengthBetween(5, 10));
+    }
+
+    @Test
+    public void testMatches() {
+        String value = "123";
+
+        assertDoesNotThrow(() -> Ensure.that(value).matches("\\d+"));
+    }
+
+    @Test
+    public void testMatchesFailed() {
+        String value = "abc";
+
+        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).matches("\\d+"));
+    }
 }
