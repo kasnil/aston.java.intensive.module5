@@ -6,5 +6,9 @@ public sealed abstract class CollectionParam<T> extends Param<T> permits
         super(value);
     }
 
-    public abstract CollectionParam hasItems();
+    public CollectionParam hasItems() {
+        return hasItems(null);
+    }
+
+    public abstract CollectionParam hasItems(String errorMessage);
 }

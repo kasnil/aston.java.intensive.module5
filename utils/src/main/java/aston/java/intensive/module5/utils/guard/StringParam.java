@@ -7,14 +7,24 @@ public final class StringParam extends Param<String> {
 
     public StringParam isNotNull()
     {
-        Ensure.string.isNotNull(this.value);
+        return isNotNull(null);
+    }
+
+    public StringParam isNotNull(String errorMessage)
+    {
+        Ensure.string.isNotNull(this.value, errorMessage);
 
         return this;
     }
 
     public StringParam isNotNullOrEmpty()
     {
-        Ensure.string.isNotNullOrEmpty(this.value);
+        return isNotNullOrEmpty(null);
+    }
+
+    public StringParam isNotNullOrEmpty(String errorMessage)
+    {
+        Ensure.string.isNotNullOrEmpty(this.value, errorMessage);
 
         return this;
     }
