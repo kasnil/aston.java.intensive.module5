@@ -8,7 +8,7 @@ public class RandomizerTest {
     private final Randomizer randomizer = new Randomizer();
 
     @Test
-    public void pick_an_enum()
+    public void testEnum()
     {
         var f = randomizer.enumValue(Gender.class);
         assertTrue(f instanceof Gender);
