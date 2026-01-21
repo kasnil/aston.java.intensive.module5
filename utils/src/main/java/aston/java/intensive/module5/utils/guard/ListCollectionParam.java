@@ -7,8 +7,8 @@ public final class ListCollectionParam<T> extends CollectionParam<List<T>> {
         super(value);
     }
 
-    public CollectionParam hasItems() {
-        Ensure.collection.hasItems(this.value);
+    public CollectionParam hasItems(String errorMessage) {
+        Ensure.collection.hasItems(this.value, errorMessage);
 
         return this;
     }

@@ -7,14 +7,24 @@ public final class BooleanParam extends Param<Boolean> {
 
     public BooleanParam isTrue()
     {
-        Ensure.bool.isTrue(this.value);
+        return isTrue(null);
+    }
+
+    public BooleanParam isTrue(String errorMessage)
+    {
+        Ensure.bool.isTrue(this.value, errorMessage);
 
         return this;
     }
 
     public BooleanParam isFalse()
     {
-        Ensure.bool.isFalse(this.value);
+        return isFalse(null);
+    }
+
+    public BooleanParam isFalse(String errorMessage)
+    {
+        Ensure.bool.isFalse(this.value, errorMessage);
 
         return this;
     }
