@@ -1,4 +1,4 @@
-﻿package aston.java.intensive.module5.domain;
+package aston.java.intensive.module5.domain;
 
 import aston.java.intensive.module5.utils.guard.Ensure;
 
