@@ -2,7 +2,7 @@ package aston.java.intensive.module5.utils.faker;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DataSetTest {
     private final DataSet dataSet = new DataSet(DataLocale.Ru);
@@ -18,24 +18,31 @@ public class DataSetTest {
     }
 
     @Test
+    public void testPassword()
+    {
+        var password = this.dataSet.password(12);
+        assertEquals(12, password.length());
+    }
+
+    @Test
     public void testFirstName()
     {
         var firstName = this.dataSet.firstName(null);
-        assertTrue(!firstName.isEmpty());
+        assertFalse(firstName.isEmpty());
     }
 
     @Test
     public void testLastName()
     {
         var lastName = this.dataSet.lastName(null);
-        assertTrue(!lastName.isEmpty());
+        assertFalse(lastName.isEmpty());
     }
 
     @Test
     public void testMiddleName()
     {
         var middleName = this.dataSet.middleName(null);
-        assertTrue(!middleName.isEmpty());
+        assertFalse(middleName.isEmpty());
     }
 
     private static boolean validateEmail(String email) {
