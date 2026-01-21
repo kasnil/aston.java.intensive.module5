@@ -1,8 +1,10 @@
 ﻿package aston.java.intensive.module5.domain;
 
+import aston.java.intensive.module5.utils.guard.Ensure;
+
 import java.util.Objects;
 
-public class User implements Comparable<User> {
+public final class User implements Comparable<User> {
     private final String name;
     private final String password;
     private final String email;
@@ -23,36 +25,36 @@ public class User implements Comparable<User> {
         private String email;
 
         public Builder setName(String name) {
-            if (name == null || name.trim().isEmpty()) {
-                throw new IllegalArgumentException("Имя не может быть пустым");
-            }
-            if (name.length() < 2 || name.length() > 50) {
-                throw new IllegalArgumentException("Имя должно быть от 2 до 50 символов");
-            }
+            Ensure.that(name)
+                    .isNotNullOrEmpty("Имя не может быть пустым")
+                    .hasLengthBetween(2, 50, "Имя должно быть от 2 до 50 символов");
+
             this.name = name.trim();
             return this;
         }
 
         public Builder setPassword(String password) {
-            if (password == null || password.length() < 6) {
-                throw new IllegalArgumentException("Пароль должен содержать минимум 6 символов");
-            }
+            Ensure.that(password)
+                    .isNotNullOrEmpty("Пароль не может быть пустым")
+                    .hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
+
             this.password = password;
             return this;
         }
 
         public Builder setEmail(String email) {
-            if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                throw new IllegalArgumentException("Неверный формат email");
-            }
+            Ensure.that(email)
+                    .isNotNullOrEmpty("email не может быть пустым")
+                    .matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", "Неверный формат email");
+
             this.email = email.trim().toLowerCase();
             return this;
         }
 
         public User build() {
-            if (name == null || password == null || email == null) {
-                throw new IllegalStateException("Все поля должны быть установлены");
-            }
+            Ensure.that(name).isNotNull();
+            Ensure.that(password).isNotNull();
+            Ensure.that(email).isNotNull();
             return new User(this);
         }
     }
