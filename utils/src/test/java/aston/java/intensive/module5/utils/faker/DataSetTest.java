@@ -5,16 +5,37 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DataSetTest {
-    private final DataSet dataSet = new DataSet();
+    private final DataSet dataSet = new DataSet(DataLocale.Ru);
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";;
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Test
     public void testEmail()
     {
         var email = this.dataSet.email();
         assertTrue(validateEmail(email));
+    }
+
+    @Test
+    public void testFirstName()
+    {
+        var firstName = this.dataSet.firstName(null);
+        assertTrue(!firstName.isEmpty());
+    }
+
+    @Test
+    public void testLastName()
+    {
+        var lastName = this.dataSet.lastName(null);
+        assertTrue(!lastName.isEmpty());
+    }
+
+    @Test
+    public void testMiddleName()
+    {
+        var middleName = this.dataSet.middleName(null);
+        assertTrue(!middleName.isEmpty());
     }
 
     private static boolean validateEmail(String email) {
