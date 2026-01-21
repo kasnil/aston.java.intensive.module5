@@ -1,4 +1,4 @@
-﻿package domain;
+﻿package aston.java.intensive.module5.domain;
 
 import java.util.Objects;
 
@@ -25,6 +25,9 @@ public class User implements Comparable<User> {
         public Builder setName(String name) {
             if (name == null || name.trim().isEmpty()) {
                 throw new IllegalArgumentException("Имя не может быть пустым");
+            }
+            if (name.length() < 2 || name.length() > 50) {
+                throw new IllegalArgumentException("Имя должно быть от 2 до 50 символов");
             }
             this.name = name.trim();
             return this;
