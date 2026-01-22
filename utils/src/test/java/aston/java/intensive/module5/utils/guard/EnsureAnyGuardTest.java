@@ -16,6 +16,6 @@ public class EnsureAnyGuardTest {
     public void testIsNotNullFailed() {
         String value = null;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNull());
+        assertThrows(GuardException.class, () -> Ensure.that(value).isNotNull());
     }
 }

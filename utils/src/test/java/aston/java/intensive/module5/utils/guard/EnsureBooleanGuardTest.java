@@ -16,7 +16,7 @@ public class EnsureBooleanGuardTest {
     public void testIsTrueFailed() {
         var value = false;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isTrue());
+        assertThrows(GuardException.class, () -> Ensure.that(value).isTrue());
     }
 
     @Test
@@ -30,6 +30,6 @@ public class EnsureBooleanGuardTest {
     public void testIsFalseFailed() {
         var value = true;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isFalse());
+        assertThrows(GuardException.class, () -> Ensure.that(value).isFalse());
     }
 }
