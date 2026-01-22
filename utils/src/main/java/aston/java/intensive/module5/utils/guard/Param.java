@@ -10,4 +10,16 @@ public sealed class Param<T> permits StringParam, BooleanParam, CollectionParam 
     public T getValue() {
         return value;
     }
+
+    public Param<T> isNotNull()
+    {
+        return isNotNull(null);
+    }
+
+    public Param<T> isNotNull(String errorMessage)
+    {
+        Ensure.any.isNotNull(this.value, errorMessage);
+
+        return this;
+    }
 }
