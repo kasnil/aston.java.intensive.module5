@@ -5,18 +5,6 @@ public final class StringParam extends Param<String> {
         super(value);
     }
 
-    public StringParam isNotNull()
-    {
-        return isNotNull(null);
-    }
-
-    public StringParam isNotNull(String errorMessage)
-    {
-        Ensure.string.isNotNull(this.value, errorMessage);
-
-        return this;
-    }
-
     public StringParam isNotNullOrEmpty()
     {
         return isNotNullOrEmpty(null);
