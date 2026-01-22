@@ -8,10 +8,6 @@
   <component name="Kotlin2JsCompilerArguments">
     <option name="moduleKind" value="plain" />
   </component>
-  <component name="KotlinNotebookOptionsProvider">
-    <option name="jdkName" value="25 (2)" />
-    <option name="jvmTargetForSnippets" value="21" />
-  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>

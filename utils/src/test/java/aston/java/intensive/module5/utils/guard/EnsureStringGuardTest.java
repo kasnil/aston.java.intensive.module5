@@ -16,7 +16,7 @@ public class EnsureStringGuardTest {
     public void testIsNotNullFailed() {
         String value = null;
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNull());
+        assertThrows(GuardException.class, () -> Ensure.that(value).isNotNull());
     }
 
     @Test
@@ -30,7 +30,7 @@ public class EnsureStringGuardTest {
     public void testIsNotNullOrEmptyFailed() {
         String value = "";
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).isNotNullOrEmpty());
+        assertThrows(GuardException.class, () -> Ensure.that(value).isNotNullOrEmpty());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class EnsureStringGuardTest {
     public void testHasLengthFailed() {
         String value = "";
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasLength(3));
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasLength(3));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class EnsureStringGuardTest {
     public void testHasLengthBetweenFailed() {
         String value = "";
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasLengthBetween(5, 10));
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasLengthBetween(5, 10));
     }
 
     @Test
@@ -72,6 +72,6 @@ public class EnsureStringGuardTest {
     public void testMatchesFailed() {
         String value = "abc";
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).matches("\\d+"));
+        assertThrows(GuardException.class, () -> Ensure.that(value).matches("\\d+"));
     }
 }

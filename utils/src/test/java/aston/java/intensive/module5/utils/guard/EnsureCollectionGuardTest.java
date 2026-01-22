@@ -18,7 +18,7 @@ public class EnsureCollectionGuardTest {
     public void testArrayIsNotNullFailed() {
         String[] value = new String[]{};
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasItems());
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasItems());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class EnsureCollectionGuardTest {
     public void testListIsNotNullFailed() {
         List<String> value = new ArrayList<>();
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasItems());
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasItems());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class EnsureCollectionGuardTest {
     public void testSequencedCollectionIsNotNullFailed() {
         SequencedCollection<String> value = new ArrayList<>();
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.That(value).hasItems());
+        assertThrows(GuardException.class, () -> Ensure.That(value).hasItems());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class EnsureCollectionGuardTest {
     public void testMapIsNotNullFailed() {
         Map<String, String> value = Map.of();
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasItems());
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasItems());
     }
 
     public void testSetIsHasItems() {
@@ -75,6 +75,6 @@ public class EnsureCollectionGuardTest {
     public void testSetIsNotNullFailed() {
         Set<String> value = Set.of();
 
-        assertThrows(IllegalArgumentException.class, () -> Ensure.that(value).hasItems());
+        assertThrows(GuardException.class, () -> Ensure.that(value).hasItems());
     }
 }
