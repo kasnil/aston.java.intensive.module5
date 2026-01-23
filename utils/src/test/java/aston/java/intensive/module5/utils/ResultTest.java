@@ -14,8 +14,8 @@ public class ResultTest {
         assertTrue(value.isOk());
         assertDoesNotThrow(() -> value.orElseThrow());
         assertDoesNotThrow(() -> value.orElseThrow(NoSuchElementException::new));
-        assertEquals(value.orElse("12"), "");
-        assertEquals(value.orElseGet(() -> "12"), "");
+        assertEquals("", value.orElse("12"));
+        assertEquals("", value.orElseGet(() -> "12"));
     }
 
     @Test
@@ -25,8 +25,8 @@ public class ResultTest {
         assertTrue(value.isErr());
         assertThrows(NullPointerException.class, () -> value.orElseThrow());
         assertThrows(NoSuchElementException.class, () -> value.orElseThrow(NoSuchElementException::new));
-        assertEquals(value.orElse("12"), "12");
-        assertEquals(value.orElseGet(() -> "12"), "12");
+        assertEquals("12", value.orElse("12"));
+        assertEquals("12", value.orElseGet(() -> "12"));
     }
 
     @Test
@@ -36,6 +36,6 @@ public class ResultTest {
         assertTrue(ResultEmpty.ok().equals(empty));
 
         assertTrue(empty.isOk());
-        assertEquals(empty.hashCode(), 0);
+        assertEquals(0, empty.hashCode());
     }
 }

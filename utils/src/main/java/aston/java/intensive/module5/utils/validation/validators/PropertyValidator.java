@@ -7,5 +7,5 @@ public abstract class PropertyValidator<T> {
         this.name = name;
     }
 
-    abstract boolean isValid(T value);
+    abstract public boolean isValid(T value);
 }
