@@ -1,18 +1,25 @@
 package aston.java.intensive.module5.domain;
 
+import aston.java.intensive.module5.domain.dto.Email;
+import aston.java.intensive.module5.domain.dto.Password;
+import aston.java.intensive.module5.domain.dto.UserName;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.util.Objects;
 
 public final class User implements Comparable<User> {
     private final String name;
-    private final String password;
     private final String email;
+    private final String password;
 
-    private User(Builder builder) {
-        this.name = builder.name;
-        this.password = builder.password;
-        this.email = builder.email;
+    private User(
+            UserName name,
+            Email email,
+            Password password
+    ) {
+        this.name = name.value();
+        this.email = email.value();
+        this.password = password.value();
     }
 
     public String getName() { return name; }
@@ -20,42 +27,42 @@ public final class User implements Comparable<User> {
     public String getEmail() { return email; }
 
     public static class Builder {
-        private String name;
-        private String password;
-        private String email;
+        private UserName name;
+        private Email email;
+        private Password password;
 
         public Builder setName(String name) {
-            Ensure.that(name)
-                    .isNotNullOrEmpty("Имя не может быть пустым")
-                    .hasLengthBetween(2, 50, "Имя должно быть от 2 до 50 символов");
+            return setName(new UserName(name));
+        }
 
-            this.name = name.trim();
+        public Builder setName(UserName name) {
+            this.name = name;
             return this;
         }
 
         public Builder setPassword(String password) {
-            Ensure.that(password)
-                    .isNotNullOrEmpty("Пароль не может быть пустым")
-                    .hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
+            return setPassword(new Password(password));
+        }
 
+        public Builder setPassword(Password password) {
             this.password = password;
             return this;
         }
 
         public Builder setEmail(String email) {
-            Ensure.that(email)
-                    .isNotNullOrEmpty("email не может быть пустым")
-                    .matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", "Неверный формат email");
+            return setEmail(new Email(email));
+        }
 
-            this.email = email.trim().toLowerCase();
+        public Builder setEmail(Email email) {
+            this.email = email;
             return this;
         }
 
         public User build() {
             Ensure.that(name).isNotNull();
-            Ensure.that(password).isNotNull();
             Ensure.that(email).isNotNull();
-            return new User(this);
+            Ensure.that(password).isNotNull();
+            return new User(name, email, password);
         }
     }
 
