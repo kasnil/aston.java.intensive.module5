@@ -32,7 +32,7 @@ public final class User implements Comparable<User> {
         private Password password;
 
         public Builder setName(String name) {
-            return setName(new UserName(name));
+            return setName(UserName.of(name).orElseThrow());
         }
 
         public Builder setName(UserName name) {
@@ -41,7 +41,7 @@ public final class User implements Comparable<User> {
         }
 
         public Builder setPassword(String password) {
-            return setPassword(new Password(password));
+            return setPassword(Password.of(password).orElseThrow());
         }
 
         public Builder setPassword(Password password) {
@@ -50,7 +50,7 @@ public final class User implements Comparable<User> {
         }
 
         public Builder setEmail(String email) {
-            return setEmail(new Email(email));
+            return setEmail(Email.of(email).orElseThrow());
         }
 
         public Builder setEmail(Email email) {
