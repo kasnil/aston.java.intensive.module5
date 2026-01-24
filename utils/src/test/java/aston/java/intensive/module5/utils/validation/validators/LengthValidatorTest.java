@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LengthValidatorTest {
-    private final PropertyValidator validator = new LengthValidator(5);
+    private final PropertyValidator validator = new StringLengthValidator(5);
 
     @Test
     public void testIsValid() {
-        assertTrue(this.validator.isValid("Aston"));
+        assertTrue(this.validator.validate("Aston").isEmpty());
     }
 
     @Test
     public void testIsValidFailed() {
-        assertFalse(this.validator.isValid(""));
-        assertFalse(this.validator.isValid(null));
-        assertFalse(this.validator.isValid("AAston"));
+        assertTrue(this.validator.validate("").isPresent());
+        assertTrue(this.validator.validate(null).isPresent());
+        assertTrue(this.validator.validate("AAston").isPresent());
     }
 }
