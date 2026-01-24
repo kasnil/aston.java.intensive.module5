@@ -4,6 +4,7 @@ package buildsrc.convention
 
 plugins {
     id("buildsrc.convention.common-jvm")
+    id("buildsrc.convention.testing-jvm")
 
     // Apply the Application plugin to add support for building an executable JVM application.
     application

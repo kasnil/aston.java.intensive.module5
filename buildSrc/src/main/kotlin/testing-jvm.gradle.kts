@@ -4,7 +4,10 @@ package buildsrc.convention
 
 plugins {
     id("buildsrc.convention.common-jvm")
-    id("buildsrc.convention.testing-jvm")
+}
 
-    `java-library`
+dependencies {
+    testImplementation(platform(Libraries.jupiterBomTest))
+    testImplementation(Libraries.jupiterTest)
+    testRuntimeOnly(Libraries.jupiterPlatformLauncherTest)
 }
