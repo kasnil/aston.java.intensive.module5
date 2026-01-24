@@ -12,7 +12,7 @@ import java.util.function.Function;
 public abstract class Validator<T> {
     private final List<RuleBuilder> rules = new ArrayList<>();
 
-    protected StringRuleBuilder addStringRule(Function<T, String> field) {
+    protected StringRuleBuilder addRule(Function<T, String> field) {
         var ruleBuilder = new StringRuleBuilder<>(field);
         rules.add(ruleBuilder);
         return ruleBuilder;

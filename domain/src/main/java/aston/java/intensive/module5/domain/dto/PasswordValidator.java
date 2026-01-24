@@ -6,6 +6,6 @@ import aston.java.intensive.module5.utils.validation.Validator;
 @Validation
 public final class PasswordValidator extends Validator<Password> {
     public PasswordValidator() {
-        addStringRule(Password::value).notNull("Пароль не может быть пустым").hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
+        addRule(Password::value).notNull("Пароль не может быть пустым").hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
     }
 }
