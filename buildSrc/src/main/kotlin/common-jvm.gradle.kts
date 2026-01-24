@@ -14,12 +14,6 @@ java {
     targetCompatibility = Versions.JVM
 }
 
-dependencies {
-    testImplementation(platform(Libraries.jupiterBomTest))
-    testImplementation(Libraries.jupiterTest)
-    testRuntimeOnly(Libraries.jupiterPlatformLauncherTest)
-}
-
 tasks.test {
     useJUnitPlatform()
 }
