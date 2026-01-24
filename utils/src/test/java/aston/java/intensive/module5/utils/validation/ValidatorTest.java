@@ -44,9 +44,9 @@ public class ValidatorTest {
 @Validation
 final class UserValidator extends Validator<User> {
     public UserValidator() {
-        addStringRule(User::getName).notNull().hasLengthBetween(2, 50);
-        addStringRule(User::getEmail).notNull().email();
-        addStringRule(User::getPassword).notNull().hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
+        addRule(User::getName).notNull().hasLengthBetween(2, 50);
+        addRule(User::getEmail).notNull().email();
+        addRule(User::getPassword).notNull().hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
     }
 }
 

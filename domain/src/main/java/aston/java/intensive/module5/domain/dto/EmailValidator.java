@@ -6,6 +6,6 @@ import aston.java.intensive.module5.utils.validation.Validator;
 @Validation
 public final class EmailValidator extends Validator<Email> {
     public EmailValidator() {
-        addStringRule(Email::value).notNull("email не может быть пустым").email("Неверный формат email");
+        addRule(Email::value).notNull("email не может быть пустым").email("Неверный формат email");
     }
 }
