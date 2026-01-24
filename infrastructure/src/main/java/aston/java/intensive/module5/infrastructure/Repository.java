@@ -1,3 +1,7 @@
 package aston.java.intensive.module5.infrastructure;
 
-public class Repository {}
+import java.util.List;
+
+public interface Repository<T> {
+    List<T> all();
+}
