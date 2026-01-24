@@ -11,12 +11,12 @@ public class EmailValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = { "testperson@gmail.com", "TestPerson@gmail.com", "test.person@gmail.com" })
     public void testIsValid(String email) {
-        assertTrue(this.validator.isValid(email));
+        assertTrue(this.validator.validate(email).isEmpty());
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "", "$A12345@example.com", "!#$%&'*+-/=?^_`|~@someDomain.com" })
     public void testIsValidFailed(String email) {
-        assertFalse(this.validator.isValid(email));
+        assertTrue(this.validator.validate(email).isPresent());
     }
 }

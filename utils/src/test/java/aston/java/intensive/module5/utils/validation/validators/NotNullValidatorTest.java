@@ -12,11 +12,11 @@ public class NotNullValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = { "", "\r\n", "Aston" })
     public void testIsValid(String value) {
-        assertTrue(this.validator.isValid(value));
+        assertTrue(this.validator.validate(value).isEmpty());
     }
 
     @Test
     public void testIsValidFailed() {
-        assertFalse(this.validator.isValid(null));
+        assertTrue(this.validator.validate(null).isPresent());
     }
 }

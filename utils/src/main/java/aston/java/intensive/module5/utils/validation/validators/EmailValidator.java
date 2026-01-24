@@ -1,17 +1,33 @@
 package aston.java.intensive.module5.utils.validation.validators;
 
-public final class EmailValidator extends PropertyValidator<String> {
-    public static final String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+import aston.java.intensive.module5.utils.validation.Validation;
+import aston.java.intensive.module5.utils.validation.ValidationFailure;
+
+import java.util.Optional;
+import java.util.regex.Pattern;
+
+@Validation
+public final class EmailValidator implements PropertyValidator<String> {
+    public static final Pattern emailPattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    private final String errorMessage;
+    private final StringMatchesValidator matchesValidator;
+
+    public EmailValidator(String errorMessage) {
+        this.errorMessage = errorMessage;
+        this.matchesValidator = new StringMatchesValidator(emailPattern, errorMessage);
+    }
 
     public EmailValidator() {
-        super(EmailValidator.class.getSimpleName());
+        this(null);
     }
 
     @Override
-    public boolean isValid(String value) {
-        if (value == null || value.isBlank()) {
-            return false;
+    public Optional<ValidationFailure> validate(String value) {
+        var matchesValidateResult = matchesValidator.validate(value);
+        if (matchesValidateResult.isPresent()) {
+            return matchesValidateResult;
         }
-        return value.matches(emailRegex);
+        return Optional.empty();
     }
 }
