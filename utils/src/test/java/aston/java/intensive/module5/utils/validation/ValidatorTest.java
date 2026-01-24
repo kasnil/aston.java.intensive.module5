@@ -44,24 +44,10 @@ public class ValidatorTest {
 @Validation
 final class UserValidator extends Validator<User> {
     public UserValidator() {
-        addRule(User::getName).notNull().hasLengthBetween(2, 50);
-        addRule(User::getEmail).notNull().email();
-        addRule(User::getPassword).notNull().hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
+        addRule(User::name).notNull().hasLengthBetween(2, 50);
+        addRule(User::email).notNull().email();
+        addRule(User::password).notNull().hasLengthBetween(6, 255, "Пароль должен содержать минимум 6 символов");
     }
 }
 
-class User {
-    private final String name;
-    private final String email;
-    private final String password;
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getName() { return name; }
-    public String getPassword() { return password; }
-    public String getEmail() { return email; }
-}
+record User(String name, String email, String password) { }
