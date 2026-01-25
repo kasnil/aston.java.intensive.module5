@@ -8,16 +8,13 @@ import java.util.function.Function;
 
 public class Application {
     private final List<Function<RequestDelegate, RequestDelegate>> layers;
-    private final List<Class<?>> menus;
 
     public Application(
-            List<Function<RequestDelegate, RequestDelegate>> layers,
-            List<Class<?>> menus
+            List<Function<RequestDelegate, RequestDelegate>> layers
     ) {
         Ensure.that(layers).isNotNull();
 
         this.layers = layers;
-        this.menus = menus;
     }
 
     public void run(Resource start) {
@@ -32,7 +29,7 @@ public class Application {
             if (response == null || response.resource().isExit()) {
                 break;
             }
-            request = new Request(request.resource(), request.param());
+            request = new Request(response.resource(), response.param());
         }
     }
 

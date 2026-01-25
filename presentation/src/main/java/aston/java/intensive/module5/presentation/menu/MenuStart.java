@@ -1,5 +1,6 @@
 package aston.java.intensive.module5.presentation.menu;
 
+import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
@@ -11,8 +12,8 @@ import aston.java.intensive.module5.utils.menu.models.Param;
 public final class MenuStart {
     private final IOService console;
 
-    public MenuStart(IOService console) {
-        this.console = console;
+    public MenuStart() {
+        this.console = new ConsoleService();
     }
 
     @Action

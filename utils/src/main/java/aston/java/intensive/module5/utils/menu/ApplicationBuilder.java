@@ -3,6 +3,7 @@ package aston.java.intensive.module5.utils.menu;
 import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.ReflectUtils;
+import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.guard.Ensure;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -17,12 +18,12 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ApplicationBuilder {
+    private final ServiceLocator serviceLocator = ServiceLocator.getInstance();
     private final List<Function<RequestDelegate, RequestDelegate>> layers = ListsUtils.newArrayList();
-    private final List<Class<?>> menus = ListsUtils.newArrayList();
 
     public <T> ApplicationBuilder addMenu(Class<T> menuClass) {
         Ensure.that(menuClass).hasAnnotation(Menu.class);
-        this.menus.add(menuClass);
+        this.serviceLocator.add(menuClass);
         return this;
     }
 
@@ -60,6 +61,6 @@ public class ApplicationBuilder {
 
     public Application build() {
         addLayer(ManuHandler.class);
-        return new Application(layers, menus);
+        return new Application(layers);
     }
 }
