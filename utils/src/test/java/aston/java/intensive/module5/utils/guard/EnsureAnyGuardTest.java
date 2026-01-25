@@ -51,6 +51,16 @@ public class EnsureAnyGuardTest {
 
         assertThrows(GuardException.class, () -> Ensure.that(value).isImplementsInterface(SomeInterface.class));
     }
+
+    @Test
+    public void testIsInterface() {
+        assertDoesNotThrow(() -> Ensure.that(SomeInterface.class).isInterface());
+    }
+
+    @Test
+    public void testIsInterfaceFailed() {
+        assertThrows(GuardException.class, () -> Ensure.that(WithoutSSomeInterface.class).isInterface());
+    }
 }
 
 @SomeAnnotation

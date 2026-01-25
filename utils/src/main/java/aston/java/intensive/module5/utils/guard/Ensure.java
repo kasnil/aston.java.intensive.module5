@@ -16,9 +16,9 @@ public final class Ensure {
         return new Param<>(value);
     }
 
-    public static <T extends Class<?>> Param<T> that(T theClass)
+    public static <T extends Class<?>> ClassParam<T> that(T theClass)
     {
-        return new Param<>(theClass);
+        return new ClassParam<>(theClass);
     }
 
     public static StringParam that(String value)

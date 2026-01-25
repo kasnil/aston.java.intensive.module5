@@ -2,7 +2,7 @@ package aston.java.intensive.module5.utils.guard;
 
 import java.lang.annotation.Annotation;
 
-public sealed class Param<T> permits StringParam, BooleanParam, IntegerParam, CollectionParam {
+public sealed class Param<T> permits StringParam, BooleanParam, IntegerParam, CollectionParam, ClassParam {
     protected final T value;
 
     public Param(T value) {
@@ -39,13 +39,13 @@ public sealed class Param<T> permits StringParam, BooleanParam, IntegerParam, Co
         return this;
     }
 
-    public <TAnnotation extends Annotation> Param<T> isImplementsInterface(
+    public Param<T> isImplementsInterface(
             Class<?> interfaceClass)
     {
         return isImplementsInterface(interfaceClass, null);
     }
 
-    public <TAnnotation extends Annotation> Param<T> isImplementsInterface(
+    public Param<T> isImplementsInterface(
             Class<?> interfaceClass, String errorMessage)
     {
         Ensure.any.isImplementsInterface(this.value, interfaceClass, errorMessage);

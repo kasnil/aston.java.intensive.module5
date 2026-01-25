@@ -1,5 +1,7 @@
 package aston.java.intensive.module5.utils;
 
+import aston.java.intensive.module5.utils.guard.Ensure;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,6 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class ReflectUtils {
+    public static <T extends Annotation> Optional<T> getAnnotation(Method method, Class<T> theAnnotation) {
+        T aAnnotation = method.getAnnotation(theAnnotation);
+
+        return aAnnotation == null ? Optional.empty() : Optional.of(aAnnotation);
+    }
+
     public static <T extends Annotation> Optional<T> getAnnotation(Class<?> theClass, Class<T> theAnnotation) {
         T aAnnotation = null;
 
@@ -36,11 +44,15 @@ public class ReflectUtils {
     }
 
     public static boolean isImplementsInterface(Class<?> theClass, Class theAnnotation) {
-        Class[] implementedInterfaces = theClass.getInterfaces();
+        Class[] implementedInterfaces = getInterfaces(theClass);
         for (Class implementedInterface : implementedInterfaces) {
             if (implementedInterface.equals(theAnnotation)) return true;
         }
         return false;
+    }
+
+    public static Class[] getInterfaces(Class<?> theClass) {
+        return theClass.getInterfaces();
     }
 
     public static Object newInstance(Class type) {
@@ -85,12 +97,19 @@ public class ReflectUtils {
         }
     }
 
-    public static Method getInterfaceMethod(Class<?> interfaceClass) {
-        for (Method m : interfaceClass.getMethods()) {
-            if (Modifier.isAbstract(m.getModifiers())) {
-                return m;
+    public static Optional<Method> getInterfaceMethod(Class<?> targetClass, Class<?> interfaceClass) {
+        Ensure.that(interfaceClass).isInterface();
+
+        Class[] implementedInterfaces = getInterfaces(targetClass);
+        for (Class implementedInterface : implementedInterfaces) {
+            if (implementedInterface.equals(interfaceClass)) {
+                for (Method m : implementedInterface.getMethods()) {
+                    if (Modifier.isAbstract(m.getModifiers())) {
+                        return Optional.of(m);
+                    }
+                }
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
