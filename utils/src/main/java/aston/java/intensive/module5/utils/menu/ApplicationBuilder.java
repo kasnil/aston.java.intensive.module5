@@ -4,6 +4,7 @@ import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.guard.Ensure;
+import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.Request;
 import aston.java.intensive.module5.utils.menu.models.RequestDelegate;
@@ -29,7 +30,7 @@ public class ApplicationBuilder {
         Ensure.that(handlerClass).isImplementsInterface(Layer.class);
         addLayer(next -> {
             T instance = (T)ReflectUtils.newInstance(handlerClass);
-            var method = ReflectUtils.getInterfaceMethod(handlerClass);
+            var method = ReflectUtils.getInterfaceMethod(handlerClass, Layer.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' handler not supported.", handlerClass.getName())));
             var factory = build(method, next);
             return request -> factory.apply(instance, request);
         });
@@ -58,6 +59,7 @@ public class ApplicationBuilder {
     }
 
     public Application build() {
+        addLayer(ManuHandler.class);
         return new Application(layers, menus);
     }
 }

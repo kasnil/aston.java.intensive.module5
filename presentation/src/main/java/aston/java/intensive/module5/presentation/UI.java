@@ -1,5 +1,8 @@
 package aston.java.intensive.module5.presentation;
 
+import aston.java.intensive.module5.utils.menu.ApplicationBuilder;
+import aston.java.intensive.module5.utils.menu.models.Resource;
+
 public class UI {
     public void run() {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
@@ -11,5 +14,8 @@ public class UI {
             // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
             IO.println("i = " + i);
         }
+
+        var applicationBuilder = new ApplicationBuilder();
+        applicationBuilder.build().run(Resource.notFound());
     }
 }

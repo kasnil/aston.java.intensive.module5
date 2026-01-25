@@ -1,7 +1,7 @@
 package aston.java.intensive.module5.utils.menu;
 
-import aston.java.intensive.module5.utils.menu.models.RequestDelegate;
-import aston.java.intensive.module5.utils.menu.models.Resource;
+import aston.java.intensive.module5.utils.guard.Ensure;
+import aston.java.intensive.module5.utils.menu.models.*;
 
 import java.util.List;
 import java.util.function.Function;
@@ -14,17 +14,36 @@ public class Application {
             List<Function<RequestDelegate, RequestDelegate>> layers,
             List<Class<?>> menus
     ) {
+        Ensure.that(layers).isNotNull();
+
         this.layers = layers;
         this.menus = menus;
     }
 
     public void run(Resource start) {
-        while (true) {
+        var requestDelegate = buildDelegate();
+        run(requestDelegate, start);
+    }
 
+    private void run(RequestDelegate requestDelegate, Resource start) {
+        Request request = new Request(start);
+        while (true) {
+            Response response = requestDelegate.invoke(request);
+            if (response == null || response.resource().isExit()) {
+                break;
+            }
+            request = new Request(request.resource(), request.param());
         }
     }
 
-    private void run(RequestDelegate request) {
+    private RequestDelegate buildDelegate()
+    {
+        RequestDelegate layer = request -> new MenuNotFound().notFound(Param.empty());
+        for (var c = this.layers.size() - 1; c >= 0; c--)
+        {
+            layer = this.layers.get(c).apply(layer);
+        }
 
+        return layer;
     }
 }

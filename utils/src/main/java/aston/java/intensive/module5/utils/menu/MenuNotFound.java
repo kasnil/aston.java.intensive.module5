@@ -6,9 +6,10 @@ import aston.java.intensive.module5.utils.menu.models.Param;
 import aston.java.intensive.module5.utils.menu.models.Response;
 
 @Menu
-public final class MenuDefault {
+public final class MenuNotFound {
     @Action
-    public Response exit(Param param) {
+    public Response notFound(Param param) {
+        System.out.println("Exit");
         return Response.exit();
     }
 }

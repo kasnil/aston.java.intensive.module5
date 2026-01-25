@@ -17,6 +17,14 @@ public record Resource(ResourceMenu menu, ResourceAction action) {
         return this.menu.isExit();
     }
 
+    public boolean isNotFound() {
+        return this.menu.isNotFound();
+    }
+
+    public static Resource notFound() {
+        return new Resource(ResourceMenu.notFound());
+    }
+
     public static Resource exit() {
         return new Resource(ResourceMenu.exit());
     }

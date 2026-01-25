@@ -40,4 +40,28 @@ public final class AnyGuard {
 
         return value;
     }
+
+    public <T extends Class<?>> T isImplementsInterface(T value, Class<?> interfaceClass, String errorMessage)
+    {
+        if (!ReflectUtils.isImplementsInterface(value, interfaceClass)) {
+            String message = errorMessage == null
+                    ? String.format(ExceptionMessages.ANY_IS_NOT_IMPLEMENTS_INTERFACE, value.getName(), interfaceClass.getName())
+                    : errorMessage;
+            throw Ensure.exceptionFactory.argumentException(message);
+        }
+
+        return value;
+    }
+
+    public <T extends Class<?>> T isInterface(T value, String errorMessage)
+    {
+        if (!value.isInterface()) {
+            String message = errorMessage == null
+                    ? String.format(ExceptionMessages.ANY_IS_NOT_INTERFACE, value.getName())
+                    : errorMessage;
+            throw Ensure.exceptionFactory.argumentException(message);
+        }
+
+        return value;
+    }
 }
