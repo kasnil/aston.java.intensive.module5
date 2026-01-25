@@ -20,6 +20,10 @@ public final class ArrayUtils {
         return (T[]) Array.newInstance(type, length);
     }
 
+    public static <T extends Object> T[] newArray(T... elements) {
+        return elements;
+    }
+
     private static <T extends Object> T[] toArray(Iterable<? extends T> iterable, T[] array) {
         Collection<? extends T> collection = castOrCopyToCollection(iterable);
         return collection.toArray(array);

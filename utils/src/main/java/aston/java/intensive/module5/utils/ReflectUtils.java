@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,5 +83,14 @@ public class ReflectUtils {
         } catch (NoSuchMethodException e) {
             throw new ReflectionException(e);
         }
+    }
+
+    public static Method getInterfaceMethod(Class<?> interfaceClass) {
+        for (Method m : interfaceClass.getMethods()) {
+            if (Modifier.isAbstract(m.getModifiers())) {
+                return m;
+            }
+        }
+        return null;
     }
 }
