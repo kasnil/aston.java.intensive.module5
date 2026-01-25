@@ -9,19 +9,26 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ApplicationBuilder {
-    private final List<Function<RequestDelegate, RequestDelegate>> handlers = ListsUtils.newArrayList();
+    private final List<Function<RequestDelegate, RequestDelegate>> layers = ListsUtils.newArrayList();
+    private final List<Class<?>> menus = ListsUtils.newArrayList();
 
-    public <T> ApplicationBuilder addMenu(Class<T> handlerClass) {
-        Ensure.that(handlerClass).hasAnnotation(Menu.class);
+    public <T> ApplicationBuilder addMenu(Class<T> menuClass) {
+        Ensure.that(menuClass).hasAnnotation(Menu.class);
+        this.menus.add(menuClass);
         return this;
     }
 
-    private <T> ApplicationBuilder addMenu(Function<RequestDelegate, RequestDelegate> handler) {
-        handlers.add(handler);
+    public <T extends Layer> ApplicationBuilder addLayer(Class<T> handlerClass) {
+        Ensure.that(handlerClass).isImplementsInterface(Layer.class);
+        return this;
+    }
+
+    private <T> ApplicationBuilder addLayer(Function<RequestDelegate, RequestDelegate> layer) {
+        layers.add(layer);
         return this;
     }
 
     public Application build() {
-        return new Application();
+        return new Application(layers, menus);
     }
 }

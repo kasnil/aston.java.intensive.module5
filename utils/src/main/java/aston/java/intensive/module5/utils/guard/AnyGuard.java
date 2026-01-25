@@ -27,4 +27,17 @@ public final class AnyGuard {
 
         return value;
     }
+
+    public <T> T isImplementsInterface(T value, Class<?> interfaceClass, String errorMessage)
+    {
+        var classOfValue = value.getClass();
+        if (!ReflectUtils.isImplementsInterface(value.getClass(), interfaceClass)) {
+            String message = errorMessage == null
+                    ? String.format(ExceptionMessages.ANY_IS_NOT_IMPLEMENTS_INTERFACE, classOfValue.getName(), interfaceClass.getName())
+                    : errorMessage;
+            throw Ensure.exceptionFactory.argumentException(message);
+        }
+
+        return value;
+    }
 }
