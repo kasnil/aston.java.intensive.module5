@@ -11,3 +11,7 @@ dependencies {
     testImplementation(Libraries.jupiterTest)
     testRuntimeOnly(Libraries.jupiterPlatformLauncherTest)
 }
+
+tasks.test {
+    useJUnitPlatform()
+}

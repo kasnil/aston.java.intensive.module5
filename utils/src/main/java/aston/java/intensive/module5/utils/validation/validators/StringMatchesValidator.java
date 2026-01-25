@@ -1,7 +1,7 @@
 package aston.java.intensive.module5.utils.validation.validators;
 
 import aston.java.intensive.module5.utils.validation.DefaultErrorMessages;
-import aston.java.intensive.module5.utils.validation.Validation;
+import aston.java.intensive.module5.utils.validation.annotation.Validation;
 import aston.java.intensive.module5.utils.validation.ValidationFailure;
 
 import java.util.Optional;
