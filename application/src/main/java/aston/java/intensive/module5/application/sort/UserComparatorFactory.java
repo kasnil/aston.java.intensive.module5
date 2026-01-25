@@ -32,9 +32,9 @@ public final class UserComparatorFactory {
             }
         }
 
-        Comparator<User> comparator = comparatorByField(orderFields.get(0));
+        Comparator<User> comparator = comparatorByField(fullOrder.get(0));
         for (int i = 1; i < orderFields.size(); i++) {
-            comparator = comparator.thenComparing(comparatorByField(orderFields.get(i)));
+            comparator = comparator.thenComparing(comparatorByField(fullOrder.get(i)));
         }
 
         return comparator;
