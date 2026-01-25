@@ -1,16 +1,16 @@
 package aston.java.intensive.module5.utils.validation;
 
+import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.guard.Ensure;
 import aston.java.intensive.module5.utils.validation.rules.RuleBuilder;
 import aston.java.intensive.module5.utils.validation.rules.StringRuleBuilder;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 
 public abstract class Validator<T> {
-    private final List<RuleBuilder> rules = new ArrayList<>();
+    private final List<RuleBuilder> rules = ListsUtils.newArrayList();
 
     protected StringRuleBuilder addRule(Function<T, String> field) {
         var ruleBuilder = new StringRuleBuilder<>(field);

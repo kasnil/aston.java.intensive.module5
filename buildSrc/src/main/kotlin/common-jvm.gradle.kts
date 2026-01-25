@@ -13,7 +13,3 @@ java {
     sourceCompatibility = Versions.JVM
     targetCompatibility = Versions.JVM
 }
-
-tasks.test {
-    useJUnitPlatform()
-}

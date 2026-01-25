@@ -7,12 +7,18 @@ public final class Ensure {
 
     public static final AnyGuard any = new AnyGuard();
     public static final StringGuard string = new StringGuard();
-    public static final BoolGuard bool = new BoolGuard();
+    public static final BooleanGuard bool = new BooleanGuard();
+    public static final IntegerGuard integer = new IntegerGuard();
     public static final CollectionGuard collection = new CollectionGuard();
 
     public static <T> Param<T> that(T value)
     {
-        return new Param<T>(value);
+        return new Param<>(value);
+    }
+
+    public static <T extends Class<?>> Param<T> that(T theClass)
+    {
+        return new Param<>(theClass);
     }
 
     public static StringParam that(String value)
@@ -23,6 +29,11 @@ public final class Ensure {
     public static BooleanParam that(Boolean value)
     {
         return new BooleanParam(value);
+    }
+
+    public static IntegerParam that(Integer value)
+    {
+        return new IntegerParam(value);
     }
 
     public static <T> CollectionParam<T[]> that(T[] value)

@@ -1,6 +1,6 @@
 package aston.java.intensive.module5.utils.guard;
 
-public final class BoolGuard {
+public final class BooleanGuard {
     public Boolean isTrue(Boolean value, String errorMessage)
     {
         Ensure.any.isNotNull(value, errorMessage);

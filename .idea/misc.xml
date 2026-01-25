@@ -5,9 +5,6 @@
     <groovy codeStyle="LEGACY" />
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="Kotlin2JsCompilerArguments">
-    <option name="moduleKind" value="plain" />
-  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -69,7 +66,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="graalvm-jdk-25 (2)" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="graalvm-jdk-25" project-jdk-type="JavaSDK" />
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="1175000" />
   </component>

@@ -1,5 +1,6 @@
 package aston.java.intensive.module5.utils.guard;
 
+import aston.java.intensive.module5.utils.ListsUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -23,28 +24,28 @@ public class EnsureCollectionGuardTest {
 
     @Test
     public void testListIsHasItems() {
-        List<String> value = new ArrayList<>(Arrays.asList(""));
+        List<String> value = ListsUtils.newArrayList("");
 
         assertDoesNotThrow(() -> Ensure.that(value).hasItems());
     }
 
     @Test
     public void testListIsNotNullFailed() {
-        List<String> value = new ArrayList<>();
+        List<String> value = ListsUtils.newArrayList();
 
         assertThrows(GuardException.class, () -> Ensure.that(value).hasItems());
     }
 
     @Test
     public void testSequencedCollectionIsHasItems() {
-        SequencedCollection<String> value = new ArrayList<>(Arrays.asList(""));
+        SequencedCollection<String> value = ListsUtils.newArrayList("");
 
         assertDoesNotThrow(() -> Ensure.That(value).hasItems());
     }
 
     @Test
     public void testSequencedCollectionIsNotNullFailed() {
-        SequencedCollection<String> value = new ArrayList<>();
+        SequencedCollection<String> value = ListsUtils.newArrayList();
 
         assertThrows(GuardException.class, () -> Ensure.That(value).hasItems());
     }

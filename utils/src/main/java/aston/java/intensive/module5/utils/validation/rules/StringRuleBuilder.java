@@ -1,14 +1,14 @@
 package aston.java.intensive.module5.utils.validation.rules;
 
+import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.validation.validators.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class StringRuleBuilder<T> implements RuleBuilder<T, String> {
     private final Function<T, String> field;
-    private final List<PropertyValidator<String>> validators = new ArrayList<>();
+    private final List<PropertyValidator<String>> validators = ListsUtils.newArrayList();
 
     public StringRuleBuilder(Function<T, String> field) {
         this.field = field;

@@ -1,6 +1,7 @@
 package aston.java.intensive.module5.utils.validation;
 
 import aston.java.intensive.module5.utils.guard.GuardException;
+import aston.java.intensive.module5.utils.validation.annotation.Validation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
