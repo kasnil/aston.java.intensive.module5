@@ -1,5 +1,8 @@
 package aston.java.intensive.module5.presentation;
 
+import aston.java.intensive.module5.presentation.menu.MenuGreet;
+import aston.java.intensive.module5.presentation.menu.MenuNotFound;
+import aston.java.intensive.module5.presentation.menu.MenuStart;
 import aston.java.intensive.module5.utils.menu.ApplicationBuilder;
 import aston.java.intensive.module5.utils.menu.models.Resource;
 
@@ -16,6 +19,10 @@ public class UI {
         }
 
         var applicationBuilder = new ApplicationBuilder();
-        applicationBuilder.build().run(Resource.notFound());
+        applicationBuilder
+                .addMenu(MenuGreet.class)
+                .addMenu(MenuNotFound.class)
+                .addMenu(MenuStart.class);
+        applicationBuilder.build().run(new Resource("index"));
     }
 }

@@ -1,5 +1,6 @@
 package aston.java.intensive.module5.presentation.menu;
 
+import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -11,8 +12,8 @@ import aston.java.intensive.module5.utils.menu.models.Response;
 public final class MenuNotFound {
     private final IOService console;
 
-    public MenuNotFound(IOService console) {
-        this.console = console;
+    public MenuNotFound() {
+        this.console = new ConsoleService();
     }
 
     @Action

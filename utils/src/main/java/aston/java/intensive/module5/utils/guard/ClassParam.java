@@ -1,8 +1,24 @@
 package aston.java.intensive.module5.utils.guard;
 
+import java.lang.annotation.Annotation;
+
 public final class ClassParam<T extends Class<?>> extends Param<T> {
     public ClassParam(T value) {
         super(value);
+    }
+
+    public <TAnnotation extends Annotation> Param<T> hasAnnotation(
+            Class<TAnnotation> annotationClass)
+    {
+        return hasAnnotation(annotationClass, null);
+    }
+
+    public <TAnnotation extends Annotation> Param<T> hasAnnotation(
+            Class<TAnnotation> annotationClass, String errorMessage)
+    {
+        Ensure.any.hasAnnotation(this.value, annotationClass, errorMessage);
+
+        return this;
     }
 
     public ClassParam<T> isImplementsInterface(
