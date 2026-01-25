@@ -1,3 +1,6 @@
 package aston.java.intensive.module5.utils.menu.models;
 
-public record RequestDelegate(Request request) { }
+@FunctionalInterface
+public interface RequestDelegate{
+    Response invoke(Request request);
+}
