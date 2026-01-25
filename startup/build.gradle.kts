@@ -12,3 +12,8 @@ application {
     mainClass = "aston.java.intensive.module5.Main"
 }
 
+tasks.withType<JavaExec>().configureEach {
+    jvmArgs(
+        "-XX:+UseCompactObjectHeaders",
+    )
+}

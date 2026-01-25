@@ -13,7 +13,7 @@ public class PrinterTest {
     public void testMessage() {
         var message = "message";
         var testPrinter = new Printer(message);
-        assertEquals(testPrinter.getMessage(), message);
+        assertEquals(message, testPrinter.getMessage());
     }
 
     @Test
