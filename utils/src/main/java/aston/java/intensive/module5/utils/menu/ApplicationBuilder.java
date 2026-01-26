@@ -5,7 +5,6 @@ import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.guard.Ensure;
-import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.Request;
 import aston.java.intensive.module5.utils.menu.models.RequestDelegate;
@@ -23,7 +22,7 @@ public class ApplicationBuilder {
 
     public <T> ApplicationBuilder addMenu(Class<T> menuClass) {
         Ensure.that(menuClass).hasAnnotation(Menu.class);
-        this.serviceLocator.add(menuClass);
+        this.serviceLocator.addSingleton(menuClass);
         return this;
     }
 
