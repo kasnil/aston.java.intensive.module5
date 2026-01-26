@@ -9,7 +9,6 @@ import aston.java.intensive.module5.utils.menu.models.Response;
 public final class MenuNotFound {
     @Action
     public Response notFound(Param param) {
-        System.out.println("Exit");
         return Response.exit();
     }
 }
