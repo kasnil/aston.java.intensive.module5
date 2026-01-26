@@ -11,4 +11,8 @@ public final class StringUtils {
 
         return SLUGIFY_REGEX.matcher(str).replaceAll("");
     }
+
+    public static String nullToEmpty(String str) {
+        return str == null ? "" : str;
+    }
 }
