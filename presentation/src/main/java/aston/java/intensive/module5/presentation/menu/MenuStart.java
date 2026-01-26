@@ -36,7 +36,7 @@ public final class MenuStart {
 
     @Action("not-found")
     public Response notFound(Param param) {
-        console.output("Not found");
+        console.output("Not found item menu. Redirect to main menu");
 
         return new Response(new Resource("index"));
     }

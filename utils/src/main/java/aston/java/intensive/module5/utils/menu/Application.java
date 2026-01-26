@@ -25,11 +25,15 @@ public class Application {
     private void run(RequestDelegate requestDelegate, Resource start) {
         Request request = new Request(start);
         while (true) {
-            Response response = requestDelegate.invoke(request);
-            if (response == null || response.resource().isExit()) {
-                break;
+            try {
+                Response response = requestDelegate.invoke(request);
+                if (response == null || response.resource().isExit()) {
+                    break;
+                }
+                request = new Request(response.resource(), response.param());
+            } catch (Exception e) {
+                request = new Request(start);
             }
-            request = new Request(response.resource(), response.param());
         }
     }
 

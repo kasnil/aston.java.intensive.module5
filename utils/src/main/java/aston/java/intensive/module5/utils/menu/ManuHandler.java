@@ -11,6 +11,7 @@ import aston.java.intensive.module5.utils.menu.models.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Optional;
 
 public class ManuHandler implements Layer {
     @Override
@@ -28,24 +29,7 @@ public class ManuHandler implements Layer {
                 continue;
             }
             if (routeMenu.equals(request.resource().menu().value())) {
-                var menu = ReflectUtils.newInstance(menuClass);
-                var methods = ReflectUtils.getAnnotatedMethods(menu.getClass(), Action.class);
-                for (Method method : methods) {
-                    var annotation = ReflectUtils.getAnnotation(method, Action.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' method not supported.", method.getName())));
-                    if (annotation.value().equals(ResourceAction.DEFAULT) || annotation.value().equals(request.resource().action().value())) {
-                        Object response = null;
-                        try {
-                            response = method.invoke(menu, ArrayUtils.newArray(request.param()));
-                            if (response instanceof Response) {
-                                return (Response)response;
-                            }
-                        } catch (IllegalAccessException e) {
-                            throw new NotSupportedException(e);
-                        } catch (InvocationTargetException e) {
-                            throw new NotSupportedException(e);
-                        }
-                    }
-                }
+                return route(request, menuClass).orElseThrow();
             }
         }
 
@@ -53,26 +37,36 @@ public class ManuHandler implements Layer {
             var menuAnnotation = ReflectUtils.getAnnotation(defaultMenuClass, Menu.class);
             var routeMenu = menuAnnotation.get().value();
             if (routeMenu.equals(request.resource().menu().value())) {
-                var menu = ReflectUtils.newInstance(defaultMenuClass);
-                var methods = ReflectUtils.getAnnotatedMethods(menu.getClass(), Action.class);
-                for (Method method : methods) {
-                    var annotation = ReflectUtils.getAnnotation(method, Action.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' method not supported.", method.getName())));
-                    if (annotation.value().equals(ResourceAction.DEFAULT) || annotation.value().equals(request.resource().action().value())) {
-                        Object response = null;
-                        try {
-                            response = method.invoke(menu, ArrayUtils.newArray(request.param()));
-                            if (response instanceof Response) {
-                                return (Response)response;
-                            }
-                        } catch (IllegalAccessException e) {
-                            throw new NotSupportedException(e);
-                        } catch (InvocationTargetException e) {
-                            throw new NotSupportedException(e);
-                        }
+                return route(request, defaultMenuClass).orElseThrow();
+            }
+        }
+        if (next == null) {
+            return new Response(Resource.notFound());
+        } else {
+            return next.invoke(request);
+        }
+    }
+
+    private Optional<Response> route(Request request, Class<?> targetMenuClass) {
+        var menu = ReflectUtils.newInstance(targetMenuClass);
+        var methods = ReflectUtils.getAnnotatedMethods(menu.getClass(), Action.class);
+        for (Method method : methods) {
+            var annotation = ReflectUtils.getAnnotation(method, Action.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' method not supported.", method.getName())));
+            if (annotation.value().equals(request.resource().action().value()) || annotation.value().equals(ResourceAction.DEFAULT)) {
+                Object response;
+                try {
+                    response = method.invoke(menu, ArrayUtils.newArray(request.param()));
+                    if (response instanceof Response) {
+                        return Optional.of((Response)response);
                     }
+                } catch (IllegalAccessException e) {
+                    throw new NotSupportedException(e);
+                } catch (InvocationTargetException e) {
+                    throw new NotSupportedException(e);
                 }
             }
         }
-        return new Response(Resource.notFound());
+
+        return Optional.empty();
     }
 }
