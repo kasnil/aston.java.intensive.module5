@@ -1,12 +1,13 @@
 package aston.java.intensive.module5.utils.di;
 
 import aston.java.intensive.module5.utils.ListsUtils;
+import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.util.List;
 
 public class ServiceLocator {
-    private final List<Class<?>> services = ListsUtils.newArrayList();
-
+    private final List<Class<?>> container = ListsUtils.newArrayList();
+    private final ServiceCollection services = new ServiceCollection();
     private static ServiceLocator instance;
 
     private ServiceLocator() {}
@@ -18,11 +19,21 @@ public class ServiceLocator {
         return instance;
     }
 
-    public <T extends Class<?>> void add(Class<?> theClass) {
-        services.add(theClass);
+    public <T> void addSingleton(Class<T> theImplementation) {
+        Ensure.that(theImplementation).isNotNull();
+
+        addSingleton(theImplementation, theImplementation);
     }
 
-    public List<Class<?>> getServices() {
-        return ListsUtils.newArrayList(services);
+    public <T, TImplementation extends T> void addSingleton(Class<T> serviceClass, Class<TImplementation> theImplementation) {
+        Ensure.that(serviceClass).isNotNull();
+        Ensure.that(theImplementation).isNotNull();
+
+        ServiceDescriptor descriptor = new ServiceDescriptor(serviceClass, theImplementation);
+        this.services.add(descriptor);
+    }
+
+    public List<Class> getServices() {
+        return services.getServices().stream().map(ServiceDescriptor::serviceClass).toList();
     }
 }
