@@ -2,8 +2,14 @@ package aston.java.intensive.module5.utils.json;
 
 import aston.java.intensive.module5.utils.StringUtils;
 
-public record JsonString(String value) {
+public final class JsonString implements JsonValue {
     private static final EscaperString escaperString = getEscaperString();
+
+    private final String value;
+
+    public JsonString(String value) {
+        this.value = value;
+    }
 
     @Override
     public String toString() {
