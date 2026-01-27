@@ -16,10 +16,12 @@ public final class EscaperString {
     public String escape(String str) {
         StringBuilder sb = new StringBuilder();
 
-        int length = str.length();
-        for (int index = 0; index < length; index++) {
-            char c = str.charAt(index);
-            sb.append(this.replacements.getOrDefault(c, String.valueOf(c)));
+        char[] chars = str.toCharArray();
+        int length = chars.length;
+        int from = 0;
+        while (from < length) {
+            char ch = chars[from++];
+            sb.append(this.replacements.getOrDefault(ch, String.valueOf(ch)));
         }
         return sb.toString();
     }

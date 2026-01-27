@@ -31,12 +31,10 @@ public final class Randomizer {
 
     public String password(int length)
     {
-        var result = new StringBuilder(length);
-
-        while(result.length() < length) {
-            result.append((char)number(33, 127)); // ASCII
+        char[] chars = new char[length];
+        for (int i = 0; i < length; i++) {
+            chars[i] = (char)number(33, 127); // ASCII
         }
-
-        return result.toString();
+        return new String(chars);
     }
 }
