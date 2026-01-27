@@ -16,4 +16,28 @@ public final class IntegerParam extends Param<Integer> {
 
         return this;
     }
+
+    public IntegerParam is(Integer expected)
+    {
+        return is(expected, null);
+    }
+
+    public IntegerParam is(Integer expected, String errorMessage)
+    {
+        Ensure.integer.is(this.value, expected, errorMessage);
+
+        return this;
+    }
+
+    public IntegerParam isNot(Integer expected)
+    {
+        return isNot(expected, null);
+    }
+
+    public IntegerParam isNot(Integer expected, String errorMessage)
+    {
+        Ensure.integer.isNot(this.value, expected, errorMessage);
+
+        return this;
+    }
 }
