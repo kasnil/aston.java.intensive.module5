@@ -1,5 +1,6 @@
 package aston.java.intensive.module5.utils.faker;
 
+import aston.java.intensive.module5.utils.ByteUtils;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.nio.charset.StandardCharsets;
@@ -34,7 +35,7 @@ public final class Randomizer {
     {
         byte[] ascii = new byte[length];
         for (int i = 0; i < length; i++) {
-            ascii[i] = (byte)number(33, 127); // ASCII
+            ascii[i] = ByteUtils.checkedCast(number(33, 127)); // ASCII
         }
         return new String(ascii, StandardCharsets.US_ASCII);
     }

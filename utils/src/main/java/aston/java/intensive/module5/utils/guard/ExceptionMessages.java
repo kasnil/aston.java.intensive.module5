@@ -14,4 +14,6 @@ public final class ExceptionMessages {
     public static final String BOOLEAN_IS_TRUE = "Ожидалось выражение, результат которого будет false.";
     public static final String COLLECTION_IS_EMPTY = "Пустой список запрещен.";
     public static final String INTEGER_IS_NEGATIVE = "Значение не может быть отрицательным, но имеет значение: %d.";
+    public static final String COMPARABLE_IS_EQUAL = "Значение '%s' равно %s.";
+    public static final String COMPARABLE_IS_NOT_EQUAL = "Значение '%s' не равно '%s'.";
 }
