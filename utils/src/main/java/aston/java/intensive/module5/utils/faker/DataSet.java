@@ -83,7 +83,13 @@ public class DataSet {
     }
 
     public String email() {
-        Gender gender = this.randomizer.enumValue(Gender.class);
+        return email(null);
+    }
+
+    public String email(Gender gender) {
+        if (gender == null) {
+            gender = this.randomizer.enumValue(Gender.class);
+        }
         var firstName = firstName(gender);
         var lastName = lastName(gender);
 
