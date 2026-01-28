@@ -12,11 +12,16 @@ public class BubbleSortStrategy<T> implements SortStrategy<T> {
         if (list == null || list.size() < 2) {
             return list;
         }
-        for (int i = 0, size = list.size(); i < size - 1; i++) {
-            for (int j = 0; j < size - i - 1; j++) {
+        for (int i = 1, size = list.size(); i < size; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < size - i; j++) {
                 if (greater(list.get(j), list.get(j+1), comparator)) {
-                    swap(list, j, j+1);
+                    swap(list, j, j + 1);
+                    swapped = true;
                 }
+            }
+            if (!swapped) {
+                break;
             }
         }
         return list;

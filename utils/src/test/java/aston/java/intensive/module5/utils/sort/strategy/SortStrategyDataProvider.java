@@ -6,7 +6,7 @@ import java.util.List;
 public final class SortStrategyDataProvider {
     public static final List<Parameter<Integer>> INT_PARAMETERS = List.of(
             Parameter.of(List.of(5, 30), Arrays.asList(5, 30)),
-            Parameter.of(List.of( -30, -7, -5), Arrays.asList(-5, -30, -7 )),
+            Parameter.of(List.of(-30, -7, -5), Arrays.asList(-5, -30, -7 )),
             Parameter.of(List.of(-10, 0, 5, 7, 30), Arrays.asList(5, 30, 7, 0, -10)),
             Parameter.of(List.of(1, 2, 3, 4, 5), Arrays.asList(1, 2, 3, 4, 5)),
             Parameter.of(List.of(1, 2, 3, 4, 5), Arrays.asList(5, 4, 3, 2, 1)),

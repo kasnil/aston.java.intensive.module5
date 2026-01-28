@@ -7,13 +7,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SortStrategyTest {
     private final SortStrategy quickSortStrategy = new QuickSortStrategy();
     private final SortStrategy bubbleSortStrategy = new BubbleSortStrategy();
     private final SortStrategy insertionSortStrategy = new InsertionSortStrategy();
+    private final SortStrategy selectSortStrategy = new SelectSortStrategy();
+    private final SortStrategy mergeSortStrategy = new MergeSortStrategy();
+    private final SortStrategy heapSortStrategy = new HeapSortStrategy();
 
     @ParameterizedTest
     @MethodSource("intParameters")
@@ -36,7 +39,28 @@ public class SortStrategyTest {
         assertIterableEquals(parameter.expected(), parameter.actual());
     }
 
-    static Stream<Parameter<Integer>> intParameters() {
-        return SortStrategyDataProvider.INT_PARAMETERS.stream();
+    @ParameterizedTest
+    @MethodSource("intParameters")
+    public void testSelectSort(Parameter<Integer> parameter) {
+        selectSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
+        assertIterableEquals(parameter.expected(), parameter.actual());
+    }
+
+    @ParameterizedTest
+    @MethodSource("intParameters")
+    public void testMergeSort(Parameter<Integer> parameter) {
+        mergeSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
+        assertIterableEquals(parameter.expected(), parameter.actual());
+    }
+
+    @ParameterizedTest
+    @MethodSource("intParameters")
+    public void testHeapSort(Parameter<Integer> parameter) {
+        heapSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
+        assertIterableEquals(parameter.expected(), parameter.actual());
+    }
+
+    static Stream<Object> intParameters() {
+        return SortStrategyDataProvider.INT_PARAMETERS.stream().map(Parameter::clone);
     }
 }
