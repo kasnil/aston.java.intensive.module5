@@ -13,6 +13,6 @@ public class Main {
                 .addMenu(MenuGreet.class)
                 .addMenu(MenuSort.class)
                 .addMenu(MenuStart.class);
-        applicationBuilder.build().run(new Resource("index"));
+        applicationBuilder.build().run();
     }
 }
