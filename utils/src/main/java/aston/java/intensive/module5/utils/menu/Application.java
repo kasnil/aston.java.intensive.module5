@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Application {
+    private final ApplicationResourceBundle resource = ApplicationResourceBundle.RESOURCES;
     private final List<Function<RequestDelegate, RequestDelegate>> layers;
 
     public Application(
@@ -17,9 +18,9 @@ public class Application {
         this.layers = layers;
     }
 
-    public void run(Resource start) {
+    public void run() {
         var requestDelegate = buildDelegate();
-        run(requestDelegate, start);
+        run(requestDelegate, getStartMenu());
     }
 
     private void run(RequestDelegate requestDelegate, Resource start) {
@@ -46,5 +47,9 @@ public class Application {
         }
 
         return layer;
+    }
+
+    private Resource getStartMenu() {
+        return this.resource.getStartResource(ResourceMenu.DEFAULT, ResourceAction.DEFAULT);
     }
 }
