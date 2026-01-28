@@ -23,12 +23,14 @@ public final class MenuStart {
                 1 - Greet (en)
                 2 - Greet (ru)
                 3 - Greet (es)
-                4 - exit""");
+                4 - sort (es)
+                5 - exit""");
         var resource = switch (answer) {
             case 1 -> new Resource("greet", "en");
             case 2 -> new Resource("greet", "ru");
             case 3 -> new Resource("greet", "es");
-            case 4 -> Resource.exit();
+            case 4 -> new Resource("sort", "chooseSortOrder");
+            case 5 -> Resource.exit();
             default -> new Resource("index", "not-found");
         };
         return new Response(resource);

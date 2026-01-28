@@ -1,14 +1,19 @@
 package aston.java.intensive.module5.domain;
 
+
 import aston.java.intensive.module5.domain.dto.Email;
 import aston.java.intensive.module5.domain.dto.Password;
 import aston.java.intensive.module5.domain.dto.UserName;
 import aston.java.intensive.module5.utils.guard.Ensure;
+import aston.java.intensive.module5.utils.sort.annotation.SortField;
 
 import java.util.Objects;
 
-public final class User implements Comparable<User> {
+public final class User implements Comparable<User>, Identifiable<Long> {
+    private Long id;
+    @SortField(displayName = "имя")
     private final String name;
+    @SortField(displayName = "email")
     private final String email;
     private final String password;
 
@@ -95,5 +100,15 @@ public final class User implements Comparable<User> {
     @Override
     public String toString() {
         return String.format("User{name='%s', email='%s'}", name, email);
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }
