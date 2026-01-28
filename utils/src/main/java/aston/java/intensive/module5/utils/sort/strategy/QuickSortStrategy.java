@@ -18,30 +18,33 @@ public class QuickSortStrategy<T> implements SortStrategy<T> {
 
     private void quickSort(List<T> list, int low, int high, Comparator<T> comparator) {
         if (low < high) {
-            int pivotIndex = partition(list, low, high, comparator);
+            final int pivotIndex = partition(list, low, high, comparator);
             quickSort(list, low, pivotIndex - 1, comparator);
-            quickSort(list, pivotIndex + 1, high, comparator);
+            quickSort(list, pivotIndex, high, comparator);
         }
     }
 
     private int partition(List<T> list, int low, int high, Comparator<T> comparator) {
-        T pivot = list.get(high); // выбираем последний элемент как опорный
+        final int mid = (low + high) >>> 1;
+        final T pivot = list.get(mid);
         int i = low - 1;
 
-        for (int j = low; j < high; j++) {
-            if (comparator.compare(list.get(j), pivot) <= 0) {
-                i++;
-                swap(list, i, j);
+        while (low <= high) {
+            while (less(list.get(low), pivot, comparator)) {
+                ++low;
+            }
+
+            while (greater(list.get(high), pivot, comparator)) {
+                --high;
+            }
+
+            if (low <= high) {
+                swap(list, low, high);
+                ++low;
+                --high;
             }
         }
-        swap(list, i + 1, high);
-        return i + 1;
-    }
-
-    private void swap(List<T> list, int i, int j) {
-        T temp = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, temp);
+        return low;
     }
 }
 

@@ -9,12 +9,16 @@ public class InsertionSortStrategy<T> implements SortStrategy<T> {
 
     @Override
     public List<T> sort(List<T> list, Comparator<T> comparator) {
+        if (list == null || list.size() < 2) {
+            return list;
+        }
+
         for (int i = 1; i < list.size(); i++) {
-            T key = list.get(i);
+            final T key = list.get(i);
             int j = i - 1;
 
             // сдвигаем элементы, которые больше key
-            while (j >= 0 && comparator.compare(list.get(j), key) > 0) {
+            while (j >= 0 && greater(list.get(j), key, comparator)) {
                 list.set(j + 1, list.get(j));
                 j--;
             }
