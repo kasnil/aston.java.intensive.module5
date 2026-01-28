@@ -17,6 +17,7 @@ public class SortStrategyTest {
     private final SortStrategy selectSortStrategy = new SelectSortStrategy();
     private final SortStrategy mergeSortStrategy = new MergeSortStrategy();
     private final SortStrategy heapSortStrategy = new HeapSortStrategy();
+    private final SortStrategy oddEvenSortStrategy = new OddEvenSortStrategy();
 
     @ParameterizedTest
     @MethodSource("intParameters")
@@ -57,6 +58,13 @@ public class SortStrategyTest {
     @MethodSource("intParameters")
     public void testHeapSort(Parameter<Integer> parameter) {
         heapSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
+        assertIterableEquals(parameter.expected(), parameter.actual());
+    }
+
+    @ParameterizedTest
+    @MethodSource("intParameters")
+    public void testOddEvenSort(Parameter<Integer> parameter) {
+        oddEvenSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
         assertIterableEquals(parameter.expected(), parameter.actual());
     }
 
