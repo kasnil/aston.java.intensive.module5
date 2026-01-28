@@ -9,12 +9,13 @@ public class BubbleSortStrategy<T> implements SortStrategy<T> {
 
     @Override
     public List<T> sort(List<T> list, Comparator<T> comparator) {
-        for (int i = 0; i < list.size() -1; i++) {
-            for (int j = 0; j < list.size() - i -1; j++) {
-                if (comparator.compare(list.get(j), list.get(j+1)) > 0) {
-                    T temp = list.get(j);
-                    list.set(j, list.get(j+1));
-                    list.set(j+1, temp);
+        if (list == null || list.size() < 2) {
+            return list;
+        }
+        for (int i = 0, size = list.size(); i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (greater(list.get(j), list.get(j+1), comparator)) {
+                    swap(list, j, j+1);
                 }
             }
         }
