@@ -27,7 +27,6 @@ public class QuickSortStrategy<T> implements SortStrategy<T> {
     private int partition(List<T> list, int low, int high, Comparator<T> comparator) {
         final int mid = (low + high) >>> 1;
         final T pivot = list.get(mid);
-        int i = low - 1;
 
         while (low <= high) {
             while (less(list.get(low), pivot, comparator)) {
