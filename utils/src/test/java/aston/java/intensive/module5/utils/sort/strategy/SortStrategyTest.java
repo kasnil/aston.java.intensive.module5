@@ -22,49 +22,47 @@ public class SortStrategyTest {
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testQuickSort(Parameter<Integer> parameter) {
-        quickSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(quickSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testBubbleSort(Parameter<Integer> parameter) {
-        bubbleSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(bubbleSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testInsertionSort(Parameter<Integer> parameter) {
-        insertionSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(insertionSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testSelectSort(Parameter<Integer> parameter) {
-        selectSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(selectSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testMergeSort(Parameter<Integer> parameter) {
-        mergeSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(mergeSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testHeapSort(Parameter<Integer> parameter) {
-        heapSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
-        assertIterableEquals(parameter.expected(), parameter.actual());
+        testSort(heapSortStrategy, parameter);
     }
 
     @ParameterizedTest
     @MethodSource("intParameters")
     public void testOddEvenSort(Parameter<Integer> parameter) {
-        oddEvenSortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
+        testSort(oddEvenSortStrategy, parameter);
+    }
+
+    private void testSort(SortStrategy sortStrategy, Parameter<Integer> parameter) {
+        sortStrategy.sort(parameter.actual(), (Comparator<Integer>) Integer::compare);
         assertIterableEquals(parameter.expected(), parameter.actual());
     }
 
