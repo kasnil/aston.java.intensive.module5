@@ -40,6 +40,16 @@ public class JsonBuilder {
         return endSub();
     }
 
+    private JsonBuilder beginMapSub() {
+        this.jsonBuilderStates.push(JsonBuilderState.IN_MAP);
+        return beginSub();
+    }
+
+    private JsonBuilder endMapSub() {
+        this.jsonBuilderStates.poll();
+        return endSub();
+    }
+
     private JsonBuilderState getCurrentJsonBuilder() {
         JsonBuilderState state = this.jsonBuilderStates.peek();
 
@@ -91,7 +101,7 @@ public class JsonBuilder {
             newArrayEntry();
         }
 
-        beginSub();
+        beginMapSub();
 
         getCurrentCounterOrThrow().resetAssociativeArrayEntries();
 
@@ -99,7 +109,7 @@ public class JsonBuilder {
     }
 
     public JsonBuilder endAssociativeArray() {
-        return append("}".intern()).endSub();
+        return append("}".intern()).endMapSub();
     }
 
     private JsonBuilder newArrayEntry() {
@@ -124,7 +134,7 @@ public class JsonBuilder {
                 .quote()
                 .jsonEscape(key)
                 .quote()
-                .append(": ");
+                .append(":");
     }
 
     private JsonBuilder append(String str) {
@@ -235,5 +245,6 @@ public class JsonBuilder {
     private enum JsonBuilderState {
         UNSPECIFIED,
         IN_ARRAY,
+        IN_MAP,
     }
 }

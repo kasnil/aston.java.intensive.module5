@@ -26,7 +26,7 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"value\": 292}", json);
+        assertEquals("{\"value\":292}", json);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"value\": 292.23}", json);
+        assertEquals("{\"value\":292.23}", json);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"name\": \"Aston\"}", json);
+        assertEquals("{\"name\":\"Aston\"}", json);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"value\": true}", json);
+        assertEquals("{\"value\":true}", json);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"company\": {\"name\": \"Aston\"}}", json);
+        assertEquals("{\"company\":{\"name\":\"Aston\"}}", json);
     }
 
     @Test
@@ -107,6 +107,6 @@ public class JsonBuilderTest {
 
         String json = builder.build();
 
-        assertEquals("{\"companies\": [{\"name\": \"Aston\"},{\"name\": \"Kontur\"}],\"key1\": \"value1\",\"key2\": \"value2\"}", json);
+        assertEquals("{\"companies\":[{\"name\":\"Aston\"},{\"name\":\"Kontur\"}],\"key1\":\"value1\",\"key2\":\"value2\"}", json);
     }
 }

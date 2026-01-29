@@ -67,11 +67,11 @@ public class JsonSerializerUserService implements JsonSerializerService<User>, J
             builder.beginAssociativeArray();
             builder.addKey("data");
             builder.beginArray();
-            builder.beginAssociativeArray();
             for (User value : values) {
+                builder.beginAssociativeArray();
                 Serialize(builder, value);
+                builder.endAssociativeArray();
             }
-            builder.endAssociativeArray();
             builder.endArray();
             builder.endAssociativeArray();
             String json = builder.build();
