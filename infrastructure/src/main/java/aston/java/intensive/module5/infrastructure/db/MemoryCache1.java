@@ -57,4 +57,14 @@ public class MemoryCache1<T extends Identifiable<Long>> implements Store<T> {
     public Optional<T> findById(Long id) {
         return Optional.ofNullable(table.get(id));
     }
+
+    @Override
+    public boolean isEmpty() {
+        return table.isEmpty();
+    }
+
+    @Override
+    public void resetSequence() {
+        sequence.set(1);
+    }
 }

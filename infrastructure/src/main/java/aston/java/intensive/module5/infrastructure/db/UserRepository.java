@@ -46,4 +46,14 @@ public class UserRepository implements Repository<User> {
     public boolean update(User user) {
         return store.update(user);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return store.isEmpty();
+    }
+
+    @Override
+    public void resetSequence() {
+        store.resetSequence();
+    }
 }

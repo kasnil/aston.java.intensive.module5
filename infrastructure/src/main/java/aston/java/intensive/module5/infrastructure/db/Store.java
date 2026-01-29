@@ -18,4 +18,7 @@ public interface Store<T> {
 
     Optional<T> findById(Long id);
 
+    boolean isEmpty();
+
+    void resetSequence();
 }

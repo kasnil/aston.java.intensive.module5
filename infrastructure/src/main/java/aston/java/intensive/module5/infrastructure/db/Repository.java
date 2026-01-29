@@ -18,4 +18,8 @@ public interface Repository<T> {
     Optional<T> findById(Long id);
 
     boolean update(T t);
+
+    boolean isEmpty();
+
+    void resetSequence();
 }
