@@ -1,7 +1,6 @@
 package aston.java.intensive.module5.utils.json;
 
 import java.util.ArrayDeque;
-import java.util.List;
 
 public class JsonBuilder {
     public static final EscaperString ESCAPER_STRING = getEscaperString();
@@ -14,40 +13,44 @@ public class JsonBuilder {
         this.json = new StringBuilder();
 
         this.counters = new ArrayDeque<>();
-        this.jsonBuilderStates = new ArrayDeque<>(List.of(JsonBuilderState.UNSPECIFIED));
+        this.jsonBuilderStates = new ArrayDeque<>();
 
-        beginSub();
+        beginScope(JsonBuilderState.UNSPECIFIED);
     }
 
-    private JsonBuilder beginSub() {
+    private JsonBuilder beginScope(JsonBuilderState state) {
         this.counters.push(new JsonCounter());
+
+        switch (state) {
+            case UNSPECIFIED -> this.jsonBuilderStates.push(JsonBuilderState.UNSPECIFIED);
+            case IN_ARRAY -> this.jsonBuilderStates.push(JsonBuilderState.IN_ARRAY);
+            case IN_MAP -> this.jsonBuilderStates.push(JsonBuilderState.IN_MAP);
+        }
         return this;
     }
 
-    private JsonBuilder endSub() {
+    private JsonBuilder endScope() {
         this.counters.poll();
 
         return this;
     }
 
-    private JsonBuilder beginArraySub() {
-        this.jsonBuilderStates.push(JsonBuilderState.IN_ARRAY);
-        return beginSub();
+    private JsonBuilder beginArrayScope() {
+        return beginScope(JsonBuilderState.IN_ARRAY);
     }
 
-    private JsonBuilder endArraySub() {
+    private JsonBuilder endArrayScope() {
         this.jsonBuilderStates.poll();
-        return endSub();
+        return endScope();
     }
 
-    private JsonBuilder beginMapSub() {
-        this.jsonBuilderStates.push(JsonBuilderState.IN_MAP);
-        return beginSub();
+    private JsonBuilder beginMapScope() {
+        return beginScope(JsonBuilderState.IN_MAP);
     }
 
-    private JsonBuilder endMapSub() {
+    private JsonBuilder endMapScope() {
         this.jsonBuilderStates.poll();
-        return endSub();
+        return endScope();
     }
 
     private JsonBuilderState getCurrentJsonBuilder() {
@@ -101,7 +104,7 @@ public class JsonBuilder {
             newArrayEntry();
         }
 
-        beginMapSub();
+        beginMapScope();
 
         getCurrentCounterOrThrow().resetAssociativeArrayEntries();
 
@@ -109,7 +112,7 @@ public class JsonBuilder {
     }
 
     public JsonBuilder endAssociativeArray() {
-        return append("}".intern()).endMapSub();
+        return append("}".intern()).endMapScope();
     }
 
     private JsonBuilder newArrayEntry() {
@@ -121,12 +124,12 @@ public class JsonBuilder {
             newArrayEntry();
         }
 
-        beginArraySub().getCurrentCounterOrThrow().resetArrayEntries();
+        beginArrayScope().getCurrentCounterOrThrow().resetArrayEntries();
         return append(getCurrentCounter().incArrayCount() > 0 ? ",".intern() : "".intern()).append("[".intern());
     }
 
     public void endArray() {
-        append("]").endArraySub();
+        append("]").endArrayScope();
     }
 
     public JsonBuilder addKey(String key) {
