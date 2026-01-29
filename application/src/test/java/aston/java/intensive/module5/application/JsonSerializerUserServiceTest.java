@@ -65,7 +65,7 @@ public class JsonSerializerUserServiceTest {
         Result<String> serializeResult = jsonSerializerUserService.serialize(user);
 
         assertTrue(serializeResult.isOk());
-        assertEquals("{\"name\": \"Андрей\",\"email\": \"andrey@example.org\",\"password\": \"123456\"}", serializeResult.getValue());
+        assertEquals("{\"name\":\"Андрей\",\"email\":\"andrey@example.org\",\"password\":\"123456\"}", serializeResult.getValue());
     }
 
     @Test
@@ -86,6 +86,6 @@ public class JsonSerializerUserServiceTest {
         Result<String> serializeResult = jsonSerializerUserService.serializeCollection(users);
 
         assertTrue(serializeResult.isOk());
-        assertEquals("{\"data\": [{\"name\": \"Андрей\",\"email\": ,\"andrey@example.org\",\"password\": ,\"123456\",\"name\": ,\"Роман\",\"email\": ,\"roman@example.org\",\"password\": ,\"654321\"}]}", serializeResult.getValue());
+        assertEquals("{\"data\":[{\"name\":\"Андрей\",\"email\":\"andrey@example.org\",\"password\":\"123456\"},{\"name\":\"Роман\",\"email\":\"roman@example.org\",\"password\":\"654321\"}]}", serializeResult.getValue());
     }
 }
