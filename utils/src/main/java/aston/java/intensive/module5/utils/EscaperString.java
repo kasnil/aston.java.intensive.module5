@@ -1,6 +1,5 @@
-package aston.java.intensive.module5.utils.json;
+package aston.java.intensive.module5.utils;
 
-import aston.java.intensive.module5.utils.MapsUtils;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.util.Map;
