@@ -2,11 +2,11 @@ package aston.java.intensive.module5.application;
 
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.Result;
-import aston.java.intensive.module5.utils.csv.CsvSerializerService;
+import aston.java.intensive.module5.utils.csv.CsvSerializer;
 
 import java.util.Map;
 
-public class CsvSerializerUserService extends CsvSerializerService<User> {
+public class CsvSerializerUserService extends CsvSerializer<User> {
 
     @Override
     public Result<User> deserialize(Map<String, String> row) {

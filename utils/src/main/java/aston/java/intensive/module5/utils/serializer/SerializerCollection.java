@@ -4,7 +4,7 @@ import aston.java.intensive.module5.utils.Result;
 
 import java.util.Collection;
 
-public interface SerializerCollectionService<T> {
+public interface SerializerCollection<T> {
     Result<Collection<T>> deserializeCollection(String json);
 
     Result<String> serializeCollection(Collection<T> value);
