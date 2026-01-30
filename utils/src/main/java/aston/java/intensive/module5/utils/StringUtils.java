@@ -1,6 +1,7 @@
 package aston.java.intensive.module5.utils;
 
 import java.text.Normalizer;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public final class StringUtils {
@@ -13,6 +14,10 @@ public final class StringUtils {
     }
 
     public static String nullToEmpty(String str) {
-        return str == null ? "" : str;
+        return Objects.isNull(str) ? "" : str;
+    }
+
+    public static boolean isNullOrEmpty(String str) {
+        return Objects.isNull(str) || str.trim().length() == 0;
     }
 }

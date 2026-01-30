@@ -3,10 +3,11 @@ package aston.java.intensive.module5.utils.guard;
 import aston.java.intensive.module5.utils.ReflectUtils;
 
 import java.lang.annotation.Annotation;
+import java.util.Objects;
 
 public final class AnyGuard {
     public <T> T isNotNull(T value, String errorMessage) {
-        if (value == null) {
+        if (Objects.isNull(value)) {
             String message = errorMessage == null ? ExceptionMessages.ANY_IS_NULL : errorMessage;
             throw Ensure.exceptionFactory.argumentNullException(message);
         }

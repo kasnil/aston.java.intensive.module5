@@ -1,5 +1,7 @@
 package aston.java.intensive.module5.utils.json;
 
+import aston.java.intensive.module5.utils.EscaperString;
+
 import java.util.ArrayDeque;
 
 public class JsonBuilder {
@@ -192,6 +194,17 @@ public class JsonBuilder {
         return quote()
                 .jsonEscape(value)
                 .quote();
+    }
+
+    public JsonBuilder addValue(Object obj) {
+        return switch (obj) {
+            case String s -> addValue(s);
+            case Integer i -> addValue(i);
+            case Long l -> addValue(l);
+            case Double d -> addValue(d);
+            case Boolean b -> addValue(b);
+            default -> addValue(obj.toString());
+        };
     }
 
     public static EscaperString getEscaperString() {
