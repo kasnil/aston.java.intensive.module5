@@ -3,10 +3,10 @@ package aston.java.intensive.module5.application;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.Result;
 import aston.java.intensive.module5.utils.json.JsonObject;
-import aston.java.intensive.module5.utils.json.JsonSerializerService;
+import aston.java.intensive.module5.utils.json.JsonSerializer;
 import aston.java.intensive.module5.utils.json.JsonString;
 
-public class JsonSerializerUserService extends JsonSerializerService<User> {
+public class JsonSerializerUserService extends JsonSerializer<User> {
 
     @Override
     public Result<User> deserialize(JsonObject jsonObject) {

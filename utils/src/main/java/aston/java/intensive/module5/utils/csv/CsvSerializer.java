@@ -6,9 +6,9 @@ import aston.java.intensive.module5.utils.ReflectionException;
 import aston.java.intensive.module5.utils.Result;
 import aston.java.intensive.module5.utils.StringUtils;
 import aston.java.intensive.module5.utils.json.JsonException;
-import aston.java.intensive.module5.utils.serializer.SerializerCollectionService;
+import aston.java.intensive.module5.utils.serializer.SerializerCollection;
 import aston.java.intensive.module5.utils.serializer.SerializerProperty;
-import aston.java.intensive.module5.utils.serializer.SerializerService;
+import aston.java.intensive.module5.utils.serializer.Serializer;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.nonNull;
 
-public abstract class CsvSerializerService<T> implements SerializerService<T>, SerializerCollectionService<T> {
+public abstract class CsvSerializer<T> implements Serializer<T>, SerializerCollection<T> {
     @Override
     public Result<T> deserialize(String csv) {
         try {

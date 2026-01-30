@@ -3,7 +3,7 @@ package aston.java.intensive.module5.application;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.Result;
-import aston.java.intensive.module5.utils.csv.CsvSerializerService;
+import aston.java.intensive.module5.utils.csv.CsvSerializer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CsvSerializerUserServiceTest {
-    private final CsvSerializerService<User> csvSerializerUserService = new CsvSerializerUserService();
+    private final CsvSerializer<User> csvSerializerUserService = new CsvSerializerUserService();
 
     @Test
     public void testDeserialize() {
