@@ -1,5 +1,6 @@
-package aston.java.intensive.module5.utils.csv;
+package aston.java.intensive.module5.utils.serializer.csv;
 
+import aston.java.intensive.module5.utils.serializer.csv.CsvParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

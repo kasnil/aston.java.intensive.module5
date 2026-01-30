@@ -1,4 +1,4 @@
-package aston.java.intensive.module5.utils.json;
+package aston.java.intensive.module5.utils.serializer.json;
 
 public final class JsonDecimal implements JsonValue {
     private final double value;
