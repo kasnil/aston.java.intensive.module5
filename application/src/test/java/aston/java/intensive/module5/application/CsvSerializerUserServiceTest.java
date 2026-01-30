@@ -3,27 +3,26 @@ package aston.java.intensive.module5.application;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.Result;
-import aston.java.intensive.module5.utils.json.JsonSerializerService;
+import aston.java.intensive.module5.utils.csv.CsvSerializerService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonSerializerUserServiceTest {
-    private final JsonSerializerService<User> jsonSerializerUserService = new JsonSerializerUserService();
+public class CsvSerializerUserServiceTest {
+    private final CsvSerializerService<User> csvSerializerUserService = new CsvSerializerUserService();
 
     @Test
     public void testDeserialize() {
         String str = """
-                {
-                    "name": "Андрей",
-                    "email": "andrey@example.org",
-                    "password": "123456"
-                }""";
+                name,email,password
+                Андрей,andrey@example.org,123456
+                """;
 
-        Result<User> deserializeResult = jsonSerializerUserService.deserialize(str);
+        Result<User> deserializeResult = csvSerializerUserService.deserialize(str);
 
         assertTrue(deserializeResult.isOk());
         assertEquals("Андрей", deserializeResult.getValue().getName());
@@ -34,22 +33,12 @@ public class JsonSerializerUserServiceTest {
     @Test
     public void testDeserializeCollection() {
         String str = """
-                {
-                    "data": [
-                        {
-                            "name": "Андрей",
-                            "email": "andrey@example.org",
-                            "password": "123456"
-                        },
-                        {
-                            "name": "Роман",
-                            "email": "roman@example.org",
-                            "password": "654321"
-                        }
-                    ]
-                }""";
+                name,email,password
+                Андрей,andrey@example.org,123456
+                Роман,roman@example.org,654321
+                """;
 
-        Result<Collection<User>> deserializeResult = jsonSerializerUserService.deserializeCollection(str);
+        Result<Collection<User>> deserializeResult = csvSerializerUserService.deserializeCollection(str);
 
         assertTrue(deserializeResult.isOk());
         assertEquals(2, deserializeResult.getValue().size());
@@ -63,10 +52,13 @@ public class JsonSerializerUserServiceTest {
                 .setPassword("123456")
                 .build();
 
-        Result<String> serializeResult = jsonSerializerUserService.serialize(user);
+        Result<String> serializeResult = csvSerializerUserService.serialize(user);
 
         assertTrue(serializeResult.isOk());
-        assertEquals("{\"name\":\"Андрей\",\"email\":\"andrey@example.org\",\"password\":\"123456\"}", serializeResult.getValue());
+        assertEquals("""
+                name,email,password
+                Андрей,andrey@example.org,123456
+                """, serializeResult.getValue());
     }
 
     @Test
@@ -84,9 +76,13 @@ public class JsonSerializerUserServiceTest {
                         .build()
         );
 
-        Result<String> serializeResult = jsonSerializerUserService.serializeCollection(users);
+        Result<String> serializeResult = csvSerializerUserService.serializeCollection(users);
 
         assertTrue(serializeResult.isOk());
-        assertEquals("{\"data\":[{\"name\":\"Андрей\",\"email\":\"andrey@example.org\",\"password\":\"123456\"},{\"name\":\"Роман\",\"email\":\"roman@example.org\",\"password\":\"654321\"}]}", serializeResult.getValue());
+        assertEquals("""
+                name,email,password
+                Андрей,andrey@example.org,123456
+                Роман,roman@example.org,654321
+                """, serializeResult.getValue());
     }
 }
