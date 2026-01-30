@@ -6,6 +6,7 @@ import aston.java.intensive.module5.utils.ReflectionException;
 import aston.java.intensive.module5.utils.Result;
 import aston.java.intensive.module5.utils.StringUtils;
 import aston.java.intensive.module5.utils.serializer.SerializerCollectionService;
+import aston.java.intensive.module5.utils.serializer.SerializerException;
 import aston.java.intensive.module5.utils.serializer.SerializerProperty;
 import aston.java.intensive.module5.utils.serializer.SerializerService;
 
@@ -60,7 +61,7 @@ public abstract class JsonSerializerService<T> implements SerializerService<T>, 
             String json = builder.build();
 
             return Result.ok(json);
-        } catch (RuntimeException e) {
+        } catch (SerializerException e) {
             return Result.err(e);
         }
     }
@@ -82,7 +83,7 @@ public abstract class JsonSerializerService<T> implements SerializerService<T>, 
             String json = builder.build();
 
             return Result.ok(json);
-        } catch (RuntimeException e) {
+        } catch (SerializerException e) {
             return Result.err(e);
         }
     }

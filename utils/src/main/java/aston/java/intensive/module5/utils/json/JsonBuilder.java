@@ -135,16 +135,11 @@ public class JsonBuilder {
     }
 
     public JsonBuilder addKey(String key) {
-        return newAssociativeArrayEntry()
-                .quote()
-                .jsonEscape(key)
-                .quote()
-                .append(":");
+        return newAssociativeArrayEntry().append(key).append(":");
     }
 
     private JsonBuilder append(String str) {
-        json.append(str);
-        return this;
+        return quote().jsonEscape(str).quote();
     }
 
     private JsonBuilder append(int val) {
