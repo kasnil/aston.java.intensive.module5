@@ -4,6 +4,7 @@ import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -111,5 +112,14 @@ public class ReflectUtils {
             }
         }
         return Optional.empty();
+    }
+
+    public static <T> T getFieldValue(Object object, Field field){
+        try{
+            field.setAccessible(true);
+            return (T)field.get(object);
+        }catch(IllegalAccessException | IllegalArgumentException e){
+            throw new ReflectionException(e);
+        }
     }
 }
