@@ -1,10 +1,10 @@
-package aston.java.intensive.module5.application;
+package aston.java.intensive.module5.application.serializer;
 
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.Result;
-import aston.java.intensive.module5.utils.json.JsonObject;
-import aston.java.intensive.module5.utils.json.JsonSerializer;
-import aston.java.intensive.module5.utils.json.JsonString;
+import aston.java.intensive.module5.utils.serializer.json.JsonObject;
+import aston.java.intensive.module5.utils.serializer.json.JsonSerializer;
+import aston.java.intensive.module5.utils.serializer.json.JsonString;
 
 public class JsonSerializerUserService extends JsonSerializer<User> {
 

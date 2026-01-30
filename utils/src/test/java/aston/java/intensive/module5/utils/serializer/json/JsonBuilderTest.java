@@ -1,5 +1,6 @@
-package aston.java.intensive.module5.utils.json;
+package aston.java.intensive.module5.utils.serializer.json;
 
+import aston.java.intensive.module5.utils.serializer.json.JsonBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

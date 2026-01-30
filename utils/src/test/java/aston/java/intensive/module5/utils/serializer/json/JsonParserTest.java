@@ -1,5 +1,12 @@
-package aston.java.intensive.module5.utils.json;
+package aston.java.intensive.module5.utils.serializer.json;
 
+import aston.java.intensive.module5.utils.serializer.json.JsonBoolean;
+import aston.java.intensive.module5.utils.serializer.json.JsonDecimal;
+import aston.java.intensive.module5.utils.serializer.json.JsonNumber;
+import aston.java.intensive.module5.utils.serializer.json.JsonObject;
+import aston.java.intensive.module5.utils.serializer.json.JsonParser;
+import aston.java.intensive.module5.utils.serializer.json.JsonString;
+import aston.java.intensive.module5.utils.serializer.json.JsonValue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

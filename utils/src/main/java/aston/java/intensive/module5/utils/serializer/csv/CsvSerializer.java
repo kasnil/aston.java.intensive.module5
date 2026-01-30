@@ -1,11 +1,11 @@
-package aston.java.intensive.module5.utils.csv;
+package aston.java.intensive.module5.utils.serializer.csv;
 
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.ReflectionException;
 import aston.java.intensive.module5.utils.Result;
 import aston.java.intensive.module5.utils.StringUtils;
-import aston.java.intensive.module5.utils.json.JsonException;
+import aston.java.intensive.module5.utils.serializer.json.JsonException;
 import aston.java.intensive.module5.utils.serializer.SerializerCollection;
 import aston.java.intensive.module5.utils.serializer.SerializerProperty;
 import aston.java.intensive.module5.utils.serializer.Serializer;

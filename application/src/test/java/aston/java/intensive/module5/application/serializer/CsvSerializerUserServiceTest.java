@@ -1,9 +1,9 @@
-package aston.java.intensive.module5.application;
+package aston.java.intensive.module5.application.serializer;
 
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.Result;
-import aston.java.intensive.module5.utils.csv.CsvSerializer;
+import aston.java.intensive.module5.utils.serializer.csv.CsvSerializer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;

@@ -1,5 +1,6 @@
-package aston.java.intensive.module5.utils.csv;
+package aston.java.intensive.module5.utils.serializer.csv;
 
+import aston.java.intensive.module5.utils.serializer.csv.CsvBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
