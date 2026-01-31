@@ -1,14 +1,11 @@
 package aston.java.intensive.module5.presentation.menu;
 
 
-import aston.java.intensive.module5.application.filling.UserService;
+import aston.java.intensive.module5.application.AppContext;
+import aston.java.intensive.module5.application.UserService;
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.domain.User;
-import aston.java.intensive.module5.infrastructure.db.MemoryCache1;
-import aston.java.intensive.module5.infrastructure.db.Repository;
-import aston.java.intensive.module5.infrastructure.db.Store;
-import aston.java.intensive.module5.infrastructure.db.UserRepository;
 import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
@@ -21,9 +18,8 @@ import aston.java.intensive.module5.utils.menu.models.Response;
 @Menu("filling")
 public final class MenuFilling {
     private final IOService console;
-    private static final Store<User> store = new MemoryCache1<>();
-    private static final Repository<User> userRepository = new UserRepository(store);
-    public static final UserService userService = new UserService(userRepository);
+
+    UserService userService = AppContext.userService();
 
     public MenuFilling() {
         this.console = new ConsoleService();
@@ -98,11 +94,19 @@ public final class MenuFilling {
         return new Response(new Resource("index", "index"));
     }
 
+    @Action("overwrite")
+    public Response overwrite(Param param) {
+        console.output("Перезапись");
+
+        userService.resetUserStore();
+
+        return new Response(new Resource("filling", "choiceCount"));
+    }
+
     private void showUsers() {
         console.output("Список пользователей: ");
         for (User user : userService.getAllUsers()) {
-            console.output(user.getId() + " " + user);
+            console.output(user);
         }
     }
-
 }

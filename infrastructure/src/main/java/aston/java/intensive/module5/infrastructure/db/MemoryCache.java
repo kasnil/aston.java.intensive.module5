@@ -36,4 +36,14 @@ public class MemoryCache<T> implements Store<T> {
     public Optional<T> findById(Long id) {
         return Optional.empty();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void resetSequence() {
+
+    }
 }

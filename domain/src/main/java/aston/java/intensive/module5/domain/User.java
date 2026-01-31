@@ -18,6 +18,7 @@ public final class User implements Comparable<User>, Identifiable<Long> {
     @SerializerProperty
     @SortField(displayName = "email")
     private final String email;
+    @SortField(displayName = "пароль")
     @SerializerProperty
     private final String password;
 
@@ -103,7 +104,7 @@ public final class User implements Comparable<User>, Identifiable<Long> {
 
     @Override
     public String toString() {
-        return String.format("User{name='%s', email='%s'}", name, email);
+        return String.format("User{ID=%d, name='%s', email='%s'}",id, name, email);
     }
 
     @Override
