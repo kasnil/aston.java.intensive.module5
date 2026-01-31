@@ -88,7 +88,7 @@ public abstract class JsonSerializer<T> implements Serializer<T>, SerializerColl
         }
     }
 
-    private void serialize(JsonBuilder builder, T value) {
+    protected void serialize(JsonBuilder builder, T value) {
         final var fieldInfoCollection = getFieldInfoCollection(value.getClass());
         for (FieldInfo fieldInfo : fieldInfoCollection) {
             try {

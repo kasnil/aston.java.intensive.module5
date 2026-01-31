@@ -120,7 +120,7 @@ public abstract class CsvSerializer<T> implements Serializer<T>, SerializerColle
         builder.endScope();
     }
 
-    private void serialize(CsvBuilder builder, final Collection<FieldInfo> fieldInfoCollection, final T value) {
+    protected void serialize(CsvBuilder builder, final Collection<FieldInfo> fieldInfoCollection, final T value) {
         builder.beginScope();
         for (FieldInfo fieldInfo : fieldInfoCollection) {
             try {
