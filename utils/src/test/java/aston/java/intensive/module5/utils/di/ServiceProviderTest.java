@@ -14,7 +14,9 @@ public class ServiceProviderTest {
         serviceLocator.addSingleton(ClassWithDeclaredConstructor.class);
         serviceLocator.addSingleton(EmptyInterface.class, ClassWithDeclaredConstructorAndImplementsEmptyInterface.class);
 
-        var serviceProvider = new ServiceProviderImpl(serviceLocator.getServices());
+        var serviceProvider = new ServiceProviderImpl.Builder()
+                .setServiceCollection(serviceLocator.getServices())
+                .build();
 
         var classWithDefaultConstructor = serviceProvider.getService(ClassWithDefaultConstructor.class);
         assertTrue(classWithDefaultConstructor.isOk());
