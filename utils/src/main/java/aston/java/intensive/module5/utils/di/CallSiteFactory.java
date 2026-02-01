@@ -44,7 +44,7 @@ public class CallSiteFactory {
     public Optional<CallSite> getCallSite(Class<?> serviceClass) {
         CallSiteCacheKey callSiteKey = new CallSiteCacheKey(serviceClass);
         if (this.callSiteCache.containsKey(callSiteKey)) {
-            return  Optional.of(callSiteCache.get(callSiteKey));
+            return Optional.of(callSiteCache.get(callSiteKey));
         }
         return createCallSite(serviceClass);
     }
@@ -65,18 +65,25 @@ public class CallSiteFactory {
     }
 
     private Optional<CallSite> tryCreateExact(ServiceDescriptor serviceDescriptor) {
-        if (serviceDescriptor.theImplementationClass() != null) {
-            CallSiteCacheKey callSiteKey = new CallSiteCacheKey(serviceDescriptor.serviceClass());
+        CallSite callSite = null;
+        CallSiteCacheKey callSiteKey = new CallSiteCacheKey(serviceDescriptor.serviceClass());
 
+        if (serviceDescriptor.theImplementationClass() != null) {
             if (this.callSiteCache.containsKey(callSiteKey)) {
                 return Optional.of(callSiteCache.get(callSiteKey));
             }
 
-            CallSite callSite = createConstructorCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.theImplementationClass());
-            if (callSite != null) {
-                this.callSiteCache.put(callSiteKey, callSite);
-                return Optional.of(callSite);
+            if (serviceDescriptor.implementationInstance() != null) {
+                callSite = new ConstantCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.implementationInstance());
             }
+            else {
+                callSite = createConstructorCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.theImplementationClass());
+            }
+        }
+
+        if (callSite != null) {
+            this.callSiteCache.put(callSiteKey, callSite);
+            return Optional.of(callSite);
         }
 
         return Optional.empty();

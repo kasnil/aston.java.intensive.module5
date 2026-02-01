@@ -1,7 +1,5 @@
 package aston.java.intensive.module5.utils.di;
 
-import aston.java.intensive.module5.utils.guard.Ensure;
-import aston.java.intensive.module5.utils.guard.GuardException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,19 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ServiceProviderTest {
     @Test
     public void testGetService() {
-        var serviceLocator = ServiceLocator.getInstance();
+        var serviceLocator = new ServiceLocator();
         serviceLocator.addSingleton(ClassWithDefaultConstructor.class);
         serviceLocator.addSingleton(ClassWithDefaultConstructorAndExtendsClassWithDefaultConstructor.class);
+        serviceLocator.addSingleton(new ClassWithManualInitialize());
         serviceLocator.addSingleton(ClassWithDeclaredConstructor.class);
         serviceLocator.addSingleton(EmptyInterface.class, ClassWithDeclaredConstructorAndImplementsEmptyInterface.class);
 
-        var serviceProvider = new ServiceProvider(serviceLocator.getServices());
+        var serviceProvider = new ServiceProviderImpl(serviceLocator.getServices());
 
         var classWithDefaultConstructor = serviceProvider.getService(ClassWithDefaultConstructor.class);
         assertTrue(classWithDefaultConstructor.isOk());
 
         var classWithDefaultConstructorAndExtendsClassWithDefaultConstructor = serviceProvider.getService(ClassWithDefaultConstructorAndExtendsClassWithDefaultConstructor.class);
         assertTrue(classWithDefaultConstructorAndExtendsClassWithDefaultConstructor.isOk());
+
+        var classWithManualInitialize = serviceProvider.getService(ClassWithManualInitialize.class);
+        assertTrue(classWithManualInitialize.isOk());
 
         var classWithDeclaredConstructor = serviceProvider.getService(ClassWithDeclaredConstructor.class);
         assertTrue(classWithDeclaredConstructor.isOk());
@@ -63,6 +65,8 @@ class ClassWithDeclaredConstructorAndImplementsEmptyInterface implements EmptyIn
     }
 }
 
-class ClassNotRegisteredInServiceCollection {
+class ClassWithManualInitialize {
+}
 
+class ClassNotRegisteredInServiceCollection {
 }

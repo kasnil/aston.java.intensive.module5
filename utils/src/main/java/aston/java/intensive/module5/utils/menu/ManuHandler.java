@@ -4,6 +4,7 @@ import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
+import aston.java.intensive.module5.utils.di.ServiceDescriptor;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -17,35 +18,38 @@ import java.util.stream.Collectors;
 
 public class ManuHandler implements Layer {
     @Override
-    public Response invoke(Request request, RequestDelegate next) {
+    public Response invoke(MenuContext menuContext, RequestDelegate next) {
         List<Class<?>> defaultMenuClasses = ListsUtils.newArrayList();
-        for (Class<?> menuClass : ServiceLocator.getInstance().getServices().stream().map(s -> s.serviceClass()).collect(Collectors.toUnmodifiableList())) {
-            var menuAnnotation = ReflectUtils.getAnnotation(menuClass, Menu.class);
+        for (ServiceDescriptor descriptor : menuContext.serviceProvider().getDescriptors()) {
+
+            var menuAnnotation = ReflectUtils.getAnnotation(descriptor.serviceClass(), Menu.class);
             if (menuAnnotation.isEmpty()) {
                 continue;
             }
+            Class<?> menuClass = descriptor.serviceClass();
             var routeMenu = menuAnnotation.get().value();
             if (routeMenu.equals(ResourceMenu.DEFAULT))
             {
                 defaultMenuClasses.add(menuClass);
                 continue;
             }
-            if (routeMenu.equals(request.resource().menu().value())) {
-                return route(request, menuClass).orElseThrow();
+            if (routeMenu.equals(menuContext.request().resource().menu().value())) {
+                return route(menuContext.request(), menuClass).orElseThrow();
             }
         }
 
         for (Class<?> defaultMenuClass : defaultMenuClasses) {
             var menuAnnotation = ReflectUtils.getAnnotation(defaultMenuClass, Menu.class);
             var routeMenu = menuAnnotation.get().value();
-            if (routeMenu.equals(request.resource().menu().value())) {
-                return route(request, defaultMenuClass).orElseThrow();
+            if (routeMenu.equals(menuContext.request().resource().menu().value())) {
+                return route(menuContext.request(), defaultMenuClass).orElseThrow();
             }
         }
+
         if (next == null) {
             return new Response(Resource.notFound());
         } else {
-            return next.invoke(request);
+            return next.invoke(menuContext);
         }
     }
 

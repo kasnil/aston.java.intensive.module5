@@ -20,6 +20,7 @@ public final class RuntimeResolver {
         Object resolved = switch (callSite)
         {
             case ConstructorCallSite constructorCallSite -> visitConstructor(constructorCallSite);
+            case ConstantCallSite constantCallSite -> visitConstant(constantCallSite);
             default -> throw new NotSupportedException(String.format("Call site тип '%s' не поддерживается.", callSite.getServiceClass().getName()));
         };
 
@@ -39,5 +40,9 @@ public final class RuntimeResolver {
             }
             return ReflectUtils.newInstance(constructorCallSite.getConstructor(), parameterValues);
         }
+    }
+
+    private Object visitConstant(ConstantCallSite constantCallSite) {
+        return constantCallSite.getValue();
     }
 }
