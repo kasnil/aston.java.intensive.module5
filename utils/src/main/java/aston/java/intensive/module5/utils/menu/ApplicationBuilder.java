@@ -2,6 +2,7 @@ package aston.java.intensive.module5.utils.menu;
 
 import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
+import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.guard.Ensure;
@@ -51,9 +52,7 @@ public class ApplicationBuilder {
                     return (Response)response;
                 }
                 throw new NotSupportedException(String.format("The '%s' method not supported.", method.getName()));
-            } catch (IllegalAccessException e) {
-                throw new NotSupportedException(e);
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new NotSupportedException(e);
             }
         };

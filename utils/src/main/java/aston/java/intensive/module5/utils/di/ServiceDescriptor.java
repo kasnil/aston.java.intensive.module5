@@ -2,10 +2,10 @@ package aston.java.intensive.module5.utils.di;
 
 import aston.java.intensive.module5.utils.guard.Ensure;
 
-public record ServiceDescriptor<T, TImplementation extends T>(Class<T> serviceClass, Class<TImplementation> theImplementation) {
+public record ServiceDescriptor<T, TImplementation extends T>(Class<T> serviceClass, Class<TImplementation> theImplementationClass) {
     public ServiceDescriptor {
         Ensure.that(serviceClass).isNotNull();
-        Ensure.that(theImplementation).isNotNull();
+        Ensure.that(theImplementationClass).isNotNull();
     }
 
     @Override
@@ -14,7 +14,7 @@ public record ServiceDescriptor<T, TImplementation extends T>(Class<T> serviceCl
         StringBuilder sb = new StringBuilder();
         sb.append(serviceClass.getSimpleName() + " = " + serviceClass);
         sb.append(", ");
-        sb.append(theImplementation.getSimpleName() + " = " + theImplementation);
+        sb.append(theImplementationClass.getSimpleName() + " = " + theImplementationClass);
         return sb.toString();
     }
 }

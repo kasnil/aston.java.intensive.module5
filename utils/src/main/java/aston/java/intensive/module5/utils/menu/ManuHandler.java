@@ -2,6 +2,7 @@ package aston.java.intensive.module5.utils.menu;
 
 import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
+import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
@@ -12,12 +13,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ManuHandler implements Layer {
     @Override
     public Response invoke(Request request, RequestDelegate next) {
         List<Class<?>> defaultMenuClasses = ListsUtils.newArrayList();
-        for (Class<?> menuClass : ServiceLocator.getInstance().getServices()) {
+        for (Class<?> menuClass : ServiceLocator.getInstance().getServices().stream().map(s -> s.serviceClass()).collect(Collectors.toUnmodifiableList())) {
             var menuAnnotation = ReflectUtils.getAnnotation(menuClass, Menu.class);
             if (menuAnnotation.isEmpty()) {
                 continue;
@@ -59,9 +61,7 @@ public class ManuHandler implements Layer {
                     if (response instanceof Response) {
                         return Optional.of((Response)response);
                     }
-                } catch (IllegalAccessException e) {
-                    throw new NotSupportedException(e);
-                } catch (InvocationTargetException e) {
+                } catch (IllegalAccessException | InvocationTargetException e) {
                     throw new NotSupportedException(e);
                 }
             }

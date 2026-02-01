@@ -64,6 +64,28 @@ public class ReflectUtils {
         return newInstance(getConstructor(type, parameterTypes), args);
     }
 
+    public static Object newInstance(final Constructor constructor) {
+
+        boolean flag = constructor.isAccessible();
+        try {
+            if (!flag) {
+                constructor.setAccessible(true);
+            }
+            Object result = constructor.newInstance();
+            return result;
+        } catch (InstantiationException e) {
+            throw new ReflectionException(e);
+        } catch (IllegalAccessException e) {
+            throw new ReflectionException(e);
+        } catch (InvocationTargetException e) {
+            throw new ReflectionException(e.getTargetException());
+        } finally {
+            if (!flag) {
+                constructor.setAccessible(flag);
+            }
+        }
+    }
+
     public static Object newInstance(final Constructor constructor, final Object[] args) {
 
         boolean flag = constructor.isAccessible();
@@ -84,7 +106,6 @@ public class ReflectUtils {
                 constructor.setAccessible(flag);
             }
         }
-
     }
 
     public static Constructor getConstructor(Class type, Class[] parameterTypes) {
