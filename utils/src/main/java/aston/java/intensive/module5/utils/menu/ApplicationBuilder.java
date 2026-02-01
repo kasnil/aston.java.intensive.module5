@@ -5,6 +5,8 @@ import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
+import aston.java.intensive.module5.utils.di.ServiceProvider;
+import aston.java.intensive.module5.utils.di.ServiceProviderImpl;
 import aston.java.intensive.module5.utils.guard.Ensure;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.Request;
@@ -19,7 +21,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ApplicationBuilder {
-    private final ServiceLocator serviceLocator = ServiceLocator.getInstance();
+    private final ServiceLocator serviceLocator = new ServiceLocator();
     private final List<Function<RequestDelegate, RequestDelegate>> layers = ListsUtils.newArrayList();
 
     public <T> ApplicationBuilder addMenu(Class<T> menuClass) {
@@ -30,11 +32,13 @@ public class ApplicationBuilder {
 
     public <T extends Layer> ApplicationBuilder addLayer(Class<T> handlerClass) {
         Ensure.that(handlerClass).isImplementsInterface(Layer.class);
+
+        this.serviceLocator.addSingleton(handlerClass);
+
         addLayer(next -> {
-            T instance = (T)ReflectUtils.newInstance(handlerClass);
             var method = ReflectUtils.getInterfaceMethod(handlerClass, Layer.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' handler not supported.", handlerClass.getName())));
             var factory = build(method, next);
-            return request -> factory.apply(instance, request);
+            return request -> factory.apply(handlerClass, request);
         });
         return this;
     }
@@ -44,9 +48,10 @@ public class ApplicationBuilder {
         return this;
     }
 
-    private <T extends Layer> BiFunction<T, Request, Response> build(Method method, RequestDelegate next) {
-        return (instance, request) -> {
+    private <T extends Layer> BiFunction<Class<?>, MenuContext, Response> build(Method method, RequestDelegate next) {
+        return (handlerClass, request) -> {
             try {
+                var instance = request.serviceProvider().getService(handlerClass).orElseThrow();
                 var response = method.invoke(instance, ArrayUtils.newArray(request, next));
                 if (response instanceof Response) {
                     return (Response)response;
@@ -60,6 +65,11 @@ public class ApplicationBuilder {
 
     public Application build() {
         addLayer(ManuHandler.class);
-        return new Application(layers);
+
+        var serviceProvider = new ServiceProviderImpl.Builder()
+                .setServiceCollection(serviceLocator.getServices())
+                .build();
+
+        return new Application(layers, serviceProvider);
     }
 }

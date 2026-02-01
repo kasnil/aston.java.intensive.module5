@@ -1,5 +1,6 @@
 package aston.java.intensive.module5.utils.menu;
 
+import aston.java.intensive.module5.utils.di.ServiceProvider;
 import aston.java.intensive.module5.utils.guard.Ensure;
 import aston.java.intensive.module5.utils.menu.models.*;
 
@@ -9,13 +10,17 @@ import java.util.function.Function;
 public class Application {
     private final ApplicationResourceBundle resource = ApplicationResourceBundle.RESOURCES;
     private final List<Function<RequestDelegate, RequestDelegate>> layers;
+    private final ServiceProvider serviceProvider;
 
     public Application(
-            List<Function<RequestDelegate, RequestDelegate>> layers
+            List<Function<RequestDelegate, RequestDelegate>> layers,
+            ServiceProvider serviceProvider
     ) {
         Ensure.that(layers).isNotNull();
+        Ensure.that(serviceProvider).isNotNull();
 
         this.layers = layers;
+        this.serviceProvider = serviceProvider;
     }
 
     public void run() {
@@ -27,7 +32,7 @@ public class Application {
         Request request = new Request(start);
         while (true) {
             try {
-                Response response = requestDelegate.invoke(request);
+                Response response = requestDelegate.invoke(new MenuContext(this.serviceProvider, request));
                 if (response == null || response.resource().isExit()) {
                     break;
                 }
@@ -40,7 +45,7 @@ public class Application {
 
     private RequestDelegate buildDelegate()
     {
-        RequestDelegate layer = request -> new MenuNotFound().notFound(Param.empty());
+        RequestDelegate layer = menuContext -> new MenuNotFound().notFound(Param.empty());
         for (var c = this.layers.size() - 1; c >= 0; c--)
         {
             layer = this.layers.get(c).apply(layer);
