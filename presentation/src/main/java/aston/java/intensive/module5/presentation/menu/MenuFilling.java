@@ -3,6 +3,8 @@ package aston.java.intensive.module5.presentation.menu;
 
 import aston.java.intensive.module5.application.AppContext;
 import aston.java.intensive.module5.application.UserService;
+import aston.java.intensive.module5.application.filling.exception.UserAbortException;
+import aston.java.intensive.module5.application.filling.strategy.FromFileFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.domain.User;
@@ -28,16 +30,16 @@ public final class MenuFilling {
     @Action("choiceCount")
     public Response choiceCount(Param param) {
         console.output("Введите количество пользователей: ");
-        var choice = console.readInt("< ");
+        var choice = console.readString("< ");
 
-        if (choice <= 0) {
-            console.output("Введите положительное число: ");
+        if (!choice.matches("\\d+")  ) {
+            console.output("Непраильный ввод: ");
             return new Response(new Resource("filling", "choiceCount"));
         }
 
         return new Response(
                 new Resource("filling", "choiceStrategy"),
-                new Param(Integer.toString(choice))
+                new Param(choice)
         );
     }
 
@@ -90,6 +92,16 @@ public final class MenuFilling {
     @Action("fillFromFile")
     public Response fillFromFile(Param param) {
         console.output("Из файла");
+        var count = Integer.parseInt(param.message());
+
+        try {
+            userService.fillUsers(count, new FromFileFillingStrategy());
+        } catch (UserAbortException e) {
+            console.output(e.getMessage());
+            return new Response(new Resource("index", "index"));
+        }
+
+        showUsers();
 
         return new Response(new Resource("index", "index"));
     }

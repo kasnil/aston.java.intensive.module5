@@ -23,9 +23,7 @@ public class UserService {
 
     public List<User> getAllUsers() {return this.repository.all();}
 
-    public void fillUsers(int count, FillingStrategy<User> strategy) {
-        strategy.fill(count, repository);
-    }
+    public void fillUsers(int count, FillingStrategy<User> strategy) {strategy.fill(count, repository);}
 
     public List<User> sortUsers(List<String> byFieldsOrder, SortStrategy<User> sortStrategy) {
 
