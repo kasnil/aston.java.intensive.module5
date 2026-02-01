@@ -1,4 +1,4 @@
-package aston.java.intensive.module5.utils.menu;
+package aston.java.intensive.module5.utils;
 
 public class NotSupportedException extends RuntimeException {
     public NotSupportedException(String message) {

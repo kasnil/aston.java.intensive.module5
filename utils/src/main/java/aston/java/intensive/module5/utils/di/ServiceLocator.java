@@ -33,7 +33,7 @@ public class ServiceLocator {
         this.services.add(descriptor);
     }
 
-    public List<Class> getServices() {
-        return services.getServices().stream().map(ServiceDescriptor::serviceClass).toList();
+    public List<ServiceDescriptor> getServices() {
+        return List.copyOf(services.getServices());
     }
 }
