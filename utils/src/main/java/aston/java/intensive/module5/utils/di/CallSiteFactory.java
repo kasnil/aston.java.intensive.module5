@@ -74,7 +74,7 @@ public class CallSiteFactory {
             }
 
             if (serviceDescriptor.implementationInstance() != null) {
-                callSite = new ConstantCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.implementationInstance());
+                callSite = new ValueCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.implementationInstance());
             }
             else {
                 callSite = createConstructorCallSite(serviceDescriptor.serviceClass(), serviceDescriptor.theImplementationClass());
