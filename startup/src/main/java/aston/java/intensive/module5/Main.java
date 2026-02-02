@@ -6,6 +6,14 @@ import aston.java.intensive.module5.application.filling.strategy.FromFileUserFil
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.application.serializer.JsonSerializerUserService;
+import aston.java.intensive.module5.application.sort.SortStrategyFactory;
+import aston.java.intensive.module5.application.sort.strategy.BubbleUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.HeapUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.InsertionUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.MergeUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.OddEvenUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.QuickUserSortStrategy;
+import aston.java.intensive.module5.application.sort.strategy.SelectUserSortStrategy;
 import aston.java.intensive.module5.infrastructure.db.MemoryCache;
 import aston.java.intensive.module5.infrastructure.db.Store;
 import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
@@ -38,6 +46,14 @@ public class Main {
                     services.addSingleton(ManuallyUserFillingStrategy.class);
                     services.addSingleton(RandomUserFillingStrategy.class);
                     services.addSingleton(FillingStrategyFactory.class);
+                    services.addSingleton(BubbleUserSortStrategy.class);
+                    services.addSingleton(HeapUserSortStrategy.class);
+                    services.addSingleton(InsertionUserSortStrategy.class);
+                    services.addSingleton(MergeUserSortStrategy.class);
+                    services.addSingleton(OddEvenUserSortStrategy.class);
+                    services.addSingleton(QuickUserSortStrategy.class);
+                    services.addSingleton(SelectUserSortStrategy.class);
+                    services.addSingleton(SortStrategyFactory.class);
                 });
         applicationBuilder.build().run();
     }
