@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class Table<T extends Identifiable<Long>> {
+public abstract class StoreSet<T extends Identifiable<Long>> {
     private final Map<Long,T> table = new ConcurrentHashMap<>();
     private final AtomicLong sequence = new AtomicLong(1);
 

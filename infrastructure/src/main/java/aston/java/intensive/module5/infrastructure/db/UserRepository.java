@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRepository implements Repository<User> {
-    private final Table<User> store;
+    private final StoreSet<User> store;
 
     public UserRepository(Store store) {
-        this.store = store.getUserTable();
+        this.store = store.getUserSet();
     }
 
     @Override
