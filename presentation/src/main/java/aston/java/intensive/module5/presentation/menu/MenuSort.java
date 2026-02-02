@@ -1,6 +1,8 @@
 package aston.java.intensive.module5.presentation.menu;
 
 import aston.java.intensive.module5.application.UserService;
+import aston.java.intensive.module5.application.sort.SortStrategyFactory;
+import aston.java.intensive.module5.application.sort.SortStrategyKind;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
@@ -20,13 +22,16 @@ import java.util.List;
 public final class MenuSort {
     private final IOService console;
     private final UserService userService;
+    private final SortStrategyFactory sortStrategyFactory;
 
     public MenuSort(
             UserService userService,
-            IOService console
+            IOService console,
+            SortStrategyFactory sortStrategyFactory
     ) {
         this.userService = userService;
         this.console = console;
+        this.sortStrategyFactory = sortStrategyFactory;
     }
 
     @Action("chooseSortOrder")
@@ -102,7 +107,7 @@ public final class MenuSort {
         }
 
         try {
-             SortStrategy<User> strategy = new QuickSortStrategy<>();
+             SortStrategy<User> strategy = sortStrategyFactory.getSortStrategy(SortStrategyKind.Quick);
              List<User> users = userService.sortUsers(selected, strategy);
 
             console.output("Результат сортировки:");
