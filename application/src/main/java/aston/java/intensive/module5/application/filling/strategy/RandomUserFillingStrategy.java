@@ -17,10 +17,6 @@ public class RandomUserFillingStrategy implements FillingStrategy<User> {
         this.dataSet = dataSet;
     }
 
-    public RandomUserFillingStrategy() {
-        this(new DataSet());
-    }
-
     @Override
     public void fill(int count, Repository<User> repository) {
         for (int i = 0; i < count; i++) {

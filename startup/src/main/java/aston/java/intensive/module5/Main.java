@@ -1,6 +1,11 @@
 package aston.java.intensive.module5;
 
 import aston.java.intensive.module5.application.UserService;
+import aston.java.intensive.module5.application.filling.FillingStrategyFactory;
+import aston.java.intensive.module5.application.filling.strategy.FromFileUserFillingStrategy;
+import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
+import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
+import aston.java.intensive.module5.application.serializer.JsonSerializerUserService;
 import aston.java.intensive.module5.infrastructure.db.MemoryCache;
 import aston.java.intensive.module5.infrastructure.db.Store;
 import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
@@ -10,6 +15,8 @@ import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.presentation.menu.MenuFilling;
 import aston.java.intensive.module5.presentation.menu.MenuSort;
 import aston.java.intensive.module5.presentation.menu.MenuStart;
+import aston.java.intensive.module5.utils.faker.DataLocale;
+import aston.java.intensive.module5.utils.faker.DataSet;
 import aston.java.intensive.module5.utils.menu.ApplicationBuilder;
 
 public class Main {
@@ -25,6 +32,12 @@ public class Main {
                     services.addSingleton(UnitOfWork.class);
                     services.addSingleton(UserService.class);
                     services.addSingleton(IOService.class, ConsoleService.class);
+                    services.addSingleton(JsonSerializerUserService.class);
+                    services.addSingleton(DataSet.class, new DataSet(DataLocale.Ru));
+                    services.addSingleton(FromFileUserFillingStrategy.class);
+                    services.addSingleton(ManuallyUserFillingStrategy.class);
+                    services.addSingleton(RandomUserFillingStrategy.class);
+                    services.addSingleton(FillingStrategyFactory.class);
                 });
         applicationBuilder.build().run();
     }

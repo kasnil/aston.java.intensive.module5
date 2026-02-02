@@ -20,10 +20,6 @@ public class ManuallyUserFillingStrategy implements FillingStrategy<User> {
         this.input = new ConsoleInputHelper(console);
     }
 
-    public ManuallyUserFillingStrategy() {
-        this(new ConsoleService());
-    }
-
     @Override
     public void fill(int count, Repository<User> repository) {
 
