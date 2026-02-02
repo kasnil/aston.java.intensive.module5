@@ -4,6 +4,7 @@ import aston.java.intensive.module5.utils.ArrayUtils;
 import aston.java.intensive.module5.utils.ListsUtils;
 import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
+import aston.java.intensive.module5.utils.di.ServiceCollection;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.di.ServiceProvider;
 import aston.java.intensive.module5.utils.di.ServiceProviderImpl;
@@ -18,7 +19,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ApplicationBuilder {
     private final ServiceLocator serviceLocator = new ServiceLocator();
@@ -40,6 +43,11 @@ public class ApplicationBuilder {
             var factory = build(method, next);
             return request -> factory.apply(handlerClass, request);
         });
+        return this;
+    }
+
+    public ApplicationBuilder configureServices(Consumer<ServiceCollection> services) {
+        services.accept(this.serviceLocator.getServices());
         return this;
     }
 
