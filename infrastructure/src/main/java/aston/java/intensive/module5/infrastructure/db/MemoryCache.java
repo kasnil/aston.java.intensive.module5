@@ -1,6 +1,7 @@
 package aston.java.intensive.module5.infrastructure.db;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MemoryCache<T> implements Store<T> {
@@ -16,5 +17,33 @@ public class MemoryCache<T> implements Store<T> {
 
     public int size() {
         return cache.size();
+    }
+
+    @Override
+    public boolean delete(T t) {
+        return false;
+    }
+
+    @Override
+    public void save(T t) {}
+
+    @Override
+    public boolean update(T t) {
+        return false;
+    }
+
+    @Override
+    public Optional<T> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void resetSequence() {
+
     }
 }

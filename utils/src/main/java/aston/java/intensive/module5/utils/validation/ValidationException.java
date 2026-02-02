@@ -20,7 +20,11 @@ public class ValidationException extends RuntimeException {
                 ? buildErrorMessage(errors)
                 : message + " " + buildErrorMessage(errors);
         super(errorMessage);
-        this.errors = errors;
+        if (errors == null) {
+            this.errors = Collections.emptyList();
+        } else {
+            this.errors = errors;
+        }
     }
 
     public ValidationException(List<ValidationFailure> errors) {

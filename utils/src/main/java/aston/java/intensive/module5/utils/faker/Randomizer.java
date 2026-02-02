@@ -1,7 +1,9 @@
 package aston.java.intensive.module5.utils.faker;
 
+import aston.java.intensive.module5.utils.ByteUtils;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public final class Randomizer {
@@ -31,12 +33,10 @@ public final class Randomizer {
 
     public String password(int length)
     {
-        var result = "";
-
-        while(result.length() < length) {
-            result += (char)number(33, 127); // ASCII
+        byte[] ascii = new byte[length];
+        for (int i = 0; i < length; i++) {
+            ascii[i] = ByteUtils.checkedCast(number(33, 127)); // ASCII
         }
-
-        return result;
+        return new String(ascii, StandardCharsets.US_ASCII);
     }
 }

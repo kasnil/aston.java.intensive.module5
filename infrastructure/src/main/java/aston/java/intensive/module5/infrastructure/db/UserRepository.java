@@ -3,6 +3,7 @@ package aston.java.intensive.module5.infrastructure.db;
 import aston.java.intensive.module5.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepository implements Repository<User> {
     private final Store<User> store;
@@ -14,5 +15,45 @@ public class UserRepository implements Repository<User> {
     @Override
     public List<User> all() {
         return store.findAll();
+    }
+
+    @Override
+    public void deleteAll() {
+        store.clear();
+    }
+
+    @Override
+    public int count() {
+        return store.size();
+    }
+
+    @Override
+    public boolean delete(User user) {
+        return store.delete(user);
+    }
+
+    @Override
+    public void add(User user) {
+        store.save(user);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return store.findById(id);
+    }
+
+    @Override
+    public boolean update(User user) {
+        return store.update(user);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return store.isEmpty();
+    }
+
+    @Override
+    public void resetSequence() {
+        store.resetSequence();
     }
 }

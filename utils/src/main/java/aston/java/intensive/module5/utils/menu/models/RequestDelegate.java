@@ -1,3 +1,8 @@
 package aston.java.intensive.module5.utils.menu.models;
 
-public record RequestDelegate(Request request) { }
+import aston.java.intensive.module5.utils.menu.MenuContext;
+
+@FunctionalInterface
+public interface RequestDelegate{
+    Response invoke(MenuContext menuContext);
+}
