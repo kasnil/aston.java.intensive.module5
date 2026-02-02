@@ -20,7 +20,7 @@ public class Main {
 
         AppContext.init(userService);
 
-        var applicationBuilder = new ApplicationBuilder();
+        var applicationBuilder = new ApplicationBuilder(Main.class);
         applicationBuilder
                 .addMenu(MenuGreet.class)
                 .addMenu(MenuFilling.class)

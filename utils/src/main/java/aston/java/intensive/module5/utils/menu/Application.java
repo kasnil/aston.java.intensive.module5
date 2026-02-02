@@ -11,19 +11,26 @@ public class Application {
     private final ApplicationResourceBundle resource = ApplicationResourceBundle.RESOURCES;
     private final List<Function<RequestDelegate, RequestDelegate>> layers;
     private final ServiceProvider serviceProvider;
+    private final ClassLoader classLoader;
+    private final ApplicationBannerPrinter applicationBannerPrinter;
 
     public Application(
             List<Function<RequestDelegate, RequestDelegate>> layers,
-            ServiceProvider serviceProvider
+            ServiceProvider serviceProvider,
+            ClassLoader classLoader
     ) {
         Ensure.that(layers).isNotNull();
         Ensure.that(serviceProvider).isNotNull();
+        Ensure.that(classLoader).isNotNull();
 
         this.layers = layers;
         this.serviceProvider = serviceProvider;
+        this.classLoader = classLoader;
+        this.applicationBannerPrinter = new ApplicationBannerPrinter(this.classLoader);
     }
 
     public void run() {
+        this.applicationBannerPrinter.print(System.out);
         var requestDelegate = buildDelegate();
         run(requestDelegate, getStartMenu());
     }
