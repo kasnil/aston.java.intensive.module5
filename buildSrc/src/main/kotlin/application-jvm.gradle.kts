@@ -9,3 +9,7 @@ plugins {
     // Apply the Application plugin to add support for building an executable JVM application.
     application
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
