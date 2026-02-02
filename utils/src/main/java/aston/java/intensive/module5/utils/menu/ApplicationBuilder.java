@@ -53,8 +53,8 @@ public class ApplicationBuilder {
         return this;
     }
 
-    public ApplicationBuilder configureServices(Consumer<ServiceCollection> services) {
-        services.accept(this.serviceLocator.getServices());
+    public ApplicationBuilder configureServices(Consumer<ServiceLocator> services) {
+        services.accept(this.serviceLocator);
         return this;
     }
 

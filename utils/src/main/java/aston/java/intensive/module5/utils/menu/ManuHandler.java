@@ -6,6 +6,7 @@ import aston.java.intensive.module5.utils.NotSupportedException;
 import aston.java.intensive.module5.utils.ReflectUtils;
 import aston.java.intensive.module5.utils.di.ServiceDescriptor;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
+import aston.java.intensive.module5.utils.di.ServiceProvider;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.*;
@@ -34,7 +35,7 @@ public class ManuHandler implements Layer {
                 continue;
             }
             if (routeMenu.equals(menuContext.request().resource().menu().value())) {
-                return route(menuContext.request(), menuClass).orElseThrow();
+                return route(menuContext.serviceProvider(), menuContext.request(), menuClass).orElseThrow();
             }
         }
 
@@ -42,7 +43,7 @@ public class ManuHandler implements Layer {
             var menuAnnotation = ReflectUtils.getAnnotation(defaultMenuClass, Menu.class);
             var routeMenu = menuAnnotation.get().value();
             if (routeMenu.equals(menuContext.request().resource().menu().value())) {
-                return route(menuContext.request(), defaultMenuClass).orElseThrow();
+                return route(menuContext.serviceProvider(), menuContext.request(), defaultMenuClass).orElseThrow();
             }
         }
 
@@ -53,15 +54,18 @@ public class ManuHandler implements Layer {
         }
     }
 
-    private Optional<Response> route(Request request, Class<?> targetMenuClass) {
-        var menu = ReflectUtils.newInstance(targetMenuClass);
-        var methods = ReflectUtils.getAnnotatedMethods(menu.getClass(), Action.class);
+    private Optional<Response> route(ServiceProvider serviceProvider, Request request, Class<?> targetMenuClass) {
+        var menu = serviceProvider.getService(targetMenuClass);
+        if (menu.isErr()) {
+            return Optional.empty();
+        }
+        var methods = ReflectUtils.getAnnotatedMethods(targetMenuClass, Action.class);
         for (Method method : methods) {
             var annotation = ReflectUtils.getAnnotation(method, Action.class).orElseThrow(() -> new NotSupportedException(String.format("The '%s' method not supported.", method.getName())));
             if (annotation.value().equals(request.resource().action().value()) || annotation.value().equals(ResourceAction.DEFAULT)) {
                 Object response;
                 try {
-                    response = method.invoke(menu, ArrayUtils.newArray(request.param()));
+                    response = method.invoke(menu.getValue(), ArrayUtils.newArray(request.param()));
                     if (response instanceof Response) {
                         return Optional.of((Response)response);
                     }
