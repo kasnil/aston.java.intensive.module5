@@ -5,7 +5,6 @@ import aston.java.intensive.module5.application.filling.exception.UserAbortExcep
 import aston.java.intensive.module5.application.serializer.JsonSerializerUserService;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.db.Repository;
-import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.serializer.json.*;
 
@@ -15,19 +14,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FromFileFillingStrategy implements FillingStrategy<User> {
+public class FromFileUserFillingStrategy implements FillingStrategy<User> {
 
     private final IOService console;
     private final JsonSerializerUserService serializer;
     // задаётся динамически
     private Path filePath;
 
-    public FromFileFillingStrategy(IOService console, JsonSerializerUserService serializer) {
+    public FromFileUserFillingStrategy(IOService console, JsonSerializerUserService serializer) {
         this.console = console;
         this.serializer = serializer;
-    }
-    public FromFileFillingStrategy() {
-        this(new ConsoleService(),new JsonSerializerUserService());
     }
 
     @Override

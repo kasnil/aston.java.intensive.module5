@@ -1,8 +1,10 @@
 package aston.java.intensive.module5.presentation.menu;
 
 import aston.java.intensive.module5.application.UserService;
+import aston.java.intensive.module5.application.filling.FillingStrategyFactory;
 import aston.java.intensive.module5.application.filling.exception.UserAbortException;
-import aston.java.intensive.module5.application.filling.strategy.FromFileFillingStrategy;
+import aston.java.intensive.module5.application.filling.strategy.FillingStrategyKind;
+import aston.java.intensive.module5.application.filling.strategy.FromFileUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.domain.User;
@@ -18,13 +20,16 @@ import aston.java.intensive.module5.utils.menu.models.Response;
 public final class MenuFilling {
     private final IOService console;
     private final UserService userService;
+    private final FillingStrategyFactory fillingStrategyFactory;
 
     public MenuFilling(
             UserService userService,
-            IOService console
+            IOService console,
+            FillingStrategyFactory fillingStrategyFactory
     ) {
         this.userService = userService;
         this.console = console;
+        this.fillingStrategyFactory = fillingStrategyFactory;
     }
 
     @Action("choiceCount")
@@ -70,7 +75,7 @@ public final class MenuFilling {
         console.output("Вручную");
         var count = Integer.parseInt(param.message());
 
-        userService.fillUsers(count, new ManuallyUserFillingStrategy());
+        userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Manually));
 
         showUsers();
 
@@ -82,7 +87,7 @@ public final class MenuFilling {
         console.output("Рандом");
         var count = Integer.parseInt(param.message());
 
-        userService.fillUsers(count, new RandomUserFillingStrategy());
+        userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Random));
 
         showUsers();
 
@@ -95,7 +100,7 @@ public final class MenuFilling {
         var count = Integer.parseInt(param.message());
 
         try {
-            userService.fillUsers(count, new FromFileFillingStrategy());
+            userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.FromFile));
         } catch (UserAbortException e) {
             console.output(e.getMessage());
             return new Response(new Resource("index", "index"));
