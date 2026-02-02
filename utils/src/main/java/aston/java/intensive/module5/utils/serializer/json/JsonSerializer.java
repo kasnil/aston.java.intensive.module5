@@ -49,6 +49,30 @@ public abstract class JsonSerializer<T> implements Serializer<T>, SerializerColl
         }
     }
 
+    // С указанием в каком первом JsonObject ошибка
+    public Result<Collection<T>> deserializeCollectionExact(String json) {
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = parser.parse(json).asJsonObject().orElseThrow();
+            if (!jsonObject.containsKey("data")) {
+                return Result.err(new JsonException("Не корректный json"));
+            }
+            List<T> values = ListsUtils.newArrayList();
+            JsonArray jsonArray = jsonObject.get("data").orElseThrow().asJsonArray().orElseThrow();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                try {
+                    JsonObject obj = jsonArray.value().get(i).asJsonObject().orElseThrow();
+                    values.add(deserialize(obj).orElseThrow());
+                } catch (RuntimeException e) {
+                    throw new JsonException( e, "Ошибка в объекте №%d: %s", i + 1, e.getMessage() );
+                }
+            }
+            return Result.ok(values);
+        } catch (RuntimeException e) {
+            return Result.err(e);
+        }
+    }
+
     protected abstract Result<T> deserialize(JsonObject jsonObject);
 
     @Override

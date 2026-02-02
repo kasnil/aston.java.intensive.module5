@@ -1,5 +1,5 @@
 {
-  "users": [
+  "data": [
     {
       "name": "Ivan",
       "email": "ivan@mail.com",
@@ -12,7 +12,7 @@
     },
     {
       "name": "Petr",
-      "email": "petrmail.com",
+      "email": "petr@mail.com",
       "password": "password"
     }
   ]
