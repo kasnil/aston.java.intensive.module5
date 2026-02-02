@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -26,6 +27,12 @@ import java.util.function.Supplier;
 public class ApplicationBuilder {
     private final ServiceLocator serviceLocator = new ServiceLocator();
     private final List<Function<RequestDelegate, RequestDelegate>> layers = ListsUtils.newArrayList();
+    private final Class<?> primarySource;
+
+    public ApplicationBuilder(Class<?> primarySource) {
+        Ensure.that(primarySource).isNotNull();
+        this.primarySource = primarySource;
+    }
 
     public <T> ApplicationBuilder addMenu(Class<T> menuClass) {
         Ensure.that(menuClass).hasAnnotation(Menu.class);
@@ -78,6 +85,6 @@ public class ApplicationBuilder {
                 .setServiceCollection(serviceLocator.getServices())
                 .build();
 
-        return new Application(layers, serviceProvider);
+        return new Application(layers, serviceProvider, primarySource.getClassLoader());
     }
 }

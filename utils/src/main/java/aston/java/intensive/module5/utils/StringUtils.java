@@ -36,4 +36,32 @@ public final class StringUtils {
         }
         return trimmedStr;
     }
+
+    public static String replace(String inString, String oldPattern, String newPattern) {
+        if (isNullOrEmpty(inString) || isNullOrEmpty(oldPattern) || newPattern == null) {
+            return inString;
+        }
+        int index = inString.indexOf(oldPattern);
+        if (index == -1) {
+            return inString;
+        }
+
+        int capacity = inString.length();
+        if (newPattern.length() > oldPattern.length()) {
+            capacity += 16;
+        }
+        StringBuilder sb = new StringBuilder(capacity);
+
+        int pos = 0;
+        int patLen = oldPattern.length();
+        while (index >= 0) {
+            sb.append(inString, pos, index);
+            sb.append(newPattern);
+            pos = index + patLen;
+            index = inString.indexOf(oldPattern, pos);
+        }
+
+        sb.append(inString, pos, inString.length());
+        return sb.toString();
+    }
 }

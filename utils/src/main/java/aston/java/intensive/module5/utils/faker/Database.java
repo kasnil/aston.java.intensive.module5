@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public final class Database {
-    private static final String baseName = "data";
+    private static final String DATA_RESOURCE_NAME = "data";
 
     public static Optional<String> get(String category, DataLocale dataLocale)
     {
@@ -27,7 +27,7 @@ public final class Database {
 
     private static ResourceBundle getResource(DataLocale dataLocale) {
         var locale = dataLocale.getLocale();
-        ResourceBundle resource = ResourceBundle.getBundle(baseName, locale);
+        ResourceBundle resource = ResourceBundle.getBundle(DATA_RESOURCE_NAME, locale);
         return resource;
     }
 
