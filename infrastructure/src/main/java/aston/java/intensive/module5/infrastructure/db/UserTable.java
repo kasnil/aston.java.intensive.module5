@@ -1,4 +1,6 @@
 package aston.java.intensive.module5.infrastructure.db;
 
-public class UserTable {
+import aston.java.intensive.module5.domain.User;
+
+public class UserTable extends Table<User> {
 }

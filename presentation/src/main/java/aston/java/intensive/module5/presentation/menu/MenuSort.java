@@ -1,9 +1,7 @@
 package aston.java.intensive.module5.presentation.menu;
 
-import aston.java.intensive.module5.application.AppContext;
 import aston.java.intensive.module5.application.UserService;
 import aston.java.intensive.module5.domain.User;
-import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -21,11 +19,14 @@ import java.util.List;
 @Menu("sort")
 public final class MenuSort {
     private final IOService console;
+    private final UserService userService;
 
-    UserService userService = AppContext.userService();
-
-    public MenuSort() {
-        this.console = new ConsoleService();
+    public MenuSort(
+            UserService userService,
+            IOService console
+    ) {
+        this.userService = userService;
+        this.console = console;
     }
 
     @Action("chooseSortOrder")

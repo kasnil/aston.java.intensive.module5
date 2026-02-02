@@ -1,8 +1,6 @@
 package aston.java.intensive.module5.presentation.menu;
 
-import aston.java.intensive.module5.application.AppContext;
 import aston.java.intensive.module5.application.UserService;
-import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.presentation.menu.view.MenuItem;
 import aston.java.intensive.module5.utils.menu.models.Resource;
@@ -18,11 +16,14 @@ import java.util.stream.Collectors;
 @Menu("index")
 public final class MenuStart {
     private final IOService console;
+    private final UserService userService;
 
-    UserService userService = AppContext.userService();
-
-    public MenuStart() {
-        this.console = new ConsoleService();
+    public MenuStart(
+            UserService userService,
+            IOService console
+    ) {
+        this.userService = userService;
+        this.console = console;
     }
 
     @Action
@@ -32,10 +33,6 @@ public final class MenuStart {
         boolean hasUsers = !userService.isEmptyStore();
         int choice;
         Resource resource;
-
-        items.add(new MenuItem("Greet (en)", new Resource("greet", "en")));
-        items.add(new MenuItem("Greet (ru)", new Resource("greet", "ru")));
-        items.add(new MenuItem("Greet (es)", new Resource("greet", "es")));
 
         // Доступны только если есть пользователи
         items.add(new MenuItem("Сортировка", new Resource("sort", "chooseSortOrder"),() -> hasUsers));

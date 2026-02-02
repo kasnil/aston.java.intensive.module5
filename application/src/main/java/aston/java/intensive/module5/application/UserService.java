@@ -3,6 +3,7 @@ package aston.java.intensive.module5.application;
 import aston.java.intensive.module5.application.filling.FillingStrategy;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.db.Repository;
+import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
 import aston.java.intensive.module5.utils.sort.ComparatorFactory;
 import aston.java.intensive.module5.utils.sort.SortStrategy;
 
@@ -15,15 +16,15 @@ public class UserService {
 
    private static final Comparator<User> DEFAULT_ORDER = Comparator.comparing(User::getId);
 
-    private final Repository<User> repository;
+    private final UnitOfWork uow;
 
-    public UserService(Repository<User> repository) {
-        this.repository = repository;
+    public UserService(UnitOfWork uow) {
+        this.uow = uow;
     }
 
-    public List<User> getAllUsers() {return this.repository.all();}
+    public List<User> getAllUsers() {return this.uow.getUserRepository().all();}
 
-    public void fillUsers(int count, FillingStrategy<User> strategy) {strategy.fill(count, repository);}
+    public void fillUsers(int count, FillingStrategy<User> strategy) {strategy.fill(count, uow.getUserRepository());}
 
     public List<User> sortUsers(List<String> byFieldsOrder, SortStrategy<User> sortStrategy) {
 
@@ -31,7 +32,7 @@ public class UserService {
 
         if (byFieldsOrder == null || byFieldsOrder.isEmpty()) {throw new IllegalArgumentException("Порядок сортировки отсутсвует");}
 
-        List<User> users = new ArrayList<>(this.repository.all());
+        List<User> users = new ArrayList<>(this.uow.getUserRepository().all());
         if (users == null || users.isEmpty()) {return List.of();}
 
         Comparator<User> comparator =
@@ -43,11 +44,11 @@ public class UserService {
     }
 
     public boolean isEmptyStore() {
-        return this.repository.isEmpty();
+        return this.uow.getUserRepository().isEmpty();
     }
 
     public void resetUserStore() {
-        this.repository.deleteAll();
-        this.repository.resetSequence();
+        this.uow.getUserRepository().deleteAll();
+        this.uow.getUserRepository().resetSequence();
     }
 }

@@ -1,49 +1,16 @@
 package aston.java.intensive.module5.infrastructure.db;
 
+import aston.java.intensive.module5.domain.User;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class MemoryCache<T> implements Store<T> {
-    private final List<T> cache = new CopyOnWriteArrayList<>();
-
-    public List<T> findAll() {
-        return cache;
-    }
-
-    public void clear() {
-        cache.clear();
-    }
-
-    public int size() {
-        return cache.size();
-    }
+public class MemoryCache implements Store {
+    private final Table<User> userTable = new UserTable();
 
     @Override
-    public boolean delete(T t) {
-        return false;
-    }
-
-    @Override
-    public void save(T t) {}
-
-    @Override
-    public boolean update(T t) {
-        return false;
-    }
-
-    @Override
-    public Optional<T> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void resetSequence() {
-
+    public Table<User> getUserTable() {
+        return this.userTable;
     }
 }

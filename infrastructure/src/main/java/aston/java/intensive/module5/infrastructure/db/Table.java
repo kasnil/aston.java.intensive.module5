@@ -1,69 +1,61 @@
 package aston.java.intensive.module5.infrastructure.db;
 
 import aston.java.intensive.module5.domain.Identifiable;
+import aston.java.intensive.module5.utils.guard.Ensure;
 
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class MemoryCache1<T extends Identifiable<Long>> implements Store<T> {
+public abstract class Table<T extends Identifiable<Long>> {
     private final Map<Long,T> table = new ConcurrentHashMap<>();
     private final AtomicLong sequence = new AtomicLong(1);
 
 
-    @Override
     public List<T> findAll() {
         return List.copyOf(table.values());
     }
 
-    @Override
     public void clear() {
         table.clear();
     }
 
-    @Override
     public int size() {
         return table.size();
     }
 
-    @Override
-    public boolean delete(T t) {
-       return table.remove(t.getId()) != null;
+    public boolean delete(T entity) {
+       return table.remove(entity.getId()) != null;
     }
 
-    @Override
-    public void save(T t) {
-        Objects.requireNonNull(t);
+    public void save(T entity) {
+        Ensure.that(entity).isNotNull();
 
-        if (t.getId() == null) {
+        if (entity.getId() == null) {
             long id = sequence.getAndIncrement();
-            t.setId(id);
+            entity.setId(id);
         }
 
-        table.put(t.getId(), t);
+        table.put(entity.getId(), entity);
     }
 
-    @Override
-    public boolean update(T t) {
-        Objects.requireNonNull(t);
-        return t.getId() != null && table.replace(t.getId(), t) != null;
+    public boolean update(T entity) {
+        Ensure.that(entity).isNotNull();
+
+        return entity.getId() != null && table.replace(entity.getId(), entity) != null;
     }
 
-    @Override
     public Optional<T> findById(Long id) {
         return Optional.ofNullable(table.get(id));
     }
 
-    @Override
     public boolean isEmpty() {
         return table.isEmpty();
     }
 
-    @Override
     public void resetSequence() {
         sequence.set(1);
     }

@@ -1,14 +1,11 @@
 package aston.java.intensive.module5.presentation.menu;
 
-
-import aston.java.intensive.module5.application.AppContext;
 import aston.java.intensive.module5.application.UserService;
 import aston.java.intensive.module5.application.filling.exception.UserAbortException;
 import aston.java.intensive.module5.application.filling.strategy.FromFileFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.domain.User;
-import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -20,11 +17,14 @@ import aston.java.intensive.module5.utils.menu.models.Response;
 @Menu("filling")
 public final class MenuFilling {
     private final IOService console;
+    private final UserService userService;
 
-    UserService userService = AppContext.userService();
-
-    public MenuFilling() {
-        this.console = new ConsoleService();
+    public MenuFilling(
+            UserService userService,
+            IOService console
+    ) {
+        this.userService = userService;
+        this.console = console;
     }
 
     @Action("choiceCount")

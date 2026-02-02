@@ -3,6 +3,7 @@ package aston.java.intensive.module5.utils;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -62,6 +63,10 @@ public class Result<T> extends ResultEmpty {
 
     public static <T> Result<T> err(RuntimeException exception) {
         return new Result<>(null, exception);
+    }
+
+    public Optional<T> toOptional() {
+        return Optional.ofNullable(this.value);
     }
 
     public boolean equals(Object obj) {
