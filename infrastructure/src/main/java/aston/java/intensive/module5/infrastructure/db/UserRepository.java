@@ -9,7 +9,7 @@ public class UserRepository implements Repository<User> {
     private final StoreSet<User> store;
 
     public UserRepository(Store store) {
-        this.store = store.getUserSet();
+        this.store = store.getUserStoreSet();
     }
 
     @Override
