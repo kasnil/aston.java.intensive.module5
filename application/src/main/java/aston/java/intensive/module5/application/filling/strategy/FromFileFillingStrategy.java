@@ -46,7 +46,6 @@ public class FromFileFillingStrategy implements FillingStrategy<User> {
                 console.output(e.getMessage());
             }
         }
-
     }
 
     private Path requestFilePath() {
@@ -85,11 +84,12 @@ public class FromFileFillingStrategy implements FillingStrategy<User> {
     private List<User> deserializeAndValidateUsers(String jsonText, int count) {
         Collection<User> users;
         try {
-            users = serializer.deserializeCollectionExact(jsonText).orElseThrow();
+            users = serializer.deserializeCollection(jsonText).orElseThrow();
         } catch (RuntimeException e) {
             throw new IllegalStateException( "Ошибка в файле: " + e.getMessage(), e );
+        }
 
-        } if (users.size() < count) {
+        if (users.size() < count) {
             throw new IllegalStateException("Недостаточно пользователей в файле. Всего в файле:  " + users.size() + " пользователей.");
         }
 
