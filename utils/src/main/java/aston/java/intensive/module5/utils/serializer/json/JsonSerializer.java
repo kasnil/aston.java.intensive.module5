@@ -38,8 +38,14 @@ public abstract class JsonSerializer<T> implements Serializer<T>, SerializerColl
             if (jsonObject.containsKey("data")) {
                 List<T> values = ListsUtils.newArrayList();
                 JsonArray jsonArray = jsonObject.get("data").orElseThrow().asJsonArray().orElseThrow();
+                int current = 1;
                 for (JsonValue jsonValue : jsonArray) {
-                    values.add(deserialize(jsonValue.asJsonObject().orElseThrow()).orElseThrow());
+                    try {
+                        values.add(deserialize(jsonValue.asJsonObject().orElseThrow()).orElseThrow());
+                    } catch (RuntimeException e) {
+                        throw new JsonException(e, "Ошибка в объекте №%d: %s", current, e.getMessage() );
+                    }
+                    current++;
                 }
                 return Result.ok(values);
             }

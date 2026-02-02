@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FromFileFillingStrategy implements FillingStrategy<User> {
@@ -36,7 +37,7 @@ public class FromFileFillingStrategy implements FillingStrategy<User> {
             try {
                 Path path = requestFilePath();
                 String json = readFile(path);
-                List<User> users = parseUsers(json, count);
+                List<User> users = deserializeAndValidateUsers(json, count);
                 users.forEach(repository::add);
                 return;
             } catch (UserAbortException e) {
@@ -45,7 +46,6 @@ public class FromFileFillingStrategy implements FillingStrategy<User> {
                 console.output(e.getMessage());
             }
         }
-
     }
 
     private Path requestFilePath() {
@@ -81,38 +81,18 @@ public class FromFileFillingStrategy implements FillingStrategy<User> {
         }
     }
 
-    private List<User> parseUsers(String jsonText, int count) {
-
-        JsonParser parser = new JsonParser();
-        JsonValue parsed = parser.parse(jsonText);
-
-        if (!(parsed instanceof JsonObject root)) {
-            throw new IllegalStateException("Ожидался JsonObject");
+    private List<User> deserializeAndValidateUsers(String jsonText, int count) {
+        Collection<User> users;
+        try {
+            users = serializer.deserializeCollection(jsonText).orElseThrow();
+        } catch (RuntimeException e) {
+            throw new IllegalStateException( "Ошибка в файле: " + e.getMessage(), e );
         }
-
-        JsonArray users = root.get("users")
-                .filter(v -> v instanceof JsonArray)
-                .map(v -> (JsonArray) v)
-                .orElseThrow(() -> new IllegalStateException("Список 'users' не найден"));
 
         if (users.size() < count) {
-            throw new IllegalStateException("Недостаточно пользователей в файле");
+            throw new IllegalStateException("Недостаточно пользователей в файле. Всего в файле:  " + users.size() + " пользователей.");
         }
 
-        List<User> result = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            JsonObject userJson = (JsonObject) users.value().get(i);
-            try {
-                result.add(serializer.jsonToUser(userJson));
-            } catch (IllegalArgumentException e) {
-                throw new IllegalStateException(
-                        "Ошибка в пользователе №" + (i + 1) + ": " +
-                                (e.getCause() != null ? e.getCause().getMessage() : e.getMessage()),
-                        e
-                );
-            }
-        }
-
-        return result;
+        return new ArrayList<>(users).subList(0, count);
     }
 }
