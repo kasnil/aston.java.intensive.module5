@@ -18,24 +18,9 @@ public class ConsoleService implements IOService {
     }
 
     @Override
-    public int readIntOrDefault(int defaultValue) {
-        try {
-            return Integer.parseInt(input.nextLine());
-        }catch (Exception e) {
-            return defaultValue;
-        }
-    }
-
-    @Override
     public int readInt(String prompt) {
         output(prompt);
         return readInt();
-    }
-
-    @Override
-    public int readIntOrDefault(String prompt, int defaultValue) {
-        output(prompt);
-        return readIntOrDefault(defaultValue);
     }
 
     @Override
