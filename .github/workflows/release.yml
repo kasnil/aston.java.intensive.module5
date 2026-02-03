@@ -43,7 +43,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: "🔨 Build with Gradle"
-        run: ./gradlew installDist
+        run: ./gradlew distZip
 
   # -------------------------------------------------
   # 3️⃣ PUBLISH
