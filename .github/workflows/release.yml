@@ -57,5 +57,5 @@ jobs:
         with:
           name: distribution-zip
           path: |
-            build/distributions/*.zip
+            startup/build/distributions/*.zip
             retention-days: 3
