@@ -4,6 +4,7 @@ import aston.java.intensive.module5.domain.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 public class UserRepository implements Repository<User> {
     private final StoreSet<User> store;
@@ -55,5 +56,10 @@ public class UserRepository implements Repository<User> {
     @Override
     public void resetSequence() {
         store.resetSequence();
+    }
+
+    @Override
+    public int counterN(User entity, ExecutorService executor) {
+        return store.counterN(entity, executor);
     }
 }

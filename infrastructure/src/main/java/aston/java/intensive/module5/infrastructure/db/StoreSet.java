@@ -1,6 +1,7 @@
 package aston.java.intensive.module5.infrastructure.db;
 
 import aston.java.intensive.module5.domain.Identifiable;
+import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.utils.guard.Ensure;
 
 
@@ -8,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class StoreSet<T extends Identifiable<Long>> {
@@ -58,5 +62,32 @@ public abstract class StoreSet<T extends Identifiable<Long>> {
 
     public void resetSequence() {
         sequence.set(1);
+    }
+
+    public int counterN(T entity, ExecutorService executor) {
+        Ensure.that(entity).isNotNull();
+
+        AtomicInteger counter = new AtomicInteger(0);
+        CountDownLatch latch = new CountDownLatch(table.size());
+
+        table.values().forEach(t ->
+                executor.submit(() -> {
+                    try {
+                        if (entity.equals(t)) {
+                            counter.incrementAndGet();
+                        }
+                    } finally {
+                        latch.countDown();
+                    }
+                })
+        );
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return counter.get();
     }
 }

@@ -38,6 +38,7 @@ public final class MenuStart {
         items.add(new MenuItem("Сортировка", new Resource("sort", "chooseSortOrder"),() -> hasUsers));
         items.add(new MenuItem("Перезаписать пользователей", new Resource("filling", "overwrite"), () -> hasUsers));
         items.add(new MenuItem("Добавить пользователей", new Resource("filling", "choiceCount"), () -> hasUsers));
+        items.add(new MenuItem("Задача 4", new Resource("additional-tasks", "4"), () -> hasUsers));
         //
 
         items.add(new MenuItem("Заполнение", new Resource("filling", "choiceCount"), () -> !hasUsers));

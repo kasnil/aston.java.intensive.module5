@@ -3,6 +3,7 @@ package aston.java.intensive.module5.infrastructure.db;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 public interface Repository<T> {
     List<T> all();
@@ -22,4 +23,6 @@ public interface Repository<T> {
     boolean isEmpty();
 
     void resetSequence();
+
+    int counterN(T entity, ExecutorService executor);
 }

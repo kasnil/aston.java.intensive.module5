@@ -4,12 +4,16 @@ import aston.java.intensive.module5.application.filling.FillingStrategy;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.db.Repository;
 import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
+import aston.java.intensive.module5.utils.guard.Ensure;
 import aston.java.intensive.module5.utils.sort.ComparatorFactory;
 import aston.java.intensive.module5.utils.sort.SortStrategy;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class UserService {
@@ -51,4 +55,28 @@ public class UserService {
         this.uow.getUserRepository().deleteAll();
         this.uow.getUserRepository().resetSequence();
     }
+
+    public int counterN(User user) {
+        if (user == null) {throw new IllegalArgumentException("Не задан пользователь");}
+
+        ExecutorService executor =
+                Executors.newFixedThreadPool(
+                        Runtime.getRuntime().availableProcessors()
+                );
+
+        try {
+            return uow.getUserRepository().counterN(user, executor);
+        } finally {
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
 }

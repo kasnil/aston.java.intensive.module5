@@ -1,8 +1,12 @@
 package aston.java.intensive.module5.presentation.menu;
 
 import aston.java.intensive.module5.application.UserService;
+import aston.java.intensive.module5.application.filling.helper.ConsoleInputHelper;
 import aston.java.intensive.module5.application.serializer.CsvSerializerUserService;
 import aston.java.intensive.module5.domain.User;
+import aston.java.intensive.module5.domain.dto.Email;
+import aston.java.intensive.module5.domain.dto.Password;
+import aston.java.intensive.module5.domain.dto.UserName;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
@@ -24,6 +28,7 @@ public final class MenuAdditionalTasks {
     private final IOService console;
     private final UserService userService;
     private final CsvSerializerUserService csvSerializerUserService;
+    private final ConsoleInputHelper inputHelper;
 
     public MenuAdditionalTasks(
             UserService userService,
@@ -33,9 +38,10 @@ public final class MenuAdditionalTasks {
         this.userService = userService;
         this.console = console;
         this.csvSerializerUserService = csvSerializerUserService;
+        this.inputHelper = new ConsoleInputHelper(console);
     }
 
-    @Action
+    @Action("index")
     public Response index(Param param) {
         var answer = console.readInt("""
                 Select:
@@ -107,14 +113,38 @@ public final class MenuAdditionalTasks {
 
     @Action("4")
     public Response task4(Param param) {
-        console.output("В процессе реализации");
-        return new Response(new Resource("additional-tasks"));
+        console.output("Задача 4");
+
+        try {
+            UserName name = inputHelper.readValidated("Введите имя: ", UserName::of);
+            Email email = inputHelper.readValidated("Введите email: ", Email::of);
+            Password password = inputHelper.readValidated("Введите пароль: ", Password::of);
+
+            User user = new User.Builder()
+                    .setName(name)
+                    .setEmail(email)
+                    .setPassword(password)
+                    .build();
+
+            console.output(user);
+
+            int count = userService.counterN(user);
+
+            console.output("Количество вхождений: " + count);
+
+        } catch (IllegalArgumentException e) {
+            console.output("Ошибка: " + e.getMessage());
+        } catch (Exception e) {
+            console.output("Произошла ошибка: " + e.getMessage());
+        }
+
+        return new Response(new Resource("index"));
     }
+
 
     @Action("not-found")
     public Response notFound(Param param) {
         console.output("Некорректный выбор");
-
         return new Response(new Resource("additional-tasks"));
     }
 }
