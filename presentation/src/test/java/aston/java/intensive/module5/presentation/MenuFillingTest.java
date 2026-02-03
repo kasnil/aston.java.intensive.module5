@@ -10,6 +10,7 @@ import aston.java.intensive.module5.infrastructure.db.Store;
 import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
 import aston.java.intensive.module5.infrastructure.db.UserRepository;
 import aston.java.intensive.module5.infrastructure.io.IOService;
+import aston.java.intensive.module5.presentation.menu.MenuFilling;
 import aston.java.intensive.module5.presentation.menu.MenuStart;
 import aston.java.intensive.module5.utils.di.ServiceLocator;
 import aston.java.intensive.module5.utils.di.ServiceProviderImpl;
@@ -20,12 +21,19 @@ import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MenuStartTest {
+public class MenuFillingTest {
     @Test
-    public void testIndexActionSelectSort() {
+    public void testFillRandomAction() {
+        AtomicInteger counter = new AtomicInteger(0);
+        var countUsers = 2;
+
         var serviceLocator = getBaseServiceLocator();
         serviceLocator.addSingleton(IOService.class, new IOService() {
             @Override
@@ -40,7 +48,7 @@ public class MenuStartTest {
 
             @Override
             public int readInt(String prompt) {
-                return 1;
+                return 0;
             }
 
             @Override
@@ -60,6 +68,9 @@ public class MenuStartTest {
 
             @Override
             public void output(Object message) {
+                if (message.toString().startsWith("User")) {
+                    counter.incrementAndGet();
+                }
             }
         });
 
@@ -68,13 +79,14 @@ public class MenuStartTest {
                 .build();
 
         UserService userService = assertDoesNotThrow(() -> serviceProvider.getService(UserService.class).orElseThrow());
-        FillingStrategy<User> randomUserFillingStrategy = assertDoesNotThrow(() -> serviceProvider.getService(RandomUserFillingStrategy.class).orElseThrow());
-        userService.fillUsers(10, randomUserFillingStrategy);
+        MenuFilling menu = assertDoesNotThrow(() -> serviceProvider.getService(MenuFilling.class).orElseThrow());
 
-        MenuStart menu = assertDoesNotThrow(() -> serviceProvider.getService(MenuStart.class).orElseThrow());
-        Param param = Param.empty();
-        var resource = menu.index(param);
-        assertEquals(new Response(new Resource("sort", "chooseSortOrder"), param), resource);
+        Param param = new Param(countUsers);
+        var resource = menu.fillRandom(param);
+
+        assertEquals(countUsers, counter.get());
+        assertEquals(countUsers, userService.getAllUsers().size());
+        assertEquals(new Response(new Resource("index", "index")), resource);
     }
 
     private ServiceLocator getBaseServiceLocator() {
@@ -86,7 +98,7 @@ public class MenuStartTest {
         serviceLocator.addSingleton(DataSet.class, new DataSet(DataLocale.Ru));
         serviceLocator.addSingleton(RandomUserFillingStrategy.class);
         serviceLocator.addSingleton(FillingStrategyFactory.class);
-        serviceLocator.addSingleton(MenuStart.class);
+        serviceLocator.addSingleton(MenuFilling.class);
 
         return serviceLocator;
     }
