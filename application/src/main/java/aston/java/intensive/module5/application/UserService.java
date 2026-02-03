@@ -2,7 +2,6 @@ package aston.java.intensive.module5.application;
 
 import aston.java.intensive.module5.application.filling.FillingStrategy;
 import aston.java.intensive.module5.domain.User;
-import aston.java.intensive.module5.infrastructure.db.Repository;
 import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
 import aston.java.intensive.module5.utils.sort.ComparatorFactory;
 import aston.java.intensive.module5.utils.sort.SortStrategy;

@@ -9,8 +9,15 @@ import aston.java.intensive.module5.application.sort.strategy.QuickUserSortStrat
 import aston.java.intensive.module5.application.sort.strategy.SelectUserSortStrategy;
 import aston.java.intensive.module5.utils.di.ServiceProvider;
 import aston.java.intensive.module5.utils.sort.SortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.BubbleSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.HeapSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.InsertionSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.MergeSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.OddEvenSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.QuickSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.SelectSortStrategy;
 
-public class SortStrategyFactory {
+public class SortStrategyFactory<T> {
     private final ServiceProvider serviceProvider;
 
     public SortStrategyFactory(
@@ -20,15 +27,15 @@ public class SortStrategyFactory {
         this.serviceProvider = serviceProvider;
     }
 
-    public SortStrategy getSortStrategy(SortStrategyKind kind) {
+    public SortStrategy<T> getSortStrategy(SortStrategyKind kind) {
         return switch (kind) {
-            case Bubble -> serviceProvider.getService(BubbleUserSortStrategy.class).orElseThrow();
-            case Heap -> serviceProvider.getService(HeapUserSortStrategy.class).orElseThrow();
-            case Insertion -> serviceProvider.getService(InsertionUserSortStrategy.class).orElseThrow();
-            case Merge -> serviceProvider.getService(MergeUserSortStrategy.class).orElseThrow();
-            case OddEven -> serviceProvider.getService(OddEvenUserSortStrategy.class).orElseThrow();
-            case Quick -> serviceProvider.getService(QuickUserSortStrategy.class).orElseThrow();
-            case Select -> serviceProvider.getService(SelectUserSortStrategy.class).orElseThrow();
+            case Bubble -> serviceProvider.getService(BubbleSortStrategy.class).orElseThrow();
+            case Heap -> serviceProvider.getService(HeapSortStrategy.class).orElseThrow();
+            case Insertion -> serviceProvider.getService(InsertionSortStrategy.class).orElseThrow();
+            case Merge -> serviceProvider.getService(MergeSortStrategy.class).orElseThrow();
+            case OddEven -> serviceProvider.getService(OddEvenSortStrategy.class).orElseThrow();
+            case Quick -> serviceProvider.getService(QuickSortStrategy.class).orElseThrow();
+            case Select -> serviceProvider.getService(SelectSortStrategy.class).orElseThrow();
         };
     }
 }

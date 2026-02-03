@@ -13,7 +13,6 @@ import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
 import aston.java.intensive.module5.utils.sort.SortStrategy;
 import aston.java.intensive.module5.utils.sort.cache.SortMetaCache;
-import aston.java.intensive.module5.utils.sort.strategy.QuickSortStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +22,12 @@ import java.util.List;
 public final class MenuSort {
     private final IOService console;
     private final UserService userService;
-    private final SortStrategyFactory sortStrategyFactory;
+    private final SortStrategyFactory<User> sortStrategyFactory;
 
     public MenuSort(
             UserService userService,
             IOService console,
-            SortStrategyFactory sortStrategyFactory
+            SortStrategyFactory<User> sortStrategyFactory
     ) {
         this.userService = userService;
         this.console = console;

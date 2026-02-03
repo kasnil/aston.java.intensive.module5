@@ -28,6 +28,13 @@ import aston.java.intensive.module5.presentation.menu.MenuStart;
 import aston.java.intensive.module5.utils.faker.DataLocale;
 import aston.java.intensive.module5.utils.faker.DataSet;
 import aston.java.intensive.module5.utils.menu.ApplicationBuilder;
+import aston.java.intensive.module5.utils.sort.strategy.BubbleSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.HeapSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.InsertionSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.MergeSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.OddEvenSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.QuickSortStrategy;
+import aston.java.intensive.module5.utils.sort.strategy.SelectSortStrategy;
 
 public class Main {
     static void main() {
@@ -50,13 +57,13 @@ public class Main {
                     services.addSingleton(ManuallyUserFillingStrategy.class);
                     services.addSingleton(RandomUserFillingStrategy.class);
                     services.addSingleton(FillingStrategyFactory.class);
-                    services.addSingleton(BubbleUserSortStrategy.class);
-                    services.addSingleton(HeapUserSortStrategy.class);
-                    services.addSingleton(InsertionUserSortStrategy.class);
-                    services.addSingleton(MergeUserSortStrategy.class);
-                    services.addSingleton(OddEvenUserSortStrategy.class);
-                    services.addSingleton(QuickUserSortStrategy.class);
-                    services.addSingleton(SelectUserSortStrategy.class);
+                    services.addSingleton(BubbleSortStrategy.class);
+                    services.addSingleton(HeapSortStrategy.class);
+                    services.addSingleton(InsertionSortStrategy.class);
+                    services.addSingleton(MergeSortStrategy.class);
+                    services.addSingleton(OddEvenSortStrategy.class);
+                    services.addSingleton(QuickSortStrategy.class);
+                    services.addSingleton(SelectSortStrategy.class);
                     services.addSingleton(SortStrategyFactory.class);
                 });
         applicationBuilder.build().run();

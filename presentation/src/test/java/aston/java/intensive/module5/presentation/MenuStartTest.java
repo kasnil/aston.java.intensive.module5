@@ -87,7 +87,6 @@ public class MenuStartTest {
         serviceLocator.addSingleton(RandomUserFillingStrategy.class);
         serviceLocator.addSingleton(FillingStrategyFactory.class);
         serviceLocator.addSingleton(MenuStart.class);
-
         return serviceLocator;
     }
 }
