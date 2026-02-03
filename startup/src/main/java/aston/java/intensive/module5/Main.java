@@ -5,6 +5,7 @@ import aston.java.intensive.module5.application.filling.FillingStrategyFactory;
 import aston.java.intensive.module5.application.filling.strategy.FromFileUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
 import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
+import aston.java.intensive.module5.application.serializer.CsvSerializerUserService;
 import aston.java.intensive.module5.application.serializer.JsonSerializerUserService;
 import aston.java.intensive.module5.application.sort.SortStrategyFactory;
 import aston.java.intensive.module5.application.sort.strategy.BubbleUserSortStrategy;
@@ -20,6 +21,7 @@ import aston.java.intensive.module5.infrastructure.db.UnitOfWork;
 import aston.java.intensive.module5.infrastructure.db.UserRepository;
 import aston.java.intensive.module5.infrastructure.io.ConsoleService;
 import aston.java.intensive.module5.infrastructure.io.IOService;
+import aston.java.intensive.module5.presentation.menu.MenuAdditionalTasks;
 import aston.java.intensive.module5.presentation.menu.MenuFilling;
 import aston.java.intensive.module5.presentation.menu.MenuSort;
 import aston.java.intensive.module5.presentation.menu.MenuStart;
@@ -34,6 +36,7 @@ public class Main {
                 .addMenu(MenuFilling.class)
                 .addMenu(MenuSort.class)
                 .addMenu(MenuStart.class)
+                .addMenu(MenuAdditionalTasks.class)
                 .configureServices(services -> {
                     services.addSingleton(Store.class, MemoryCache.class);
                     services.addSingleton(UserRepository.class);
@@ -41,6 +44,7 @@ public class Main {
                     services.addSingleton(UserService.class);
                     services.addSingleton(IOService.class, ConsoleService.class);
                     services.addSingleton(JsonSerializerUserService.class);
+                    services.addSingleton(CsvSerializerUserService.class);
                     services.addSingleton(DataSet.class, new DataSet(DataLocale.Ru));
                     services.addSingleton(FromFileUserFillingStrategy.class);
                     services.addSingleton(ManuallyUserFillingStrategy.class);

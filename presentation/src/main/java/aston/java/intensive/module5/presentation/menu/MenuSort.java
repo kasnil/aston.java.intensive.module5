@@ -5,6 +5,7 @@ import aston.java.intensive.module5.application.sort.SortStrategyFactory;
 import aston.java.intensive.module5.application.sort.SortStrategyKind;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.io.IOService;
+import aston.java.intensive.module5.utils.StringUtils;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
 import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.Param;
@@ -113,6 +114,16 @@ public final class MenuSort {
             console.output("Результат сортировки:");
             users.forEach(console::output);
 
+            var answer = console.readInt("""
+                Select:
+                1 - Записать результат в файл
+                2 - Главное меню""");
+            var response = switch (answer) {
+                case 1 -> new Response(new Resource("additional-tasks", "2"), new Param(users));
+                default -> new Response(new Resource("index"));
+            };
+
+            return response;
         } catch (IllegalArgumentException e) {
             console.output("Ошибка: " + e.getMessage());
         } catch (Exception e) {
@@ -123,10 +134,11 @@ public final class MenuSort {
     }
 
     private List<String> parseSelected(Param param) {
-        if (param == null || param.message() == null || param.message().isBlank()) {
+        var str = (String)(param.data());
+        if (StringUtils.isNullOrEmpty(str)) {
             return new ArrayList<>();
         }
-        return new ArrayList<>(List.of(param.message().split(",")));
+        return new ArrayList<>(List.of(str.split(",")));
     }
 
     private Param toParam(List<String> selected) {
