@@ -19,7 +19,7 @@ jobs:
   # -------------------------------------------------
   # 2️⃣ BUILD
   # -------------------------------------------------
-  setup-java:
+  build:
     runs-on: ubuntu-latest
     needs: checkout
     steps:
