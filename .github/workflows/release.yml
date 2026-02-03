@@ -42,7 +42,7 @@ jobs:
       - name: "🔒 Grant execute permission for gradlew"
         run: chmod +x gradlew
 
-      - name: "🔨 Build with Gradle"
+      - name: "🔨 Build with Gradl e"
         working-directory: src/adservice
         run: ./gradlew installDist
 
