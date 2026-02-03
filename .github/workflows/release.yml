@@ -42,12 +42,14 @@ jobs:
       - name: "🔒 Grant execute permission for gradlew"
         run: chmod +x gradlew
 
-      - name: "🔨 Build the dist"
-        run: ./gradlew distZip
+      - name: "📦 Build the dist"
+        run:  |
+          ./gradlew distZip
+          echo "✅ Build completed."
 
-      - name: "🚀 Publish Gradle Application Artifacts"
+      - name: "🚀 Upload Application Artifacts"
         uses: actions/upload-artifact@v6
         with:
-          name: distribution-zip
+          name: build-output
           path: |
             ./*/build/distributions/*.zip
