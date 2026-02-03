@@ -45,8 +45,10 @@ jobs:
       - name: "🔨 Build the dist"
         run: ./gradlew distZip
 
-      - name: "📂 Move binary distribution"
-        run: mkdir -p build/distributions/ && mv startup/build/distributions/startup.zip build/distributions/
+      - name: "📂 Move distribution"
+        run: |
+          ls startup/build/distributions
+          mkdir -p build/distributions/ && mv startup/build/distributions/startup.zip build/distributions/
 
   # -------------------------------------------------
   # 3️⃣ PUBLISH
@@ -57,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: "🚀 Publish Gradle Application  Artifacts"
+      - name: "🚀 Publish Gradle Application Artifacts"
         uses: actions/upload-artifact@v6
         with:
           name: distr
