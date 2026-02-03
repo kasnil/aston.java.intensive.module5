@@ -76,7 +76,7 @@ public final class MenuFilling {
 
         showUsers();
 
-        return new Response(new Resource("index", "index"));
+        return new Response(new Resource("index"));
     }
 
     @Action("fillRandom")
@@ -88,7 +88,7 @@ public final class MenuFilling {
 
         showUsers();
 
-        return new Response(new Resource("index", "index"));
+        return new Response(new Resource("index"));
     }
 
     @Action("fillFromFile")
@@ -100,12 +100,12 @@ public final class MenuFilling {
             userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.FromFile));
         } catch (UserAbortException e) {
             console.output(e.getMessage());
-            return new Response(new Resource("index", "index"));
+            return new Response(new Resource("index"));
         }
 
         showUsers();
 
-        return new Response(new Resource("index", "index"));
+        return new Response(new Resource("index"));
     }
 
     @Action("overwrite")
