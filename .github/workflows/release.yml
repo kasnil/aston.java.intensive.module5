@@ -39,7 +39,7 @@ jobs:
           build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
           build-scan-terms-of-use-agree: "yes"
 
-      - name: "🔒 Grant execute permission for gradlew"
+      - name: "🔒 Grant execute permission for gvradlew"
         run: chmod +x gradlew
 
       - name: "🔨 Build the dist"
