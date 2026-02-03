@@ -64,7 +64,7 @@ jobs:
   # -------------------------------------------------
   publish:
     runs-on: ubuntu-latest
-    needs: setup-java
+    needs: build
     steps:
       - name: "🚀 Publish Gradle Application Artifacts"
         uses: actions/upload-artifact@v6
