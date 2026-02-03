@@ -3,6 +3,8 @@ name: 🔥 Build Release Gradle project
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 # -------------------------------------------------
 # 1️⃣ CHECKOUT
