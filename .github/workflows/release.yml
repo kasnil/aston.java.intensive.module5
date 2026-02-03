@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: "🚀 Publish Gradle Application Artifacts"
+      - name: "🚀 Publish Gradle Application  Artifacts"
         uses: actions/upload-artifact@v6
         with:
           name: distr
