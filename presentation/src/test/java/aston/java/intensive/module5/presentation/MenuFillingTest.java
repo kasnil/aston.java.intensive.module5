@@ -86,7 +86,7 @@ public class MenuFillingTest {
 
         assertEquals(countUsers, counter.get());
         assertEquals(countUsers, userService.getAllUsers().size());
-        assertEquals(new Response(new Resource("index", "index")), response);
+        assertEquals(new Response(new Resource("index")), response);
     }
 
     private ServiceLocator getBaseServiceLocator() {

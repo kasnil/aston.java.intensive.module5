@@ -61,8 +61,7 @@ public final class MenuAdditionalTasks {
 
     @Action("2")
     public Response task2(Param param) {
-        console.output("Введите путь к CSV-файлу с пользователями: ");
-        String input = console.readString();
+        String input = console.readString("Введите путь к CSV-файлу с пользователями: ");
 
         Path path = Path.of(input.trim());
         List<User> users = (List<User>)(param.data());
