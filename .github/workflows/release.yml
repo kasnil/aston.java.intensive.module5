@@ -59,6 +59,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: "📂 Move distribution"
+        run: |
+          ls build/distributions
+
       - name: "🚀 Publish Gradle Application Artifacts"
         uses: actions/upload-artifact@v6
         with:
