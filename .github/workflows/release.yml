@@ -33,7 +33,7 @@ jobs:
           cache: 'gradle'
 
       - name: "🐘 Setup Gradle"
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@@v4
         with:
           build-scan-publish: true
           build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
@@ -45,20 +45,6 @@ jobs:
       - name: "🔨 Build the dist"
         run: ./gradlew distZip
 
-      - name: "🚀 Publish Gradle Application Artifacts"
-        uses: actions/upload-artifact@v6
-        with:
-          name: distribution-zip
-          path: |
-            ./*/build/distributions/*.zip
-
-  # -------------------------------------------------
-  # 3️⃣ PUBLISH
-  # -------------------------------------------------
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: "🚀 Publish Gradle Application Artifacts"
         uses: actions/upload-artifact@v6
         with:
