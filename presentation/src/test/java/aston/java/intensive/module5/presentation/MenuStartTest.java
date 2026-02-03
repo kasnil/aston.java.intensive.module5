@@ -73,8 +73,8 @@ public class MenuStartTest {
 
         MenuStart menu = assertDoesNotThrow(() -> serviceProvider.getService(MenuStart.class).orElseThrow());
         Param param = Param.empty();
-        var resource = menu.index(param);
-        assertEquals(new Response(new Resource("sort", "chooseSortOrder"), param), resource);
+        var response = menu.index(param);
+        assertEquals(new Response(new Resource("sort", "chooseSortOrder"), param), response);
     }
 
     private ServiceLocator getBaseServiceLocator() {

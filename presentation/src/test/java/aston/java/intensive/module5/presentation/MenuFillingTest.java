@@ -82,11 +82,11 @@ public class MenuFillingTest {
         MenuFilling menu = assertDoesNotThrow(() -> serviceProvider.getService(MenuFilling.class).orElseThrow());
 
         Param param = new Param(countUsers);
-        var resource = menu.fillRandom(param);
+        var response = menu.fillRandom(param);
 
         assertEquals(countUsers, counter.get());
         assertEquals(countUsers, userService.getAllUsers().size());
-        assertEquals(new Response(new Resource("index", "index")), resource);
+        assertEquals(new Response(new Resource("index", "index")), response);
     }
 
     private ServiceLocator getBaseServiceLocator() {
