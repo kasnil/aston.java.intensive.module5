@@ -20,6 +20,11 @@ public class Result<T> extends ResultEmpty {
         return this.value;
     }
 
+    public RuntimeException getCause() {
+        Ensure.that(this.exception).isNotNull();
+        return this.exception;
+    }
+
     public void ifOk(Consumer<? super T> action) {
         if (this.value != null) {
             action.accept(value);

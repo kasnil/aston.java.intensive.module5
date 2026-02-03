@@ -4,9 +4,6 @@ import aston.java.intensive.module5.application.UserService;
 import aston.java.intensive.module5.application.filling.FillingStrategyFactory;
 import aston.java.intensive.module5.application.filling.exception.UserAbortException;
 import aston.java.intensive.module5.application.filling.strategy.FillingStrategyKind;
-import aston.java.intensive.module5.application.filling.strategy.FromFileUserFillingStrategy;
-import aston.java.intensive.module5.application.filling.strategy.ManuallyUserFillingStrategy;
-import aston.java.intensive.module5.application.filling.strategy.RandomUserFillingStrategy;
 import aston.java.intensive.module5.domain.User;
 import aston.java.intensive.module5.infrastructure.io.IOService;
 import aston.java.intensive.module5.utils.menu.annotation.Action;
@@ -67,13 +64,13 @@ public final class MenuFilling {
             }
         };
 
-        return new Response(answer, new Param(param.message()));
+        return new Response(answer, new Param(param.data()));
     }
 
     @Action("fillManually")
     public Response fillManually(Param param) {
         console.output("Вручную");
-        var count = Integer.parseInt(param.message());
+        var count = Integer.parseInt((String)(param.data()));
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Manually));
 
@@ -85,7 +82,7 @@ public final class MenuFilling {
     @Action("fillRandom")
     public Response fillRandom(Param param) {
         console.output("Рандом");
-        var count = Integer.parseInt(param.message());
+        var count = Integer.parseInt((String)(param.data()));
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Random));
 
@@ -97,7 +94,7 @@ public final class MenuFilling {
     @Action("fillFromFile")
     public Response fillFromFile(Param param) {
         console.output("Из файла");
-        var count = Integer.parseInt(param.message());
+        var count = Integer.parseInt((String)(param.data()));
 
         try {
             userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.FromFile));
