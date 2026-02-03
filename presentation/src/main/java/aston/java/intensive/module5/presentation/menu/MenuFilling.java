@@ -32,9 +32,9 @@ public final class MenuFilling {
     @Action("choiceCount")
     public Response choiceCount(Param param) {
         console.output("Введите количество пользователей: ");
-        var choice = console.readString("< ");
+        var choice = console.readIntOrDefault("< ", -1);
 
-        if (!choice.matches("\\d+")  ) {
+        if (choice < 0) {
             console.output("Непраильный ввод: ");
             return new Response(new Resource("filling", "choiceCount"));
         }
@@ -70,7 +70,7 @@ public final class MenuFilling {
     @Action("fillManually")
     public Response fillManually(Param param) {
         console.output("Вручную");
-        var count = Integer.parseInt((String)(param.data()));
+        var count = (Integer)(param.data());
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Manually));
 
@@ -82,7 +82,7 @@ public final class MenuFilling {
     @Action("fillRandom")
     public Response fillRandom(Param param) {
         console.output("Рандом");
-        var count = Integer.parseInt((String)(param.data()));
+        var count = (Integer)(param.data());
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Random));
 
@@ -94,7 +94,7 @@ public final class MenuFilling {
     @Action("fillFromFile")
     public Response fillFromFile(Param param) {
         console.output("Из файла");
-        var count = Integer.parseInt((String)(param.data()));
+        var count = (Integer)(param.data());
 
         try {
             userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.FromFile));
