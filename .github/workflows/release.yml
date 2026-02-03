@@ -43,20 +43,32 @@ jobs:
         run: chmod +x gradlew
 
   # -------------------------------------------------
-  # 3️⃣ GRADLE BUILD
+  # 3️⃣ VALIDATE GRADLE WRAPPER
   # -------------------------------------------------
-  build:
+  validate-gradle:
+    name: Validate Gradle Wrapper
     runs-on: ubuntu-latest
     needs: setup-java
     steps:
       - uses: actions/checkout@v4
 
+      - name: "✅ Validate Wrapper"
+        uses: gradle/wrapper-validation-action@v2
+
+  # -------------------------------------------------
+  # 4️⃣ GRADLE BUILD
+  # -------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    needs: validate-gradle
+    steps:
+      - uses: actions/checkout@v4
+
       - name: "🔨 Build with Gradle"
-        working-directory: src/adservice
         run: ./gradlew installDist
 
   # -------------------------------------------------
-  # 4️⃣ PUBLISH
+  # 5️⃣ PUBLISH
   # -------------------------------------------------
   publish:
     runs-on: ubuntu-latest
