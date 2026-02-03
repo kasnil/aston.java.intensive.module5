@@ -42,17 +42,7 @@ public class MenuFillingTest {
             }
 
             @Override
-            public int readIntOrDefault(int defaultValue) {
-                return 0;
-            }
-
-            @Override
             public int readInt(String prompt) {
-                return 0;
-            }
-
-            @Override
-            public int readIntOrDefault(String prompt, int defaultValue) {
                 return 0;
             }
 
