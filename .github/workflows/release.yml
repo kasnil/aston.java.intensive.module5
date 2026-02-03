@@ -46,7 +46,7 @@ jobs:
         run: ./gradlew distZip
 
       - name: "📂 Move binary distribution"
-        run: mkdir -p build/distributions/ && mv startup/gbuild/distributions/startup.zip build/distributions/
+        run: mkdir -p build/distributions/ && mv startup/build/distributions/startup.zip build/distributions/
 
   # -------------------------------------------------
   # 3️⃣ PUBLISH
