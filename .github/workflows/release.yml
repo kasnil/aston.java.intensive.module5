@@ -32,7 +32,7 @@ jobs:
           java-version: '25'
           cache: 'gradle'
 
-      - name: "🐘 Setup Gradle"
+      - name: "🐘 Setup Gradle "
         uses: gradle/actions/setup-gradle@@v4
         with:
           build-scan-publish: true
