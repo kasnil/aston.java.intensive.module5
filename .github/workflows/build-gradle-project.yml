@@ -59,11 +59,11 @@ jobs:
           retention-days: 4
 
       - name: Unit coverage results
-        uses: codecov/codecov-action@v5
+        uses: actions/upload-artifact@v5
         if: always()
         with:
-          name: coverage-report
-          path: |
+          name: coverage-report-html
+          directory: |
             */build/reports/jacoco/test
           if-no-files-found: warn
           retention-days: 4
