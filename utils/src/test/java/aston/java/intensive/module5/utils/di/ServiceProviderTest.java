@@ -34,7 +34,8 @@ public class ServiceProviderTest {
         var classWithDeclaredConstructorAndImplementsEmptyInterface = serviceProvider.getService(EmptyInterface.class);
         assertTrue(classWithDeclaredConstructorAndImplementsEmptyInterface.isOk());
 
-        assertThrows(IllegalArgumentException.class, () -> serviceProvider.getService(ClassNotRegisteredInServiceCollection.class));
+        assertTrue(serviceProvider.getService(ClassNotRegisteredInServiceCollection.class).isErr());
+        assertThrows(IllegalArgumentException.class, () -> serviceProvider.getService(ClassNotRegisteredInServiceCollection.class).orElseThrow());
     }
 }
 
