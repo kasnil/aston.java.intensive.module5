@@ -13,7 +13,6 @@ import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
 import aston.java.intensive.module5.utils.sort.SortStrategy;
 import aston.java.intensive.module5.utils.sort.cache.SortMetaCache;
-import aston.java.intensive.module5.utils.sort.strategy.QuickSortStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,19 +107,23 @@ public final class MenuSort {
         }
 
         try {
-             SortStrategy<User> strategy = sortStrategyFactory.getSortStrategy(SortStrategyKind.Quick);
-             List<User> users = userService.sortUsers(selected, strategy);
+            SortStrategy<User> strategy = sortStrategyFactory.getSortStrategy(SortStrategyKind.Quick);
+            List<User> users = userService.sortUsers(selected, strategy);
 
             console.output("Результат сортировки:");
             users.forEach(console::output);
 
             var answer = console.readIntOrDefault("""
-                Select:
-                1 - Записать результат в файл
-                2 - Главное меню""", -1);
+                    Select:
+                    1 - Записать результат в файл
+                    2 - Главное меню""", -1);
             var response = switch (answer) {
                 case 1 -> new Response(new Resource("additional-tasks", "2"), new Param(users));
-                default -> new Response(new Resource("index"));
+                case 2 -> new Response(new Resource("index"));
+                default -> {
+                    console.output("Неверный ввод");
+                    yield new Response(new Resource("sort", "sort"), param);
+                }
             };
 
             return response;
@@ -134,7 +137,7 @@ public final class MenuSort {
     }
 
     private List<String> parseSelected(Param param) {
-        var str = (String)(param.data());
+        var str = (String) (param.data());
         if (StringUtils.isNullOrEmpty(str)) {
             return new ArrayList<>();
         }
