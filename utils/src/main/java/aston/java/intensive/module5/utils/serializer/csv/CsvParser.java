@@ -31,7 +31,7 @@ public class CsvParser {
             for (int j = 0; j < fieldList.size(); j++) {
                 if (withHeader) {
                     if (j >= headers.size()) {
-                        throw new CsvException("Колличество полей в строке '%d' больше разрешенных в заголовке", i + 2);
+                        throw new CsvException("Количество полей в строке '%d' больше разрешенных в заголовке", i + 2);
                     }
                     result.get(headers.get(j)).add(parseString(fieldList.get(j)));
                 } else {

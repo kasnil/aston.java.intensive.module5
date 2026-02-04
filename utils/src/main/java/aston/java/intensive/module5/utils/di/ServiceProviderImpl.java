@@ -47,7 +47,7 @@ public class ServiceProviderImpl implements ServiceProvider {
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException(String.format("Ошибка при проверке дескриптора сервиса '%d': %s", e.getMessage(), e), e);
+            throw new IllegalArgumentException(String.format("Ошибка при проверке дескриптора сервиса '%s': %s", e.getMessage(), e), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class ServiceProviderImpl implements ServiceProvider {
         Supplier<Optional<Object>> realizedService = createServiceAccessor(serviceClass);
         var result = realizedService.get();
         if (result.isEmpty()) {
-            return Result.err(new IllegalArgumentException(String.format("Для типа '%d' не зарегистрирована ни один сервис.", serviceClass.getName())));
+            return Result.err(new IllegalArgumentException(String.format("Для типа '%s' не зарегистрирована ни один сервис.", serviceClass.getName())));
         }
         return Result.ok((T)result.get());
     }
