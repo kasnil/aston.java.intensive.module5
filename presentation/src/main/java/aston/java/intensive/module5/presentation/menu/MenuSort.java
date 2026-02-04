@@ -111,7 +111,8 @@ public final class MenuSort {
             List<User> users = userService.sortUsers(selected, strategy);
 
             console.output("Результат сортировки:");
-            users.forEach(console::output);
+
+            userService.printUsers(users);
 
             var answer = console.readIntOrDefault("""
                     Select:

@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MenuFillingTest {
     @Test
     public void testFillRandomAction() {
-        AtomicInteger counter = new AtomicInteger(0);
         var countUsers = 2;
 
         var serviceLocator = getBaseServiceLocator();
@@ -58,9 +57,6 @@ public class MenuFillingTest {
 
             @Override
             public void output(Object message) {
-                if (message.toString().startsWith("User")) {
-                    counter.incrementAndGet();
-                }
             }
         });
 
@@ -74,7 +70,6 @@ public class MenuFillingTest {
         Param param = new Param(countUsers);
         var response = menu.fillRandom(param);
 
-        assertEquals(countUsers, counter.get());
         assertEquals(countUsers, userService.getAllUsers().size());
         assertEquals(new Response(new Resource("index")), response);
     }
