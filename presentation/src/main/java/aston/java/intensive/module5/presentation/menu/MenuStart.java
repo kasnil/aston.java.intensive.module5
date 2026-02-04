@@ -41,6 +41,7 @@ public final class MenuStart {
         //
 
         items.add(new MenuItem("Заполнение", new Resource("filling", "choiceCount"), () -> !hasUsers));
+        items.add(new MenuItem("Список пользователей", new Resource("filling", "show"), () -> hasUsers));
 
         items.add(new MenuItem("Выход", Resource.exit()));
 

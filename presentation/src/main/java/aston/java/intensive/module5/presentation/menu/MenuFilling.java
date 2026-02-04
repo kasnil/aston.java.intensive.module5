@@ -74,8 +74,6 @@ public final class MenuFilling {
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Manually));
 
-        showUsers();
-
         return new Response(new Resource("index"));
     }
 
@@ -85,8 +83,6 @@ public final class MenuFilling {
         var count = (Integer)(param.data());
 
         userService.fillUsers(count, fillingStrategyFactory.getFillingStrategy(FillingStrategyKind.Random));
-
-        showUsers();
 
         return new Response(new Resource("index"));
     }
@@ -103,8 +99,6 @@ public final class MenuFilling {
             return new Response(new Resource("index"));
         }
 
-        showUsers();
-
         return new Response(new Resource("index"));
     }
 
@@ -117,10 +111,10 @@ public final class MenuFilling {
         return new Response(new Resource("filling", "choiceCount"));
     }
 
-    private void showUsers() {
-        console.output("Список пользователей: ");
-        for (User user : userService.getAllUsers()) {
-            console.output(user);
-        }
+    @Action("show")
+    public Response show(Param param) {
+        userService.printUsers(userService.getAllUsers());
+
+        return new Response(new Resource("index"));
     }
 }
