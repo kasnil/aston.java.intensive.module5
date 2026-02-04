@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/java-25-blue.svg)](https://www.oracle.com/java/)
 [![Gradle](https://img.shields.io/badge/Gradle-v9.3.0-green.svg)](https://gradle.org/)
-[![GitHub Actions - Gradle](https://github.com/kasnil/aston.java.intensive.module5/actions/workflows/build-gradle-project.yml/badge.svg)]([https://github.com/kasnil/aston.java.intensive.module5/blob/dev/.github/workflows/build-gradle-project.yml](https://github.com/kasnil/aston.java.intensive.module5/actions/workflows/build-gradle-project.yml))
+[![GitHub Actions - Gradle](https://github.com/kasnil/aston.java.intensive.module5/actions/workflows/build-gradle-project.yml/badge.svg)]([https://github.com/kasnil/aston.java.intensive.module5/blob/dev/.github/workflows/build-gradle-project.yml](https://github.com/kasnil/aston.java.intensive.module5/actions))
 [![Лицензия: MIT](https://img.shields.io/badge/%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 В этом проекте используется [Gradle](https://gradle.org/).
