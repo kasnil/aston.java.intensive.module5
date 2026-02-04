@@ -61,7 +61,7 @@ public final class MenuSort {
         console.output("0. Завершить выбор");
         console.output("-1. Главное меню");
 
-        int choice = console.readInt("> ");
+        int choice = console.readIntOrDefault("> ", -2);
 
         // главное меню
         if (choice == -1) {
@@ -114,10 +114,10 @@ public final class MenuSort {
             console.output("Результат сортировки:");
             users.forEach(console::output);
 
-            var answer = console.readInt("""
+            var answer = console.readIntOrDefault("""
                 Select:
                 1 - Записать результат в файл
-                2 - Главное меню""");
+                2 - Главное меню""", -1);
             var response = switch (answer) {
                 case 1 -> new Response(new Resource("additional-tasks", "2"), new Param(users));
                 default -> new Response(new Resource("index"));

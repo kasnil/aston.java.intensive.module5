@@ -53,7 +53,7 @@ public final class MenuFilling {
                     2 - Рандом
                     3 - Из файла
                     """);
-        var choice = console.readInt("< ");
+        var choice = console.readIntOrDefault("< ", -1);
         var answer = switch (choice) {
             case 1 -> new Resource("filling", "fillManually");
             case 2 -> new Resource("filling", "fillRandom");
