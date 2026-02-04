@@ -26,3 +26,26 @@ tasks.jacocoTestReport {
     }
     dependsOn(tasks.test) // tests are required to run before generating the report
 }
+
+checkstyle {
+    toolVersion = "10.3.3"
+    configDirectory = rootProject.file("${rootDir}/config/checkstyle")
+
+    isShowViolations = true
+    isIgnoreFailures = true
+}
+
+tasks {
+    checkstyleMain {
+        configFile = rootProject.file("${rootDir}/config/checkstyle/checkstyleMain.xml")
+    }
+    checkstyleTest {
+        configFile = rootProject.file("${rootDir}/config/checkstyle/checkstyleTest.xml")
+    }
+}
+
+tasks.withType<Checkstyle>().configureEach {
+    reports {
+        html.required = true
+    }
+}

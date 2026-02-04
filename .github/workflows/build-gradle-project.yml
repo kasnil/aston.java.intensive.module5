@@ -39,6 +39,9 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew test --no-daemon --build-cache --warning-mode all --scan
 
+      - name: Run Checkstyle
+        run: ./gradlew checkstyleMain checkstyleTest --no-daemon || true
+
       - name: Problems Report
         uses: actions/upload-artifact@v5
         if: failure()
@@ -65,5 +68,15 @@ jobs:
           name: coverage-report-html
           path: |
             */build/reports/jacoco/test
+          if-no-files-found: warn
+          retention-days: 4
+
+      - name: Upload analysis reports
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: code-analysis-reports
+          path: |
+            */build/reports/checkstyle/
           if-no-files-found: warn
           retention-days: 4
