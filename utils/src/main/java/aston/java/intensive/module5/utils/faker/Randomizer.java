@@ -28,7 +28,7 @@ public final class Randomizer {
 
     public int number(int min, int max)
     {
-        return seed.nextInt(max - min + 1) + min;
+        return seed.nextInt(max - min) + min;
     }
 
     public String password(int length)
