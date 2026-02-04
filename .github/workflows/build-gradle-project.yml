@@ -55,3 +55,15 @@ jobs:
           name: unit-tests-results
           path: |
             */build/reports/tests
+          if-no-files-found: warn
+          retention-days: 4
+
+      - name: Unit coverage results
+        uses: codecov/codecov-action@v5
+        if: always()
+        with:
+          name: coverage-report
+          path: |
+            */build/reports/jacoco/test
+          if-no-files-found: warn
+          retention-days: 4

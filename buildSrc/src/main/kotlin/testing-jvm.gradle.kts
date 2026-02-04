@@ -4,6 +4,7 @@ package buildsrc.convention
 
 plugins {
     id("buildsrc.convention.common-jvm")
+    jacoco
 }
 
 dependencies {
@@ -14,4 +15,14 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        html.apply {
+            required.set(true)
+        }
+    }
+    dependsOn(tasks.test) // tests are required to run before generating the report
 }
