@@ -54,5 +54,7 @@ tasks.withType<Checkstyle>().configureEach {
 }
 
 tasks.named("check") {
+    group = "verification"
+    description = "Execute Checkstyle to ensure code and Javadoc formatting"
     dependsOn("checkstyleMain", "checkstyleTest")
 }
