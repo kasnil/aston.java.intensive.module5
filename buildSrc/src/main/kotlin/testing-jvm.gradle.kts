@@ -28,11 +28,14 @@ tasks.jacocoTestReport {
 }
 
 checkstyle {
-    toolVersion = "10.3.3"
+    toolVersion = "13.1.0"
     configDirectory = rootProject.file("${rootDir}/config/checkstyle")
+    configProperties["charset"] = "UTF-8"
 
     isShowViolations = true
     isIgnoreFailures = true
+    maxErrors = 0
+    maxWarnings = 0
 }
 
 tasks {
@@ -48,4 +51,8 @@ tasks.withType<Checkstyle>().configureEach {
     reports {
         html.required = true
     }
+}
+
+tasks.named("check") {
+    dependsOn("checkstyleMain", "checkstyleTest")
 }

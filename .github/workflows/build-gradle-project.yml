@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew test --no-daemon --build-cache --warning-mode all --scan
 
       - name: Run Checkstyle
-        run: ./gradlew checkstyleMain checkstyleTest --no-daemon || true
+        run: ./gradlew check checkstyleTest --no-daemon || true
 
       - name: Problems Report
         uses: actions/upload-artifact@v5
