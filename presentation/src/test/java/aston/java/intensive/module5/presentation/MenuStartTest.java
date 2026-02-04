@@ -30,12 +30,12 @@ public class MenuStartTest {
         serviceLocator.addSingleton(IOService.class, new IOService() {
             @Override
             public int readInt() {
-                return 0;
+                return 1;
             }
 
             @Override
             public int readInt(String prompt) {
-                return 1;
+                return 0;
             }
 
             @Override

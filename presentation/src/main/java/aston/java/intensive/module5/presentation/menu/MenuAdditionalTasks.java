@@ -37,12 +37,12 @@ public final class MenuAdditionalTasks {
 
     @Action
     public Response index(Param param) {
-        var answer = console.readInt("""
+        var answer = console.readIntOrDefault("""
                 Select:
                 1 - Дополнительное задание 1
                 3 - Дополнительное задание 3
                 4 - Дополнительное задание 4
-                5 - Главное меню""");
+                5 - Главное меню""", -1);
         var resource = switch (answer) {
             case 1 -> new Resource("additional-tasks", "1");
             case 3 -> new Resource("additional-tasks", "3");

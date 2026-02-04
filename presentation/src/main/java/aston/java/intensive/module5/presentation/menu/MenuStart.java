@@ -53,7 +53,7 @@ public final class MenuStart {
 
         // Выбор
         while (true) {
-            choice = console.readInt("> ") - 1;
+            choice = console.readIntOrDefault("> ", 0) - 1;
             if (choice < 0 || choice >= items.size()) {
                 console.output("Неверный выбор, попробуйте ещё раз");
                 continue;
