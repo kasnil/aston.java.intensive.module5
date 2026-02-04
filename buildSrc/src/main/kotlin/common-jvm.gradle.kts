@@ -7,6 +7,7 @@ repositories {
 plugins {
     java
     idea
+    checkstyle
 }
 
 java {
