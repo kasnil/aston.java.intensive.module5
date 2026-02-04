@@ -13,7 +13,7 @@
     To completely disable a check, just comment it out or delete it from the file.
     To suppress certain violations please review suppression filters.
 
-    Authors: Max Vetrenko, Mauryan Kansara, Ruslan Diachenko, Roman Ivanov.
+    Authors: Max Vetrenko, Mauryan Kansara, Ruslan Diachenko, Roman Ivanov, Kasnil.
  -->
 
 <module name="Checker">
@@ -54,7 +54,7 @@
 
     <module name="LineLength">
         <property name="fileExtensions" value="java"/>
-        <property name="max" value="100"/>
+        <property name="max" value="120"/>
         <property name="ignorePattern"
                   value="^package.*|^import.*|href\s*=\s*&quot;[^&quot;]*&quot;|http://|https://|ftp://"/>
     </module>
@@ -320,7 +320,7 @@
                      value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
         </module>
         <module name="Indentation">
-            <property name="basicOffset" value="2"/>
+            <property name="basicOffset" value="4"/>
             <property name="braceAdjustment" value="2"/>
             <property name="caseIndent" value="2"/>
             <property name="throwsIndent" value="4"/>
@@ -414,6 +414,7 @@
             <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
         </module>
         <module name="MissingJavadocMethod">
+            <property name="severity" value="ignore"/>
             <property name="scope" value="protected"/>
             <property name="allowMissingPropertyJavadoc" value="true"/>
             <property name="allowedAnnotations" value="Override, Test"/>
@@ -429,6 +430,7 @@
                                  [not(./MODIFIERS/LITERAL_PUBLIC)]]"/>
         </module>
         <module name="MissingJavadocType">
+            <property name="severity" value="ignore"/>
             <property name="scope" value="protected"/>
             <property name="tokens"
                       value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
