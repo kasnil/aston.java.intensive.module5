@@ -5,6 +5,7 @@ package buildsrc.convention
 plugins {
     id("buildsrc.convention.common-jvm")
     id("buildsrc.convention.testing-jvm")
+    id("buildsrc.convention.verification-jvm")
 
     `java-library`
 }
