@@ -11,6 +11,10 @@ import aston.java.intensive.module5.utils.menu.annotation.Menu;
 import aston.java.intensive.module5.utils.menu.models.Param;
 import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
+import aston.java.intensive.module5.utils.sort.cache.SortMetaCache;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Menu("filling")
@@ -34,8 +38,8 @@ public final class MenuFilling {
         console.output("Введите количество пользователей: ");
         var choice = console.readIntOrDefault("< ", -1);
 
-        if (choice < 0) {
-            console.output("Непраильный ввод: ");
+        if (choice <= 0) {
+            console.output("Неправильный ввод: ");
             return new Response(new Resource("filling", "choiceCount"));
         }
 
@@ -113,8 +117,34 @@ public final class MenuFilling {
 
     @Action("show")
     public Response show(Param param) {
-        userService.printUsers(userService.getAllUsers());
+        console.outputTable(userService.getAllUsers());
 
         return new Response(new Resource("index"));
+    }
+
+    @Action("find")
+    public Response find(Param param) {
+        var users = this.userService.find();
+        console.outputTable(users);
+
+        if (users.isEmpty()) {
+            return new Response(new Resource("index"));
+        }
+
+        var answer = console.readIntOrDefault("""
+                    Select:
+                    1 - Записать результат в файл
+                    2 - Главное меню""", -1);
+
+        var response = switch (answer) {
+            case 1 -> new Response(new Resource("additional-tasks", "2"), new Param(users));
+            case 2 -> new Response(new Resource("index"));
+            default -> {
+                console.output("Неверный ввод");
+                yield new Response(new Resource("sort", "sort"), param);
+            }
+        };
+
+        return response;
     }
 }

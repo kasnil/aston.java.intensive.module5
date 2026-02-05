@@ -20,6 +20,8 @@ import aston.java.intensive.module5.utils.menu.models.Resource;
 import aston.java.intensive.module5.utils.menu.models.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -50,6 +52,10 @@ public class MenuStartTest {
 
             @Override
             public void output(Object message) {
+            }
+
+            @Override
+            public void outputTable(List<User> users) {
             }
         });
 

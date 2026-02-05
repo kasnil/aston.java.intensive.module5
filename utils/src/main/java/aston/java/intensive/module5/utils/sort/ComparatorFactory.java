@@ -14,7 +14,7 @@ public final class ComparatorFactory {
         if( meta == null) {
             throw new IllegalArgumentException("Поле не найдено: " + displayName);
         }
-        return Comparator.comparing(meta::getValue);
+        return Comparator.comparing(meta::getComparableValue);
     }
 
     public static <T> Comparator<T> byFields(Class<T> type, List<String> displayNames) {
