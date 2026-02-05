@@ -48,6 +48,9 @@ build/
 # *.iml
 # *.ipr
 
+# Log Files
+*.log
+
 # CMake
 cmake-build-*/
 

@@ -21,9 +21,17 @@ public final class SortFieldMeta {
 
 
     @SuppressWarnings("unchecked")
-    public <T> Comparable<Object> getValue(T instance) {
+    public <T> Comparable<Object> getComparableValue(T instance) {
         try {
             return (Comparable<Object>) getter.invoke(instance);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T, V> V getValue(T instance) {
+        try {
+            return (V) getter.invoke(instance);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

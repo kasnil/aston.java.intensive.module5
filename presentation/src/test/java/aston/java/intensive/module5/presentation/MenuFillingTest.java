@@ -58,6 +58,10 @@ public class MenuFillingTest {
             @Override
             public void output(Object message) {
             }
+
+            @Override
+            public void outputTable(List<User> users) {
+            }
         });
 
         var serviceProvider = new ServiceProviderImpl.Builder()

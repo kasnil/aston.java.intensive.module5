@@ -4,56 +4,62 @@ import aston.java.intensive.module5.domain.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class UserRepository implements Repository<User> {
-    private final StoreSet<User> store;
+    private final StoreSet<User> set;
 
     public UserRepository(Store store) {
-        this.store = store.getUserStoreSet();
+        this.set = store.getUserStoreSet();
     }
 
     @Override
     public List<User> all() {
-        return store.findAll();
+        return set.findAll();
     }
 
     @Override
     public void deleteAll() {
-        store.clear();
+        set.clear();
     }
 
     @Override
     public int count() {
-        return store.size();
+        return set.size();
     }
 
     @Override
     public boolean delete(User user) {
-        return store.delete(user);
+        return set.delete(user);
     }
 
     @Override
     public void add(User user) {
-        store.save(user);
+        set.save(user);
     }
 
     @Override
     public Optional<User> findById(Long id) {
-        return store.findById(id);
+        return set.findById(id);
+    }
+
+    @Override
+    public List<User> find(Predicate<User> predicate) {
+        return set.find(predicate);
     }
 
     @Override
     public boolean update(User user) {
-        return store.update(user);
+        return set.update(user);
     }
 
     @Override
     public boolean isEmpty() {
-        return store.isEmpty();
+        return set.isEmpty();
     }
 
     @Override
     public void resetSequence() {
-        store.resetSequence();
+        set.resetSequence();
     }
 }

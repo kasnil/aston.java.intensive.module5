@@ -112,7 +112,7 @@ public final class MenuSort {
 
             console.output("Результат сортировки:");
 
-            userService.printUsers(users);
+            console.outputTable(users);
 
             var answer = console.readIntOrDefault("""
                     Select:
