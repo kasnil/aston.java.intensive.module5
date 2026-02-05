@@ -1,7 +1,7 @@
 # Changelog
 Все существенные изменения в этом проекте задокументированы в данном файле.
 
-## Version [1.0.0](https://github.com/kasnil/aston.java.intensive.module5) (2026-02-04)
+## Version [1.0.0](https://github.com/kasnil/aston.java.intensive.module5/releases/tag/v1.0.0) (2026-02-04)
 
 ### Features
 * Выбор заполнения исходного массива данных (из файла, рандом, вручную) и его длину. 
